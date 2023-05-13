@@ -1,8 +1,8 @@
 {
-  "name": "ntn-boilerplate",
+  "name": "dotyk",
   "version": "1.0.0",
-  "description": "Nuxt-Tailwind-NetlifyCMS boilerplate",
-  "author": "Sven Parker <sven@svenparker.com> (https://svenparker.com)",
+  "description": "Dotyk Archive Website ",
+  "author": "Alberto Harres & Hanna Paniutsich",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
