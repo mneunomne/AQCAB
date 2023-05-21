@@ -37,18 +37,16 @@ collections:
           # - { label: Site Email, name: siteemail, widget: string, required: false }
   - name: 'connections'
     label: 'Connections'
-    # identifier_field: name
+    identifier_field: name_en
     folder: 'assets/content/connections'
     create: true
     format: 'json'
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
-    # editor:
-    #   preview: true
+    slug: '{{slug}}'
     fields:
-      - { name: 'node_id', label: 'Node Id', widget: 'string' , pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."]} 
-      - { name: 'name_en', label: 'name_en', widget: 'string' } 
-      - { name: 'name_be', label: 'name_be', widget: 'string' } 
-      - { name: 'node_type', label: 'node_type', widget: 'string' } 
+      - { name: 'node_id', label: 'Node Id', widget: 'string' , required: true, pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."]} 
+      - { name: 'name_en', label: 'name_en', widget: 'string' , required: true} 
+      - { name: 'name_be', label: 'name_be', widget: 'string' , required: false , default: ''} 
+      - { name: 'node_type', label: 'node_type', widget: 'string' , required: false, default: ''} 
       - { 
           name: 'connections',
           label: 'Connections',
@@ -59,12 +57,14 @@ collections:
           collection: 'connections',
           search_fields: ['node_id'],
           value_field: 'node_id',
-          display_fields: ["node_id"]
+          display_fields: ["node_id"],
+          required: false,
+          default: []
         } 
-      - { name: 'tags', label: 'tags', widget: 'list', max: 3, min: 1, default: [] } 
-      - { name: 'type', label: 'type', widget: 'string' } 
-      - { name: 'content_en', label: 'content_en', widget: 'markdown' } 
-      - { name: 'content_be', label: 'content_be', widget: 'markdown' } 
+      - { name: 'tags', label: 'tags', widget: 'list', default: [], required: false } 
+      - { name: 'type', label: 'type', widget: 'string', required: false, default: '' } 
+      - { name: 'content_en', label: 'content_en', widget: 'markdown' , required: false, default: ''} 
+      - { name: 'content_be', label: 'content_be', widget: 'markdown' , required: false, default: ''} 
   - name: 'blog'
     label: 'Blog'
     # identifier_field: name
