@@ -52,7 +52,6 @@ collections:
           label: 'Connections',
           widget: 'relation',
           multiple: true,
-          min: 1,
           max: 99,
           collection: 'connections',
           search_fields: ['node_id'],
