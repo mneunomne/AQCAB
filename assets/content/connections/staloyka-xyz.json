@@ -2,7 +2,10 @@
   "node_id": "staloyka-xyz",
   "name_en": "staloyka xyz",
   "name_be": "Сталоўка XYZ",
-  "connections": [],
+  "connections": [
+    "bahdan-khmialnitsky",
+    "dotyk"
+  ],
   "tags": [
     "queer",
     "activism",
