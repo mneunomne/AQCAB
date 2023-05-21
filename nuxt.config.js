@@ -77,6 +77,10 @@ export default {
    ** Build configuration
    */
   build: {
+    transpile: [
+      'three',
+      'three-spritetext'
+    ],
     extractCSS: true,
     postcss: {
       plugins: {
@@ -94,7 +98,13 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config) {
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      })
+    },
   },
   /*
    ** Custom additions configuration

@@ -16,7 +16,11 @@
   "license": "MIT",
   "dependencies": {
     "@nuxtjs/markdownit": "^1.2.6",
-    "nuxt": "^2.14.12"
+    "3d-force-graph": "^1.71.4",
+    "d3-force-limit": "^1.2.1",
+    "nuxt": "^2.14.12",
+    "three": "^0.152.2",
+    "three-spritetext": "^1.8.1"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^1.1.1",

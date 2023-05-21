@@ -10,13 +10,16 @@
       <li class="flex-1">
         <nuxt-link class="btn block" to="/projects">Projects</nuxt-link>
       </li>
+      <li class="flex-1">
+        <nuxt-link class="btn block" to="/connections">Connections</nuxt-link>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
 }
 </script>
 

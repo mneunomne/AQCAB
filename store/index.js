@@ -1,8 +1,9 @@
-import { SET_BLOG_POSTS, SET_PROJECT_POSTS } from './mutations.type'
+import { SET_BLOG_POSTS, SET_PROJECT_POSTS, SET_CONNECTIONS } from './mutations.type'
 
 export const state = () => ({
   blogPosts: [],
-  projectPosts: []
+  projectPosts: [],
+  connections: [],
 })
 
 export const mutations = {
@@ -11,6 +12,9 @@ export const mutations = {
   },
   [SET_PROJECT_POSTS](state, list) {
     state.projectPosts = list
+  },
+  [SET_CONNECTIONS](state, list) {
+    state.connections = list
   }
 }
 
@@ -30,6 +34,10 @@ export const actions = {
     // Project collection type
     let projectFiles = await require.context('~/assets/content/projects/', false, /\.json$/)
     await commit(SET_PROJECT_POSTS, actions.getPosts(projectFiles))
+
+    // Project collection type
+    let connections = await require.context('~/assets/content/connections/', false, /\.json$/)
+    await commit(SET_CONNECTIONS, actions.getPosts(connections))
 
     // ? When adding/changing NetlifyCMS collection types, make sure to:
     // ? 1. Add/rename exact slugs here
