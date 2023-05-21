@@ -49,7 +49,7 @@ collections:
       - { name: 'name_en', label: 'name_en', widget: 'string' } 
       - { name: 'name_be', label: 'name_be', widget: 'string' } 
       - { name: 'node_type', label: 'node_type', widget: 'string' } 
-      - { name: 'tags', label: 'tags', widget: 'list' } 
+      - { name: 'tags', label: 'tags', widget: 'list', max: 3, min: 1, default: [] } 
       - { name: 'type', label: 'type', widget: 'string' } 
       - { name: 'content_en', label: 'content_en', widget: 'string' } 
       - { name: 'content_be', label: 'content_be', widget: 'string' } 
