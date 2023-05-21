@@ -35,6 +35,24 @@ collections:
               pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
             }
           # - { label: Site Email, name: siteemail, widget: string, required: false }
+  - name: 'connections'
+    label: 'Connections'
+    # identifier_field: name
+    folder: 'assets/content/connections'
+    create: true
+    format: 'json'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    # editor:
+    #   preview: true
+    fields:
+      - { name: 'node_id', label: 'Node Id', widget: 'string' , pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."]} 
+      - { name: 'name_en', label: 'name_en', widget: 'string' } 
+      - { name: 'name_be', label: 'name_be', widget: 'string' } 
+      - { name: 'node_type', label: 'node_type', widget: 'string' } 
+      - { name: 'tags', label: 'tags', widget: 'list' } 
+      - { name: 'type', label: 'type', widget: 'string' } 
+      - { name: 'content_en', label: 'content_en', widget: 'string' } 
+      - { name: 'content_be', label: 'content_be', widget: 'string' } 
   - name: 'blog'
     label: 'Blog'
     # identifier_field: name
@@ -79,53 +97,3 @@ collections:
           summary: '{{fields.image}}',
           field: { label: 'Image', name: 'image', widget: 'image' },
         }
-  # - name: 'story_projects'
-  #   # identifier_field: name
-  #   label: 'Story Projects'
-  #   label_singular: 'Story Project'
-  #   folder: 'assets/content/stories'
-  #   create: true
-  #   format: 'json'
-  #   slug: '{{slug}}'
-  #   preview_path: 'stories/{{slug}}'
-  #   # filter: { field: 'project_type', value: 'story' }
-  #   fields:
-  #     # - { label: 'Project Type', name: 'project_type', widget: 'select', options: ['story', 'photo'] }
-  #     - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-  #     - { label: 'Title', name: 'title', widget: 'string' }
-  #     - { label: 'Description', name: 'description', widget: 'string', required: false }
-  #     - { label: 'Content', name: 'body', widget: 'markdown', required: false }
-  #     - { label: 'Cover Image', name: 'cover', widget: 'image', required: false, allow_multiple: false }
-  #     - {
-  #         label: 'Gallery',
-  #         name: 'gallery',
-  #         widget: 'list',
-  #         required: false,
-  #         summary: '{{fields.image}}',
-  #         field: { label: 'Image', name: 'image', widget: 'image' },
-  #       }
-  # - name: 'photo_projects'
-  #   # identifier_field: name
-  #   label: 'Photo Projects'
-  #   label_singular: 'Photo Project'
-  #   folder: 'assets/content/photos'
-  #   create: true
-  #   format: 'json'
-  #   slug: '{{slug}}'
-  #   preview_path: 'photos/{{slug}}'
-  #   # filter: { field: 'project_type', value: 'photo' }
-  #   fields:
-  #     # - { label: 'Project Type', name: 'project_type', widget: 'select', options: ['story', 'photo'] }
-  #     - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-  #     - { label: 'Title', name: 'title', widget: 'string' }
-  #     - { label: 'Description', name: 'description', widget: 'string', required: false }
-  #     - { label: 'Content', name: 'body', widget: 'markdown', required: false }
-  #     - { label: 'Cover Image', name: 'cover', widget: 'image', required: false, allow_multiple: false }
-  #     - {
-  #         label: 'Gallery',
-  #         name: 'gallery',
-  #         widget: 'list',
-  #         required: false,
-  #         summary: '{{fields.image}}',
-  #         field: { label: 'Image', name: 'image', widget: 'image' },
-  #       }
