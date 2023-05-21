@@ -1,9 +1,9 @@
 {
-  "node_id": "varvara_sudnik",
+  "node_id": "varvara-sudnik",
   "name_en": "Varvara Sudnik",
   "name_be": "Варвара Суднік",
   "connections": [
-    "vasilisa_palianina"
+    "vasilisa-palianina"
   ],
   "tags": [
     "PARNAT",
