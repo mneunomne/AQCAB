@@ -38,6 +38,7 @@ export default {
             id: node.node_id,
             name: node.name_en,
             val: 1,
+            content_en: node.content_en,
           }
         }),
         links: this.generateLinks(data),
@@ -51,6 +52,15 @@ export default {
         .showNavInfo(false)
         .numDimensions(2)
         .linkOpacity(1)
+        .nodeLabel((node) => {
+          return node.content_en.length > 0
+            ? `
+          <div class="tooltip-box">
+            ${this.$md.render(node.content_en)}
+          </div>
+        `
+            : false
+        })
         .nodeThreeObject((node) => {
           console.log('node', node)
           const group = new THREE.Group()
@@ -71,7 +81,7 @@ export default {
           const click_sphere = new THREE.Mesh(geometry, clickMatSphere)
           click_sphere.scale.set(10, 10, 10)
 
-          sphere.scale.set(1, 1, 1)
+          sphere.scale.set(0.5, 0.5, 0.5)
           const sprite = new SpriteText(node.name)
           // sprite.fontFace = 'Space Mono'
           sprite.material.depthWrite = false // make sprite background transparent
@@ -112,7 +122,7 @@ export default {
 }
 </script>
   
-<style lang="postcss">
+<style global lang="postcss">
 .connections-graph {
   position: absolute;
   top: 0;
