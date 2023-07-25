@@ -1,8 +1,8 @@
-import { SET_BLOG_POSTS, SET_PROJECT_POSTS, SET_CONNECTIONS } from './mutations.type'
+import { SET_BLOG_POSTS, SET_PROJECTS, SET_CONNECTIONS } from './mutations.type'
 
 export const state = () => ({
   blogPosts: [],
-  projectPosts: [],
+  projects: [],
   connections: [],
 })
 
@@ -10,8 +10,8 @@ export const mutations = {
   [SET_BLOG_POSTS](state, list) {
     state.blogPosts = list
   },
-  [SET_PROJECT_POSTS](state, list) {
-    state.projectPosts = list
+  [SET_PROJECTS](state, list) {
+    state.projects = list
   },
   [SET_CONNECTIONS](state, list) {
     state.connections = list
@@ -33,7 +33,7 @@ export const actions = {
 
     // Project collection type
     let projectFiles = await require.context('~/assets/content/projects/', false, /\.json$/)
-    await commit(SET_PROJECT_POSTS, actions.getPosts(projectFiles))
+    await commit(SET_PROJECTS, actions.getPosts(projectFiles))
 
     // Project collection type
     let connections = await require.context('~/assets/content/connections/', false, /\.json$/)

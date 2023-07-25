@@ -7,7 +7,7 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
-const fontSize = 6
+const fontSize = 5
 
 export default {
   props: {
@@ -48,10 +48,14 @@ export default {
 
       g.graphData(gData)
         .backgroundColor('rgba(0,0,0,0)')
-        .linkWidth(1)
+        .linkWidth(0)
         .showNavInfo(false)
         .numDimensions(2)
-        .linkOpacity(1)
+        .linkOpacity(0.2)
+        .linkColor(() => {
+          return '#000'
+        })
+        .enableNavigationControls(false)
         .nodeLabel((node) => {
           return node.content_en.length > 0
             ? `
@@ -64,30 +68,49 @@ export default {
         .nodeThreeObject((node) => {
           console.log('node', node)
           const group = new THREE.Group()
-          const geometry = new THREE.SphereGeometry(5, 64, 64)
-          let op = 1
-          const matSphere = new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            opacity: op,
-            transparent: true,
-          })
-          const sphere = new THREE.Mesh(geometry, matSphere)
-
+          const click_geometry = new THREE.SphereGeometry(5, 64, 64)
           const clickMatSphere = new THREE.MeshBasicMaterial({
             color: 0x000000,
             opacity: 0,
             transparent: true,
           })
-          const click_sphere = new THREE.Mesh(geometry, clickMatSphere)
+          const click_sphere = new THREE.Mesh(click_geometry, clickMatSphere)
           click_sphere.scale.set(10, 10, 10)
+          // create a triangle plane with random shape and color
+          const material = new THREE.MeshBasicMaterial({
+            color: this.randomTriangleColor(),
+            opacity: 1,
+            transparent: true,
+          })
+          let vertices = new Float32Array([
+            -1.0,
+            -1.0,
+            1.0, // vertex 1
+            1.0,
+            -1.0,
+            1.0, // vertex 2
+            0,
+            1.0,
+            1.0, // vertex 3
+          ])
 
-          sphere.scale.set(0.5, 0.5, 0.5)
+          const geometry = new THREE.BufferGeometry()
+          geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+          geometry.center()
+          const mesh = new THREE.Mesh(geometry, material)
+          var triangle_scale = 4
+          var rand = Math.random() * triangle_scale
+          mesh.scale.set(triangle_scale + rand, triangle_scale + triangle_scale - rand, triangle_scale)
+          mesh.rotation.z = Math.random() * (Math.PI * 2)
+          mesh.position.set(0, 0, 1)
+          group.add(mesh)
+
           const sprite = new SpriteText(node.name)
           // sprite.fontFace = 'Space Mono'
           sprite.material.depthWrite = false // make sprite background transparent
           sprite.material.opacity = 1
 
-          sprite.color = 'red'
+          sprite.color = 'black'
           sprite.textHeight = fontSize
           sprite.padding = 2
 
@@ -97,8 +120,7 @@ export default {
           // this.sprites.push({ id: node.id, sprite })
 
           group.add(sprite)
-          sprite.position.set(0, 1.6, 0)
-          group.add(sphere)
+          sprite.position.set(0, triangle_scale + 2, 0)
           if (!node?.disabled) {
             //group.add(click_sphere)
           }
@@ -117,6 +139,10 @@ export default {
         })
       })
       return links
+    },
+    randomTriangleColor() {
+      var colors = ['#ff49b0', '#66c7f4', '#28666e', '#553e4e', '#a4243b', '#40c9a2', '#ffbafd', '#f9b3d1']
+      return colors[Math.floor(Math.random() * colors.length)]
     },
   },
 }
