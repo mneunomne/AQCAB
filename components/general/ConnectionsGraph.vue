@@ -31,16 +31,9 @@ export default {
       }
       const el = document.querySelector('.connections-graph')
       const g = ForceGraph3D()(el)
-
+      console.log('data', data)
       const gData = {
-        nodes: data.map((node) => {
-          return {
-            id: node.node_id,
-            name: node.name_en,
-            val: 1,
-            content_en: node.content_en,
-          }
-        }),
+        nodes: this.generateNodes(data),
         links: this.generateLinks(data),
       }
 
@@ -76,34 +69,36 @@ export default {
           })
           const click_sphere = new THREE.Mesh(click_geometry, clickMatSphere)
           click_sphere.scale.set(10, 10, 10)
-          // create a triangle plane with random shape and color
-          const material = new THREE.MeshBasicMaterial({
-            color: this.randomTriangleColor(),
-            opacity: 1,
-            transparent: true,
-          })
-          let vertices = new Float32Array([
-            -1.0,
-            -1.0,
-            1.0, // vertex 1
-            1.0,
-            -1.0,
-            1.0, // vertex 2
-            0,
-            1.0,
-            1.0, // vertex 3
-          ])
 
-          const geometry = new THREE.BufferGeometry()
-          geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
-          geometry.center()
-          const mesh = new THREE.Mesh(geometry, material)
-          var triangle_scale = 4
-          var rand = Math.random() * triangle_scale
-          mesh.scale.set(triangle_scale + rand, triangle_scale + triangle_scale - rand, triangle_scale)
-          mesh.rotation.z = Math.random() * (Math.PI * 2)
-          mesh.position.set(0, 0, 1)
-          group.add(mesh)
+          // create a triangle plane with random shape and color
+          if (node.type === 'node') {
+            const material = new THREE.MeshBasicMaterial({
+              color: this.randomTriangleColor(),
+              opacity: 1,
+              transparent: true,
+            })
+            let vertices = new Float32Array([
+              -1.0,
+              -1.0,
+              1.0, // vertex 1
+              1.0,
+              -1.0,
+              1.0, // vertex 2
+              0,
+              1.0,
+              1.0, // vertex 3
+            ])
+            const geometry = new THREE.BufferGeometry()
+            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+            geometry.center()
+            const mesh = new THREE.Mesh(geometry, material)
+            var triangle_scale = 4
+            var rand = Math.random() * triangle_scale
+            mesh.scale.set(triangle_scale + rand, triangle_scale + triangle_scale - rand, triangle_scale)
+            mesh.rotation.z = Math.random() * (Math.PI * 2)
+            mesh.position.set(0, 0, 1)
+            group.add(mesh)
+          }
 
           const sprite = new SpriteText(node.name)
           // sprite.fontFace = 'Space Mono'
@@ -120,13 +115,44 @@ export default {
           // this.sprites.push({ id: node.id, sprite })
 
           group.add(sprite)
-          sprite.position.set(0, triangle_scale + 2, 0)
+          if (node.type === 'node') {
+            sprite.position.set(0, triangle_scale + 2, 0)
+          } else {
+            sprite.position.set(0, 0, 0)
+          }
           if (!node?.disabled) {
             //group.add(click_sphere)
           }
 
           return group
         })
+    },
+    generateNodes(data) {
+      const nodes = []
+      data.forEach((node) => {
+        nodes.push({
+          id: node.node_id,
+          name: node.name_en,
+          val: 1,
+          content_en: node.content_en,
+          type: 'node',
+        })
+
+        node.tags.forEach((tag) => {
+          // check if tag already exists
+          if (nodes.find((n) => n.id === tag)) {
+            return
+          }
+          nodes.push({
+            id: tag,
+            name: tag,
+            val: 1,
+            content_en: tag,
+            type: 'tag',
+          })
+        })
+      })
+      return nodes
     },
     generateLinks(data) {
       const links = []
@@ -135,6 +161,15 @@ export default {
           links.push({
             source: node.node_id,
             target: connection,
+          })
+        })
+      })
+      // connect tags to nodes
+      data.forEach((node) => {
+        node.tags.forEach((tag) => {
+          links.push({
+            source: tag,
+            target: node.node_id,
           })
         })
       })
