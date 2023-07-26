@@ -49,6 +49,7 @@ export default {
           return '#000'
         })
         .enableNavigationControls(false)
+        /*
         .nodeLabel((node) => {
           return node.content_en.length > 0
             ? `
@@ -57,7 +58,7 @@ export default {
           </div>
         `
             : false
-        })
+        })*/
         .onNodeClick((node) => {
           console.log('node', node)
           if (node.type === 'node') {

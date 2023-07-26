@@ -57,6 +57,20 @@ export default {
         type: 'font/woff',
         crossorigin: true
       },
+      {
+        rel: 'preload',
+        href: '/fonts/hauora_sans/fonts/web/Hauora-SemiBold.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: true
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/hauora_sans/fonts/web/Hauora-SemiBold.woff',
+        as: 'font',
+        type: 'font/woff',
+        crossorigin: true
+      },
     ] // ? Imports the font 'Karla' and is optimized by the netlify plugin 'Subfont'
   },
   generate: {
