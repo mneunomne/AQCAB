@@ -31,6 +31,7 @@ export default {
   width: 120px;
   height: 33px;
   display: flex;
+  z-index: 1;
 }
 .btn {
   padding: auto;
