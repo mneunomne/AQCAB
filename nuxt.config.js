@@ -45,14 +45,14 @@ export default {
       },
       {
         rel: 'preload',
-        href: '/fonts/hauora_sans/fonts/ttf/Hauora-Regular.woff2',
+        href: '/fonts/hauora_sans/fonts/web/Hauora-Regular.woff2',
         as: 'font',
         type: 'font/woff2',
         crossorigin: true
       },
       {
         rel: 'preload',
-        href: '/fonts/hauora_sans/fonts/ttf/Hauora-Regular.woff',
+        href: '/fonts/hauora_sans/fonts/web/Hauora-Regular.woff',
         as: 'font',
         type: 'font/woff',
         crossorigin: true

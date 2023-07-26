@@ -107,7 +107,7 @@ export default {
           }
 
           const sprite = new SpriteText(node.name)
-          // sprite.fontFace = 'Hauora'
+          sprite.fontFace = 'Hauora'
           sprite.material.depthWrite = false // make sprite background transparent
           sprite.material.opacity = 1
 
