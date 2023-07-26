@@ -21,6 +21,9 @@ export default {
       const tags = []
       this.$store.state.connections.forEach((node) => {
         node.tags.forEach((tag) => {
+          if (tags.includes(tag)) {
+            return
+          }
           tags.push(tag)
         })
       })
