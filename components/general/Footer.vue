@@ -1,5 +1,5 @@
 <template>
-  <span id="title">Belarusian Queer Archives</span>
+  <span id="footer-title">Belarusian Queer Archives</span>
 </template>
 <script>
 export default {
@@ -7,7 +7,7 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-#title {
+#footer-title {
   position: absolute;
   bottom: 20px;
   left: 20px;

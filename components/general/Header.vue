@@ -43,6 +43,7 @@ export default {
   height: 100%;
   transition: background-color 0.2s ease 0s;
   background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
   border-radius: 10px;
   padding-top: 20px;
   &:hover {

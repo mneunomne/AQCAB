@@ -42,13 +42,34 @@ export default {
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400&display=swap'
-      }
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/hauora_sans/fonts/ttf/Hauora-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: true
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/hauora_sans/fonts/ttf/Hauora-Regular.woff',
+        as: 'font',
+        type: 'font/woff',
+        crossorigin: true
+      },
     ] // ? Imports the font 'Karla' and is optimized by the netlify plugin 'Subfont'
   },
   generate: {
     routes: dynamicRoutes,
     fallback: true,
     subFolders: false
+  },
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style', 'font'].includes(type)
+      }
+    }
   },
   /*
    ** Customize the progress-bar color

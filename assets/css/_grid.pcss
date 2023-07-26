@@ -1,6 +1,7 @@
 .container {
   min-height: 100vh;
   padding: 20px;
+  max-width: calc(100vw - 240px);
 }
 
 .main {
@@ -30,19 +31,4 @@
 .cover-image {
   max-height: 500px;
   @apply w-full object-cover my-4;
-}
-
-/** LIGHT MODE */
-.light-mode {
-  & .articles {
-    & .article {
-      @apply border-primary-400;
-
-      &.article--clickable {
-        &:hover {
-          @apply border-primary-300 bg-primary-200 bg-opacity-25;
-        }
-      }
-    }
-  }
 }

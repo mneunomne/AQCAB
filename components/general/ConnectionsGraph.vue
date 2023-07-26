@@ -58,6 +58,12 @@ export default {
         `
             : false
         })
+        .onNodeClick((node) => {
+          console.log('node', node)
+          if (node.type === 'node') {
+            this.$router.push(`/connections/${node.id}`)
+          }
+        })
         .nodeThreeObject((node) => {
           console.log('node', node)
           const group = new THREE.Group()
@@ -101,7 +107,7 @@ export default {
           }
 
           const sprite = new SpriteText(node.name)
-          // sprite.fontFace = 'Space Mono'
+          // sprite.fontFace = 'Hauora'
           sprite.material.depthWrite = false // make sprite background transparent
           sprite.material.opacity = 1
 
