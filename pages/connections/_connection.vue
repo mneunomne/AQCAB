@@ -1,12 +1,20 @@
 <template>
-  <article v-if="connectionNode" class="main article">
-    <span class="close" @click="$router.push('/connections')">close</span>
-    <h1 class="article-title">{{ connectionNode.node_id }}</h1>
-    <p class="article-content">{{ connectionNode.content_en }}</p>
-  </article>
+  <div class="main" v-if="connectionNode">
+    <Tags :tags="connectionNode.tags" />
+    <article class="main article">
+      <span class="close" @click="$router.push('/connections')">close</span>
+      <h1 class="article-title">{{ connectionNode.node_id }}</h1>
+      <p class="article-content">{{ connectionNode.content_en }}</p>
+    </article>
+  </div>
 </template>
 <script>
+import Tags from '~/components/general/Tags.vue'
+
 export default {
+  components: {
+    Tags,
+  },
   async asyncData({ params, payload }) {
     console.log('params', params, payload)
     if (payload) return { connectionNode: payload }
@@ -25,7 +33,7 @@ export default {
   background: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   z-index: 10;
-  padding: 20px;
+  padding: 50px;
   border-radius: 10px;
   pointer-events: all;
 }
@@ -36,7 +44,7 @@ export default {
 
 .close {
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 50px;
+  top: 50px;
 }
 </style>

@@ -7,7 +7,7 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
-const fontSize = 5
+const fontSize = 6
 
 export default {
   props: {
@@ -44,7 +44,7 @@ export default {
         .linkWidth(0)
         .showNavInfo(false)
         .numDimensions(2)
-        .linkOpacity(0.2)
+        .linkOpacity(0.5)
         .linkColor(() => {
           return '#000'
         })
@@ -98,7 +98,7 @@ export default {
             geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 4
+            var triangle_scale = 5
             var rand = Math.random() * triangle_scale
             mesh.scale.set(triangle_scale + rand, triangle_scale + triangle_scale - rand, triangle_scale)
             mesh.rotation.z = Math.random() * (Math.PI * 2)
