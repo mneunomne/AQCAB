@@ -16,8 +16,17 @@ export default {
       default: () => [],
     },
   },
+  data() {
+    return {
+      g: null,
+    }
+  },
   mounted() {
     this.buildGraph()
+    window.addEventListener('resize', this.onWindowResize, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onWindowResize, false)
   },
   methods: {
     buildGraph() {
@@ -37,8 +46,6 @@ export default {
         links: this.generateLinks(data),
       }
 
-      console.log('gData', gData)
-
       g.graphData(gData)
         .backgroundColor('rgba(0,0,0,0)')
         .linkWidth(0)
@@ -49,24 +56,19 @@ export default {
           return '#000'
         })
         .enableNavigationControls(false)
-        /*
-        .nodeLabel((node) => {
-          return node.content_en.length > 0
-            ? `
-          <div class="tooltip-box">
-            ${this.$md.render(node.content_en)}
-          </div>
-        `
-            : false
-        })*/
+        .nodeLabel(false)
+        .onNodeHover((node) => {
+          if (node && node.type === 'node') {
+            // this.nodeOpacity(node.id, 1)
+            node.__threeObj.children[1].material.opacity = 1
+          }
+        })
         .onNodeClick((node) => {
-          console.log('node', node)
           if (node.type === 'node') {
             this.$router.push(`/connections/${node.id}`)
           }
         })
         .nodeThreeObject((node) => {
-          console.log('node', node)
           const group = new THREE.Group()
           const click_geometry = new THREE.SphereGeometry(5, 64, 64)
           const clickMatSphere = new THREE.MeshBasicMaterial({
@@ -80,28 +82,29 @@ export default {
           // create a triangle plane with random shape and color
           if (node.type === 'node') {
             const material = new THREE.MeshBasicMaterial({
-              color: this.randomTriangleColor(),
+              color: this.hexColorWithRandomHue(),
               opacity: 1,
               transparent: true,
             })
             let vertices = new Float32Array([
-              -1.0,
-              -1.0,
-              1.0, // vertex 1
-              1.0,
-              -1.0,
-              1.0, // vertex 2
-              0,
-              1.0,
-              1.0, // vertex 3
+              -1.0, -1.0, 1.0, // vertex 1
+              1.0, -1.0, 1.0, // vertex 2
+              0, 1.0, 1.0, // vertex 3
             ])
             const geometry = new THREE.BufferGeometry()
-            geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
+            geometry.setAttribute(
+              'position',
+              new THREE.BufferAttribute(vertices, 3)
+            )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
             var triangle_scale = 5
             var rand = Math.random() * triangle_scale
-            mesh.scale.set(triangle_scale + rand, triangle_scale + triangle_scale - rand, triangle_scale)
+            mesh.scale.set(
+              triangle_scale + rand,
+              triangle_scale + triangle_scale - rand,
+              triangle_scale
+            )
             mesh.rotation.z = Math.random() * (Math.PI * 2)
             mesh.position.set(0, 0, 1)
             group.add(mesh)
@@ -110,7 +113,11 @@ export default {
           const sprite = new SpriteText(node.name)
           sprite.fontFace = 'Hauora'
           sprite.material.depthWrite = false // make sprite background transparent
-          sprite.material.opacity = 1
+          if (node.type === 'node') {
+            sprite.material.opacity = 0
+          } else {
+            sprite.material.opacity = 1
+          }
 
           sprite.color = 'black'
           sprite.textHeight = fontSize
@@ -122,18 +129,29 @@ export default {
           // this.sprites.push({ id: node.id, sprite })
 
           group.add(sprite)
+          var bbox = new THREE.Box3().setFromObject(sprite);
+
+          var text_height = bbox.max.z - bbox.min.z
+          var text_width = bbox.max.x - bbox.min.x
+          console.log('text_width', text_width)
+
           if (node.type === 'node') {
-            sprite.position.set(0, triangle_scale + 2, 0)
+            // sprite.material.rotation = Math.PI / 2;
+            sprite.position.set(text_width / 2 + 5, 0, 0)
+            //sprite.material.rotation = Math.PI / 2;
+            //group.add(click_sphere)
           } else {
             sprite.position.set(0, 0, 0)
           }
           if (!node?.disabled) {
             //group.add(click_sphere)
           }
-
           return group
         })
+      g.d3Force('charge').strength(-70)
+      this.g = g
     },
+    // Data for nodes -> names of connections + tags
     generateNodes(data) {
       const nodes = []
       data.forEach((node) => {
@@ -144,7 +162,6 @@ export default {
           content_en: node.content_en,
           type: 'node',
         })
-
         node.tags.forEach((tag) => {
           // check if tag already exists
           if (nodes.find((n) => n.id === tag)) {
@@ -161,6 +178,7 @@ export default {
       })
       return nodes
     },
+    // Data for Links -> Array of objects with source and target
     generateLinks(data) {
       const links = []
       data.forEach((node) => {
@@ -183,8 +201,40 @@ export default {
       return links
     },
     randomTriangleColor() {
-      var colors = ['#ff49b0', '#66c7f4', '#28666e', '#553e4e', '#a4243b', '#40c9a2', '#ffbafd', '#f9b3d1']
+      var colors = [
+        '#ff49b0',
+        '#66c7f4',
+        '#28666e',
+        '#553e4e',
+        '#a4243b',
+        '#40c9a2',
+        '#ffbafd',
+        '#f9b3d1',
+      ]
       return colors[Math.floor(Math.random() * colors.length)]
+    },
+    hexColorWithRandomHue() {
+      function hslToHex(h, s, l) {
+        l /= 100
+        const a = (s * Math.min(l, 1 - l)) / 100
+        const f = (n) => {
+          const k = (n + h / 30) % 12
+          const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+          return Math.round(255 * color)
+            .toString(16)
+            .padStart(2, '0') // convert to Hex and prefix "0" if needed
+        }
+        return `#${f(0)}${f(8)}${f(4)}`
+      }
+      return hslToHex(
+        Math.random() * 360,
+        80 + Math.random() * 20,
+        40 + Math.random() * 20
+      )
+    },
+    onWindowResize() {
+      this.g.width(window.innerWidth)
+      this.g.height(window.innerHeight)
     },
   },
 }

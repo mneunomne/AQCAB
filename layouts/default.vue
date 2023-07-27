@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Header from '~/components/general/Header.vue'
+import Header from '~/components/general/Menu.vue'
 import Footer from '~/components/general/Footer.vue'
 import ConnectionsGraph from '~/components/general/ConnectionsGraph.vue'
 

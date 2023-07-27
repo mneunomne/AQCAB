@@ -6,9 +6,17 @@
        url('/fonts/hauora_sans/fonts/web/Hauora-SemiBold.woff') format('woff');
 }
 
-hml, body {
+@font-face {
+  font-family: 'Hauora';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/hauora_sans/fonts/web/Hauora-Medium.woff2') format('woff2'),
+       url('/fonts/hauora_sans/fonts/web/Hauora-Medium.woff') format('woff');
+}
+
+html, body {
   font-family: 'Hauora', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
   -webkit-font-smoothing: antialiased;
@@ -22,11 +30,9 @@ a {
 
 .title {
   color: var(--color-primary);
-  @apply block font-bold text-5xl tracking-wide transition-colors duration-200 ease-in-out;
 }
 
 .subtitle {
   color: var(--text-secondary);
   word-spacing: 0.15em;
-  @apply block font-light text-3xl tracking-wide pb-4 transition-colors duration-200 ease-in-out;
 }

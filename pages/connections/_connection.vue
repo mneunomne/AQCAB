@@ -1,7 +1,6 @@
 <template>
-  <div class="main" v-if="connectionNode">
-    <Tags :tags="connectionNode.tags" />
-    <article class="main article">
+  <div class="main" v-show="connectionNode">
+    <article class="main article card">
       <span class="close" @click="$router.push('/connections')">close</span>
       <h1 class="article-title">{{ connectionNode.node_id }}</h1>
       <p class="article-content">{{ connectionNode.content_en }}</p>
@@ -9,12 +8,7 @@
   </div>
 </template>
 <script>
-import Tags from '~/components/general/Tags.vue'
-
 export default {
-  components: {
-    Tags,
-  },
   async asyncData({ params, payload }) {
     console.log('params', params, payload)
     if (payload) return { connectionNode: payload }
@@ -30,11 +24,7 @@ export default {
 .article {
   width: 100%;
   min-height: 400px;
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  z-index: 10;
   padding: 50px;
-  border-radius: 10px;
   pointer-events: all;
 }
 
