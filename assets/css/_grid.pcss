@@ -11,7 +11,24 @@
   border-radius: 10px;
 }
 
-a.card, button span.card {
+.article.card {
+  width: 100%;
+  min-height: 400px;
+  padding: 50px;
+  pointer-events: all;
+}
+
+.article-title {
+  margin-bottom: 1em;
+}
+
+.close {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+}
+
+a > .card, a.card, button span.card {
   &:hover {
     background: rgba(220, 220, 220, 0.7);
   }

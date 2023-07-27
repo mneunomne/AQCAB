@@ -5,12 +5,14 @@ import postcssNesting from 'postcss-nesting'
 import postcssPresetEnv from 'postcss-preset-env'
 import * as SITE_INFO from './assets/content/site/info.json'
 import { COLOR_MODE_FALLBACK } from './utils/globals.js'
+import en from './locales/en-US.js'
+import be from './locales/be-BE.js'
 
 const dynamicContentPath = 'assets/content' // ? No prepending/appending backslashes here
 const dynamicRoutes = getDynamicPaths(
   {
     blog: 'blog/*.json',
-    projects: 'projects/*.json'
+    connections: 'connections/*.json'
   },
   dynamicContentPath
 )
@@ -104,9 +106,22 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/markdownit', 'nuxt-purgecss'],
+  modules: [
+    '@nuxtjs/markdownit',
+    'nuxt-purgecss',
+    '@nuxtjs/i18n',
+  ],
   markdownit: {
     injected: true
+  },
+  i18n: {
+    locales: ['en', 'be'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: { en, be }
+
+    }
   },
   /*
    ** Build configuration
@@ -183,13 +198,13 @@ export default {
  * @param {*} urlFilepathTable - example below
  * {
  *   blog: 'blog/*.json',
- *   projects: 'projects/*.json'
+ *   connections: 'connections/*.json'
  * }
  *
  * @return {Array} - Will return those files into urls for SSR generated .html's like
  * [
  *   /blog/2019-08-27-incidunt-laborum-e ,
- *   /projects/story-test-story-1
+ *   /connections/example-name
  * ]
  */
 function getDynamicPaths(urlFilepathTable, cwdPath) {

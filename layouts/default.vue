@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import Header from '~/components/general/Menu.vue'
-import Footer from '~/components/general/Footer.vue'
-import ConnectionsGraph from '~/components/general/ConnectionsGraph.vue'
+import Header from '~/components/Menu.vue'
+import Footer from '~/components/Footer.vue'
+import ConnectionsGraph from '~/components/ConnectionsGraph.vue'
 
 export default {
   components: {

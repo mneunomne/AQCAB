@@ -1,9 +1,9 @@
 <template>
   <div class="main" v-show="connectionNode">
-    <article class="main article card">
+    <article class="article card">
       <span class="close" @click="$router.push('/connections')">close</span>
       <h1 class="article-title">{{ connectionNode.node_id }}</h1>
-      <p class="article-content">{{ connectionNode.content_en }}</p>
+      <div v-html="$md.render(connectionNode.content_en)"></div>
     </article>
   </div>
 </template>
@@ -19,22 +19,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="postcss">
-.article {
-  width: 100%;
-  min-height: 400px;
-  padding: 50px;
-  pointer-events: all;
-}
-
-.article-title {
-  margin-bottom: 1em;
-}
-
-.close {
-  position: absolute;
-  right: 50px;
-  top: 50px;
-}
-</style>
