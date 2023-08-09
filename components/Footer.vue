@@ -1,5 +1,5 @@
 <template>
-  <span id="footer-title">Belarusian Queer Archives</span>
+  <span id="footer-title">{{ $t('title') }}</span>
 </template>
 <script>
 export default {

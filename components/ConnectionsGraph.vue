@@ -117,6 +117,8 @@ export default {
             sprite.material.opacity = 0
           } else {
             sprite.material.opacity = 1
+            sprite.backgroundColor = "#B1B2B5";
+            sprite.padding = [0, 0];
           }
 
           sprite.color = 'black'
