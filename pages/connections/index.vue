@@ -1,7 +1,7 @@
 <template>
-  <main class="main">
+  <div class="connections">
     <!--<ConnectionsGraph :data="connections" />-->
-  </main>
+  </div>
 </template>
 <script>
 export default {

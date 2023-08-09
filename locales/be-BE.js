@@ -1,6 +1,6 @@
 export default {
   about: 'Пра нас',
-  menu: 'Menu',
+  menu: 'навігацыя',
   blog: 'блог',
   timeline: 'стужка',
   title: 'Belarussian Queer Archive',
@@ -9,4 +9,5 @@ export default {
   insta: 'Insta',
   eng: 'eng',
   email: 'Email',
+  contribute: "-> дадаць да архіву"
 }

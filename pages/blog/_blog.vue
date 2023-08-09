@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-show="blogPost">
+  <div v-show="blogPost">
     <article class="article card">
       <div class="article-content">
         <span class="close" @click="$router.push('/blog')">{{

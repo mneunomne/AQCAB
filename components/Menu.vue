@@ -63,9 +63,10 @@ export default {
   right: 0;
   bottom: 0;
   width: 270px;
-  padding-top: 20px;
-  padding-right: 20px;
+  padding-top: 50px;
+  padding-right: 50px;
   overflow: auto;
+  overflow-x: hidden;
 }
 .toggle-button {
   width: 100%;

@@ -10,4 +10,5 @@ export default {
   eng: 'eng',
   bel: 'бел',
   email: 'Email',
+  contribute: "-> contribute to the archive"
 }

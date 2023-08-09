@@ -1,20 +1,22 @@
 <template>
   <div class="container">
     <ConnectionsGraph v-if="connections" :data="connections" />
-    <Header />
-    <Footer />
-    <nuxt />
+    <Menu />
+    <div class="main">
+      <Footer />
+      <nuxt />
+    </div>
   </div>
 </template>
 
 <script>
-import Header from '~/components/Menu.vue'
+import Menu from '~/components/Menu.vue'
 import Footer from '~/components/Footer.vue'
 import ConnectionsGraph from '~/components/ConnectionsGraph.vue'
 
 export default {
   components: {
-    Header,
+    Menu,
     Footer,
     ConnectionsGraph,
   },
