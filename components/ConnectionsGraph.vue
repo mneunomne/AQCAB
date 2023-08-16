@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       g: null,
+      rotateInterval: null,
     }
   },
   mounted() {
@@ -65,8 +66,21 @@ export default {
         })
         .onNodeHover((node) => {
           if (node && node.type === 'node') {
+            // 
             // this.nodeOpacity(node.id, 1)
-            // node.__threeObj.children[1].material.opacity = 1
+            node.__threeObj.children[0]
+            // make triangle rotate
+            //node.__threeObj.children[0].rotation.z += 0.01
+            if (this.rotateInterval) {
+              clearInterval(this.rotateInterval)
+            }
+            this.rotateInterval = setInterval(() => {
+              node.__threeObj.children[0].rotation.z += 0.01
+            }, 10)
+          } else {
+            if (this.rotateInterval) {
+              clearInterval(this.rotateInterval)
+            }
           }
         })
         .onNodeClick((node) => {
