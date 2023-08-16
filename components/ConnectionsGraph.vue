@@ -56,11 +56,17 @@ export default {
           return '#000'
         })
         .enableNavigationControls(false)
-        .nodeLabel(false)
+        .nodeLabel((node) => {
+          if (node.type === 'node') {
+            return `<span class="node-name">${node.name}</span>`
+          } else {
+            return false
+          }
+        })
         .onNodeHover((node) => {
           if (node && node.type === 'node') {
             // this.nodeOpacity(node.id, 1)
-            node.__threeObj.children[1].material.opacity = 1
+            // node.__threeObj.children[1].material.opacity = 1
           }
         })
         .onNodeClick((node) => {
