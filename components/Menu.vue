@@ -1,9 +1,9 @@
 <template>
-  <div class="menu">
+  <div class="menu" :class="{ closed: !getIsMenuOpen }">
     <!-- toggle button -->
     <button class="toggle-button">
-      <span class="card block" @click="toggleMenu"
-        >{{ menuOpen ? $t('hide') : $t('menu') }}
+      <span class="card block" @click="onClickMenuButton"
+        >{{ getIsMenuOpen ? $t('hide') : $t('menu') }}
       </span>
     </button>
     <nav class="nav" :class="{ closed: !menuOpen }">
@@ -26,7 +26,7 @@
           </div>
           <div class="side_menu-btn btn-small">
             <nuxt-link class="btn card" :to="switchLocalePath(locale)"
-              ><span>{{ locale }}</span></nuxt-link
+              ><span>{{ localeName }}</span></nuxt-link
             >
           </div>
         </li>
@@ -36,6 +36,9 @@
 </template>
 
 <script>
+
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'Header',
   data() {
@@ -44,13 +47,23 @@ export default {
     }
   },
   methods: {
-    toggleMenu() {
+    ...mapActions({
+      toggleMenu: 'toggleMenu'
+    }),
+    onClickMenuButton() {
       this.menuOpen = !this.menuOpen
+      this.toggleMenu(this.menuOpen)
     },
   },
   computed: {
+    ...mapGetters({
+      getIsMenuOpen: 'getIsMenuOpen'
+    }),
     locale() {
       return this.$i18n.locale == 'en' ? 'be' : 'en'
+    },
+    localeName() {
+      return this.$i18n.locale == 'en' ? 'bel' : 'eng'
     },
   },
 }
@@ -63,11 +76,17 @@ export default {
   right: 0;
   bottom: 0;
   width: 270px;
-  padding-top: 50px;
-  padding-right: 50px;
+  padding-top: 30px;
+  padding-right: 30px;
   overflow: auto;
   overflow-x: hidden;
+  z-index: 1;
 }
+
+.menu.closed {
+  overflow: hidden;
+}
+
 .toggle-button {
   width: 100%;
   height: 100px;

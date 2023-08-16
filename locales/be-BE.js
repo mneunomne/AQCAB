@@ -3,7 +3,7 @@ export default {
   menu: 'навігацыя',
   blog: 'блог',
   timeline: 'стужка',
-  title: 'Belarussian Queer Archive',
+  title: 'беларускі квір архіў',
   close: 'зачыніць',
   hide: 'схаваць',
   insta: 'Insta',

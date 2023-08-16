@@ -1,9 +1,16 @@
-import { SET_BLOG_POSTS, SET_CONNECTIONS } from './mutations.type'
+import { SET_BLOG_POSTS, SET_CONNECTIONS, TOGGLE_MENU } from './mutations.type'
 
 export const state = () => ({
   blogPosts: [],
   connections: [],
+  menuOpen: false
 })
+
+export const getters = {
+  getIsMenuOpen(state) {
+    return state.menuOpen
+  },
+}
 
 export const mutations = {
   [SET_BLOG_POSTS](state, list) {
@@ -11,7 +18,11 @@ export const mutations = {
   },
   [SET_CONNECTIONS](state, list) {
     state.connections = list
+  },
+  [TOGGLE_MENU](state, payload) {
+    state.menuOpen = payload
   }
+
 }
 
 export const actions = {
@@ -21,6 +32,9 @@ export const actions = {
       res.slug = key.slice(2, -5)
       return res
     })
+  },
+  toggleMenu({ commit }, payload) {
+    commit('toggleMenu', payload)
   },
   async nuxtServerInit({ commit }) {
     // Blog collection type

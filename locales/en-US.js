@@ -3,7 +3,7 @@ export default {
   menu: 'Menu',
   blog: 'Blog',
   timeline: 'Timeline',
-  title: 'Belarussian Queer Archive',
+  title: 'Belarusian Queer Archive',
   close: 'Close',
   hide: 'Hide',
   insta: 'Insta',
