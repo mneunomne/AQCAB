@@ -9,13 +9,19 @@
     <nav class="nav" :class="{ closed: !menuOpen }">
       <ul class="side_menu">
         <li class="side_menu-btn">
-          <nuxt-link class="btn card" to="/">{{ $t('home') }}</nuxt-link>
+          <nuxt-link class="btn card" :to="localePath('/')">{{
+            $t('home')
+          }}</nuxt-link>
         </li>
         <li class="side_menu-btn">
-          <nuxt-link class="btn card" to="/blog">{{ $t('blog') }}</nuxt-link>
+          <nuxt-link class="btn card" :to="localePath('/blog')">{{
+            $t('blog')
+          }}</nuxt-link>
         </li>
         <li class="side_menu-btn">
-          <nuxt-link class="btn card" to="/about">{{ $t('about') }}</nuxt-link>
+          <nuxt-link class="btn card" :to="localePath('/about')">{{
+            $t('about')
+          }}</nuxt-link>
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small">

@@ -1,11 +1,9 @@
 <template>
-  <div class="main" v-show="connectionNode">
-    <article class="article card">
-      <span class="close" @click="$router.push('/connections')">close</span>
-      <h1 class="article-title">{{ connectionNode.node_id }}</h1>
-      <div v-html="$md.render(connectionNode.content_en)"></div>
-    </article>
-  </div>
+  <article class="article card">
+    <span class="close" @click="$router.push('/connections')">close</span>
+    <h1 class="article-title">{{ connectionNode.node_id }}</h1>
+    <div v-html="$md.render(connectionNode.content_en)"></div>
+  </article>
 </template>
 <script>
 export default {
