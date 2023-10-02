@@ -118,12 +118,12 @@ export default {
             )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 5
+            var triangle_scale = 4 + Math.random() * 3
             var rand = Math.random() * triangle_scale
             mesh.scale.set(
               triangle_scale + rand,
               triangle_scale + triangle_scale - rand,
-              triangle_scale
+              triangle_scale // z stays same
             )
             mesh.rotation.z = Math.random() * (Math.PI * 2)
             mesh.position.set(0, 0, 1)
@@ -172,18 +172,26 @@ export default {
         })
       g.d3Force('charge').strength(-70)
       this.g = g
+
     },
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
+      let nx = 400
+      let ny = 250
       const nodes = []
       data.forEach((node) => {
-        nodes.push({
+        let obj = {
           id: node.node_id,
           name: node.name_en,
           val: 1,
           content_en: node.content_en,
           type: 'node',
-        })
+        }
+        if (Math.random() > 0.5) {
+          obj.fx = nx / 2 - Math.random() * nx
+          obj.fy = ny / 2 - Math.random() * ny
+        }
+        nodes.push(obj)
         node.tags.forEach((tag) => {
           // check if tag already exists
           if (nodes.find((n) => n.id === tag)) {

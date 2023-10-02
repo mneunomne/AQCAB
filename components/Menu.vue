@@ -1,10 +1,9 @@
 <template>
   <div class="menu" :class="{ closed: !getIsMenuOpen }">
     <!-- toggle button -->
-    <button class="toggle-button">
-      <span class="card block" @click="onClickMenuButton"
-        >{{ getIsMenuOpen ? $t('hide') : $t('menu') }}
-      </span>
+    <button class="toggle-button" @click="onClickMenuButton">
+      <BoxShape />
+      <span class="block">{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
     </button>
     <nav class="nav" :class="{ closed: !menuOpen }">
       <ul class="side_menu">
@@ -44,9 +43,13 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex'
+import BoxShape from '~/components/BoxShape.vue'
 
 export default {
   name: 'Header',
+  components: {
+    BoxShape
+  },
   data() {
     return {
       menuOpen: false,
@@ -57,6 +60,7 @@ export default {
       toggleMenu: 'toggleMenu'
     }),
     onClickMenuButton() {
+      console.log("onClickMenuButton")
       this.menuOpen = !this.menuOpen
       this.toggleMenu(this.menuOpen)
     },
@@ -69,7 +73,7 @@ export default {
       return this.$i18n.locale == 'en' ? 'be' : 'en'
     },
     localeName() {
-      return this.$i18n.locale == 'en' ? 'bel' : 'eng'
+      return this.$i18n.locale == 'en' ? 'бел' : 'eng'
     },
   },
 }
@@ -94,9 +98,12 @@ export default {
 }
 
 .toggle-button {
+  position: relative;
   width: 100%;
   height: 100px;
   z-index: 10;
+  overflow: hidden;
+  border-radius: 10px;
 }
 .toggle-button span {
   height: 100%;
