@@ -1,5 +1,5 @@
 <template>
-  <div class="box_shape" :id="`box_shape_${id}`" :class="{ effect }">
+  <div class="box_shape" :id="`box_shape_${id}`">
     <svg
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
@@ -70,18 +70,15 @@ export default {
   methods: {
     onMouseEnter() {
       // if its animating... dont do anything
-      if (this.animating) {
+      if (this.animating || this.isShape) {
         return
       }
 
-      // if its shape...
       if (this.isShape) {
-        // reset time to go back to shape
         if (this.waitTimeout) clearTimeout(this.waitTimeout)
         this.waitTimeout = setTimeout(() => {
           this.setToRect()
         }, this.waitDuration)
-        return
       }
 
       // if its rectangle...
@@ -92,7 +89,7 @@ export default {
     },
     onMouseLeave() {
       // if its animating... dont do anything
-      if (this.animating || this.isShape) {
+      if (this.animating) {
         return
       }
 
@@ -112,12 +109,12 @@ export default {
       this.animationTimeout = setTimeout(() => {
         this.animating = false
       }, this.duration)
-
+      /*
       if (this.waitTimeout) clearTimeout(this.waitTimeout)
       this.waitTimeout = setTimeout(() => {
         this.setToRect()
       }, this.waitDuration)
-
+      */
     },
 
     setToRect() {
@@ -127,19 +124,6 @@ export default {
       this.rectAnimation.start();
       this.animationTimeout = setTimeout(() => {
         this.animating = false
-      }, this.duration)
-    },
-
-    startAnimation() {
-      this.effect = true
-      var tween = KUTE.fromTo(
-        `#target_${this.id}`,
-        { path: '#rectangle' },
-        { path: '#shape_1' },
-        { duration: 500, easing: 'easingCubicInOut' }
-      ).start();
-      this.timeout = setTimeout(() => {
-
       }, this.duration)
     },
   }

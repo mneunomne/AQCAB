@@ -9,29 +9,34 @@
       <ul class="side_menu">
         <li class="side_menu-btn">
           <BoxShape />
-          <nuxt-link class="btn card" :to="localePath('/')">{{
+          <nuxt-link class="btn" :to="localePath('/')">{{
             $t('home')
           }}</nuxt-link>
         </li>
         <li class="side_menu-btn">
-          <nuxt-link class="btn card" :to="localePath('/blog')">{{
+          <BoxShape />
+          <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
           }}</nuxt-link>
         </li>
         <li class="side_menu-btn">
-          <nuxt-link class="btn card" :to="localePath('/about')">{{
+          <BoxShape />
+          <nuxt-link class="btn" :to="localePath('/about')">{{
             $t('about')
           }}</nuxt-link>
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small">
-            <a class="btn card" target="_blank"><span>insta</span></a>
+            <BoxShape />
+            <a class="btn" target="_blank"><span>insta</span></a>
           </div>
           <div class="side_menu-btn btn-small">
-            <a class="btn card" target="_blank"><span>email</span></a>
+            <BoxShape />
+            <a class="btn" target="_blank"><span>email</span></a>
           </div>
           <div class="side_menu-btn btn-small">
-            <nuxt-link class="btn card" :to="switchLocalePath(locale)"
+            <BoxShape />
+            <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
           </div>
