@@ -8,6 +8,7 @@
     <nav class="nav" :class="{ closed: !menuOpen }">
       <ul class="side_menu">
         <li class="side_menu-btn">
+          <BoxShape />
           <nuxt-link class="btn card" :to="localePath('/')">{{
             $t('home')
           }}</nuxt-link>

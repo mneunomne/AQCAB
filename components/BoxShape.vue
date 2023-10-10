@@ -1,6 +1,5 @@
 <template>
   <div class="box_shape" :id="`box_shape_${id}`" :class="{ effect }">
-    <div class="color_mask"></div>
     <svg
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
@@ -33,40 +32,116 @@ export default {
   name: "BoxShape",
   data() {
     return {
-      timeout: null,
+      waitTimeout: null,
+      animationTimeout: null,
       id: 0,
       width: 100,
       height: 100,
-      effect: false
+      isShape: false,
+      isRectangle: true,
+      shapeAnimation: null,
+      rectAnimation: null,
+      animating: false,
+      animationDuration: 500,
+      waitDuration: 1000,
     }
   },
   mounted() {
     this.id = parseInt(Math.random() * 100)
     console.log("KUTE", KUTE)
-
-    // write a simple tween object
-    // var tween = KUTE.fromTo('#target', { path: '#rectangle' }, { path: '#shape_1' }).start();
-
-    /*
-    // trigger it whenever you want
-    document.getElementById('wrapper').onclick = function () {
-      !tween.playing && tween.start();
-    }
-    */
-
-
+    // wait for dom to be rendered
+    this.$nextTick(() => {
+      // animation to become shape
+      this.shapeAnimation = KUTE.fromTo(
+        `#target_${this.id}`,
+        { path: '#rectangle' },
+        { path: '#shape_1' },
+        { duration: this.animationDuration, easing: 'easingCubicInOut' }
+      )
+      // animation to become rectangle
+      this.rectAnimation = KUTE.fromTo(
+        `#target_${this.id}`,
+        { path: '#shape_1' },
+        { path: '#rectangle' },
+        { duration: this.animationDuration, easing: 'easingCubicInOut' }
+      )
+    })
   },
   methods: {
     onMouseEnter() {
-      this.effect = true
-      console.log("onMouseEnter", `#target_${this.id}`)
-      var tween = KUTE.fromTo(`#target_${this.id}`, { path: '#rectangle' }, { path: '#shape_1' }, { duration: 500, easing: 'easingCubicInOut' }).start();
-      console.log("tween", tween)
+      // if its animating... dont do anything
+      if (this.animating) {
+        return
+      }
+
+      // if its shape...
+      if (this.isShape) {
+        // reset time to go back to shape
+        if (this.waitTimeout) clearTimeout(this.waitTimeout)
+        this.waitTimeout = setTimeout(() => {
+          this.setToRect()
+        }, this.waitDuration)
+        return
+      }
+
+      // if its rectangle...
+      if (this.isRectangle) {
+        // reset time to go back to rectangle
+        this.setToShape()
+      }
     },
     onMouseLeave() {
-      this.effect = false
-      var tween = KUTE.fromTo(`#target_${this.id}`, { path: '#shape_1' }, { path: '#rectangle' }).start();
-    }
+      // if its animating... dont do anything
+      if (this.animating || this.isShape) {
+        return
+      }
+
+      if (this.isShape) {
+        if (this.waitTimeout) clearTimeout(this.waitTimeout)
+        this.waitTimeout = setTimeout(() => {
+          this.setToRect()
+        }, this.waitDuration)
+      }
+    },
+
+    setToShape() {
+      this.isRectangle = false
+      this.isShape = true
+      this.animating = true
+      this.shapeAnimation.start();
+      this.animationTimeout = setTimeout(() => {
+        this.animating = false
+      }, this.duration)
+
+      if (this.waitTimeout) clearTimeout(this.waitTimeout)
+      this.waitTimeout = setTimeout(() => {
+        this.setToRect()
+      }, this.waitDuration)
+
+    },
+
+    setToRect() {
+      this.isShape = false
+      this.isRectangle = true
+      this.animating = true
+      this.rectAnimation.start();
+      this.animationTimeout = setTimeout(() => {
+        this.animating = false
+      }, this.duration)
+    },
+
+    startAnimation() {
+      this.effect = true
+      var tween = KUTE.fromTo(
+        `#target_${this.id}`,
+        { path: '#rectangle' },
+        { path: '#shape_1' },
+        { duration: 500, easing: 'easingCubicInOut' }
+      ).start();
+      this.timeout = setTimeout(() => {
+
+      }, this.duration)
+    },
   }
 }
 </script>
@@ -90,7 +165,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: red;
+  /*background: red;*/
 }
 
 .box_shape svg path {
