@@ -1,5 +1,5 @@
 <template>
-  <div class="box_shape" :id="`box_shape_${id}`">
+  <div class="box_shape" :id="`box_shape_${id}`" :class="{ color: isShape }">
     <svg
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
@@ -18,6 +18,7 @@
             :id="`target_${this.id}`"
             d="M0,0 L100,0 L100,100 L0,100 Z"
             style="fill-opacity: 1"
+            :fill="color"
           />
         </g>
       </g>
@@ -27,6 +28,7 @@
 <script>
 // import kute.js library
 import KUTE from 'kute.js'
+import { colors } from '~/utils/globals'
 
 export default {
   name: "BoxShape",
@@ -43,11 +45,13 @@ export default {
       rectAnimation: null,
       animating: false,
       animationDuration: 500,
-      waitDuration: 1000,
+      waitDuration: 5000,
+      color: null
     }
   },
   mounted() {
     this.id = parseInt(Math.random() * 100)
+    this.color = this.randomColor()
     console.log("KUTE", KUTE)
     // wait for dom to be rendered
     this.$nextTick(() => {
@@ -116,7 +120,6 @@ export default {
       }, this.waitDuration)
       */
     },
-
     setToRect() {
       this.isShape = false
       this.isRectangle = true
@@ -124,8 +127,12 @@ export default {
       this.rectAnimation.start();
       this.animationTimeout = setTimeout(() => {
         this.animating = false
+        this.color = this.randomColor()
       }, this.duration)
     },
+    randomColor() {
+      return colors[Math.floor(Math.random() * colors.length)]
+    }
   }
 }
 </script>
@@ -134,6 +141,8 @@ export default {
   width: 100%;
   position: absolute;
   height: 100%;
+  filter: drop-shadow(2px 4px 6px black);
+  opacity: 0.5;
 }
 
 .box_shape.effect {
@@ -143,6 +152,8 @@ export default {
 .box_shape svg {
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .color_mask {
@@ -154,6 +165,9 @@ export default {
 
 .box_shape svg path {
   transition: fill 0.5s;
-  fill: rgba(220, 220, 220, 0.5);
+}
+
+.box_shape:not(.color) svg path {
+  fill: rgba(220, 220, 220);
 }
 </style>

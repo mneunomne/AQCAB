@@ -1,44 +1,45 @@
 <template>
-  <div class="menu" :class="{ closed: !getIsMenuOpen }">
-    <!-- toggle button -->
-    <button class="toggle-button" @click="onClickMenuButton">
-      <BoxShape />
-      <span class="block">{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
-    </button>
-    <nav class="nav" :class="{ closed: !menuOpen }">
+  <div class="menu">
+    <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
-        <li class="side_menu-btn">
+        <li class="side_menu-btn btn-fixed" @click="onClickMenuButton">
+          <a class="btn" href="#">
+            <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
+          </a>
           <BoxShape />
+        </li>
+        <li class="side_menu-btn" @click="goToRoute('/')">
           <nuxt-link class="btn" :to="localePath('/')">{{
             $t('home')
           }}</nuxt-link>
-        </li>
-        <li class="side_menu-btn">
           <BoxShape />
+        </li>
+        <li class="side_menu-btn" @click="goToRoute('/blog')">
           <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
           }}</nuxt-link>
-        </li>
-        <li class="side_menu-btn">
           <BoxShape />
+        </li>
+        <li class="side_menu-btn" @click="goToRoute('/about')">
           <nuxt-link class="btn" :to="localePath('/about')">{{
             $t('about')
           }}</nuxt-link>
+          <BoxShape />
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small">
-            <BoxShape />
             <a class="btn" target="_blank"><span>insta</span></a>
+            <BoxShape />
           </div>
           <div class="side_menu-btn btn-small">
-            <BoxShape />
             <a class="btn" target="_blank"><span>email</span></a>
+            <BoxShape />
           </div>
           <div class="side_menu-btn btn-small">
-            <BoxShape />
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
+            <BoxShape />
           </div>
         </li>
       </ul>
@@ -70,6 +71,9 @@ export default {
       this.menuOpen = !this.menuOpen
       this.toggleMenu(this.menuOpen)
     },
+    goToRoute(path) {
+      this.$router.push({ path: this.localePath(path) })
+    }
   },
   computed: {
     ...mapGetters({
@@ -94,13 +98,7 @@ export default {
   width: 270px;
   padding-top: 30px;
   padding-right: 30px;
-  overflow: auto;
-  overflow-x: hidden;
   z-index: 1;
-}
-
-.menu.closed {
-  overflow: hidden;
 }
 
 .toggle-button {
@@ -108,15 +106,13 @@ export default {
   width: 100%;
   height: 100px;
   z-index: 10;
-  overflow: hidden;
-  border-radius: 10px;
 }
 .toggle-button span {
   height: 100%;
   display: flex;
   padding: 20px 18px;
 }
-.nav.closed .side_menu li {
+.nav.closed .side_menu-btn:not(.btn-fixed) {
   transform: translateX(300px);
 }
 
@@ -125,24 +121,36 @@ export default {
   width: 100%;
   display: inline-block;
 }
+
 .side_menu li {
   flex: 1 1 0%;
   height: 230px;
-  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.side_menu-btn {
+  cursor: pointer;
   transform: translateX(0px);
   transition: transform 0.3s ease-in-out;
   text-align: left;
 }
 
+/* text inside button */
 .side_menu-btn .btn {
+  position: absolute;
+  z-index: 10;
   height: 100%;
+  width: 100%;
   padding-top: 20px;
   display: block;
   padding-left: 20px;
   text-align: left;
+  background: transparent;
+  pointer-events: none;
 }
 
 .btn-small {
+  position: relative;
   display: inline-block;
   height: 70px;
   .btn {
@@ -172,37 +180,37 @@ export default {
 
 /* open */
 
-.nav.closed .side_menu li:nth-child(1) {
+.nav.closed .side_menu li:nth-child(2) {
   transition-delay: 0.45s;
 }
-.nav.closed .side_menu li:nth-child(2) {
+.nav.closed .side_menu li:nth-child(3) {
   transition-delay: 0.35s;
 }
-.nav.closed .side_menu li:nth-child(3) {
+.nav.closed .side_menu li:nth-child(4) {
   transition-delay: 0.25s;
 }
-.nav.closed .side_menu li:nth-child(4) {
+.nav.closed .side_menu li:nth-child(5) {
   transition-delay: 0.15s;
 }
-.nav.closed .side_menu li:nth-child(5) {
+.nav.closed .side_menu li:nth-child(6) {
   transition-delay: 0.05s;
 }
 
 /* closed */
 
-.nav .side_menu li:nth-child(1) {
+.nav .side_menu li:nth-child(2) {
   transition-delay: 0.05s;
 }
-.nav .side_menu li:nth-child(2) {
+.nav .side_menu li:nth-child(3) {
   transition-delay: 0.15s;
 }
-.nav .side_menu li:nth-child(3) {
+.nav .side_menu li:nth-child(4) {
   transition-delay: 0.25s;
 }
-.nav .side_menu li:nth-child(4) {
+.nav .side_menu li:nth-child(5) {
   transition-delay: 0.35s;
 }
-.nav .side_menu li:nth-child(5) {
+.nav .side_menu li:nth-child(6) {
   transition-delay: 0.45s;
 }
 </style>

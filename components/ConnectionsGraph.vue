@@ -7,6 +7,8 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
+import { colors } from '~/utils/globals'
+
 const fontSize = 6
 
 export default {
@@ -231,16 +233,6 @@ export default {
       return links
     },
     randomTriangleColor() {
-      var colors = [
-        '#ff49b0',
-        '#66c7f4',
-        '#28666e',
-        '#553e4e',
-        '#a4243b',
-        '#40c9a2',
-        '#ffbafd',
-        '#f9b3d1',
-      ]
       return colors[Math.floor(Math.random() * colors.length)]
     },
     hexColorWithRandomHue() {
