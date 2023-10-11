@@ -45,13 +45,13 @@ export default {
       rectAnimation: null,
       animating: false,
       animationDuration: 500,
-      waitDuration: 5000,
+      waitDuration: 1000,
       color: null
     }
   },
   mounted() {
-    this.id = parseInt(Math.random() * 100)
-    this.color = this.randomColor()
+    this.id = parseInt(Math.random() * 1000)
+    this.color = this.generateHighContrastColor()
     console.log("KUTE", KUTE)
     // wait for dom to be rendered
     this.$nextTick(() => {
@@ -127,12 +127,50 @@ export default {
       this.rectAnimation.start();
       this.animationTimeout = setTimeout(() => {
         this.animating = false
-        this.color = this.randomColor()
+        this.color = this.generateHighContrastColor()
       }, this.duration)
     },
     randomColor() {
       return colors[Math.floor(Math.random() * colors.length)]
+    },
+    generateHighContrastColor() {
+      // Generate a random hue value between 0 and 360
+      const hue = Math.floor(Math.random() * 360);
+
+      // Set high saturation and lightness values
+      const saturation = 80; // Adjust this value for desired saturation
+      const lightness = 50;  // Adjust this value for desired lightness
+
+      // Convert HSL to RGB
+      const hslToRgb = (h, s, l) => {
+        h /= 360;
+        s /= 100;
+        l /= 100;
+        let r, g, b;
+        if (s === 0) {
+          r = g = b = l;
+        } else {
+          const hueToRgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+          };
+          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          const p = 2 * l - q;
+          r = hueToRgb(p, q, h + 1 / 3);
+          g = hueToRgb(p, q, h);
+          b = hueToRgb(p, q, h - 1 / 3);
+        }
+        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+      };
+
+      const [r, g, b] = hslToRgb(hue, saturation, lightness);
+      return `rgb(${r}, ${g}, ${b})`;
     }
+
   }
 }
 </script>
