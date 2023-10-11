@@ -72,6 +72,7 @@ export default {
       this.toggleMenu(this.menuOpen)
     },
     goToRoute(path) {
+      console.log("goToRoute", path)
       this.$router.push({ path: this.localePath(path) })
     }
   },

@@ -46,12 +46,14 @@ export default {
       animating: false,
       animationDuration: 500,
       waitDuration: 1000,
-      color: null
+      color: null,
+      shape_idx: 0
     }
   },
   mounted() {
     this.id = parseInt(Math.random() * 1000)
     this.color = this.generateHighContrastColor()
+    this.shape_idx = parseInt(Math.random() * 4) + 1
     console.log("KUTE", KUTE)
     // wait for dom to be rendered
     this.$nextTick(() => {
@@ -59,13 +61,13 @@ export default {
       this.shapeAnimation = KUTE.fromTo(
         `#target_${this.id}`,
         { path: '#rectangle' },
-        { path: '#shape_1' },
+        { path: '#shape_' + this.shape_idx },
         { duration: this.animationDuration, easing: 'easingCubicInOut' }
       )
       // animation to become rectangle
       this.rectAnimation = KUTE.fromTo(
         `#target_${this.id}`,
-        { path: '#shape_1' },
+        { path: '#shape_' + this.shape_idx },
         { path: '#rectangle' },
         { duration: this.animationDuration, easing: 'easingCubicInOut' }
       )
