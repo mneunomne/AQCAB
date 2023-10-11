@@ -1,3 +1,12 @@
+:root {
+  --margin-top: 30px;
+  --margin-side: 30px;
+  --grid-margin: 20px;
+  --footer-height: 120px;
+  --grid-height: calc(((100vh - var(--footer-height) - var(--margin-top)) / 4) - var(--grid-margin));
+  --grid-height-2: calc((var(--grid-height) * 2) + var(--grid-margin));
+}
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;

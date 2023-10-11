@@ -140,6 +140,7 @@ export default {
 .box_shape {
   width: 100%;
   position: absolute;
+  top: 0;
   height: 100%;
   filter: drop-shadow(2px 4px 6px black);
   opacity: 0.5;

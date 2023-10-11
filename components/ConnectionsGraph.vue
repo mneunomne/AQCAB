@@ -1,5 +1,5 @@
 <template>
-  <div class="connections-graph">.</div>
+  <div class="connections-graph" :class="{ hide: !isHomeRoute }">.</div>
 </template>
   
 <script>
@@ -30,6 +30,11 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize, false)
+  },
+  computed: {
+    isHomeRoute() {
+      return this.$route.path === '/'
+    },
   },
   methods: {
     buildGraph() {
@@ -270,5 +275,10 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
+  transition: filter 0.5s;
+  filter: blur(0px);
+}
+.connections-graph.hide {
+  filter: blur(8px);
 }
 </style>

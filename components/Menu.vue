@@ -96,8 +96,8 @@ export default {
   right: 0;
   bottom: 0;
   width: 270px;
-  padding-top: 30px;
-  padding-right: 30px;
+  padding-top: var(--margin-top);
+  padding-right: var(--margin-side);
   z-index: 1;
 }
 
@@ -124,8 +124,8 @@ export default {
 
 .side_menu li {
   flex: 1 1 0%;
-  height: 230px;
-  margin-top: 20px;
+  height: var(--grid-height);
+  margin-bottom: var(--grid-margin);
 }
 
 .side_menu-btn {
