@@ -8,7 +8,7 @@
     </div>
     <div class="grid-block grid-width-2 grid-height-1">
       <article class="article">
-        <span class="close" @click="$router.push('/connections')">close</span>
+        <span class="close" @click="$router.push('/')">close</span>
         <h1 class="article-title">{{ connectionNode.node_id }}</h1>
       </article>
       <BoxShape />

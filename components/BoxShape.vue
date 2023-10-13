@@ -15,6 +15,7 @@
       <g id="shape-7a682ccd-6dce-80b8-8003-3399c0cf2987">
         <g class="fills" id="fills-7a682ccd-6dce-80b8-8003-3399c0cf2987">
           <path
+            filter="url(#inset-shadow)"
             :id="`target_${this.id}`"
             d="M0,0 L100,0 L100,100 L0,100 Z"
             style="fill-opacity: 1"
@@ -182,7 +183,7 @@ export default {
   position: absolute;
   top: 0;
   height: 100%;
-  filter: drop-shadow(2px 4px 6px black);
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
   opacity: 0.5;
 }
 

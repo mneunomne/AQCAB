@@ -18,6 +18,20 @@
         fill="none"
         version="1.1"
       >
+        <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feComponentTransfer in="SourceAlpha">
+            <feFuncA type="table" tableValues="1 0" />
+          </feComponentTransfer>
+          <feGaussianBlur stdDeviation="4" />
+          <feOffset dx="0" dy="0" result="offsetblur" />
+          <feFlood flood-color="rgb(0, 0, 0, 0.5)" result="color" />
+          <feComposite in2="offsetblur" operator="in" />
+          <feComposite in2="SourceAlpha" operator="in" />
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode />
+          </feMerge>
+        </filter>
         <g id="shape-7a682ccd-6dce-80b8-8003-3399c0cf2987">
           <g class="fills" id="fills-7a682ccd-6dce-80b8-8003-3399c0cf2987">
             <path

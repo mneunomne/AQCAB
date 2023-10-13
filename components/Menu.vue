@@ -136,9 +136,8 @@ export default {
   z-index: 10;
   height: 100%;
   width: 100%;
-  padding-top: 20px;
+  padding: var(--block-padding);
   display: block;
-  padding-left: 20px;
   text-align: left;
   background: transparent;
   pointer-events: none;
