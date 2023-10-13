@@ -1,10 +1,8 @@
 <template>
-  <div v-show="blogPost">
-    <article class="article card">
-      <div class="article-content">
-        <span class="close" @click="$router.push('/blog')">{{
-          $t('close')
-        }}</span>
+  <div class="grid-block-container" v-show="blogPost">
+    <div class="grid-block grid-width-3 grid-height-3">
+      <article class="article">
+        <span class="close" @click="$router.push('/blog')">close</span>
         <h1 class="article-title">{{ blogPost.title }}</h1>
         <h6
           v-if="blogPost.date"
@@ -13,12 +11,19 @@
           {{ formatDate(blogPost.date) }}
         </h6>
         <div v-html="$md.render(blogPost.body)"></div>
-      </div>
-    </article>
+      </article>
+      <BoxShape />
+    </div>
   </div>
 </template>
 <script>
+
+import BoxShape from '~/components/BoxShape.vue'
+
 export default {
+  components: {
+    BoxShape
+  },
   async asyncData({ params, payload }) {
     if (payload) return { blogPost: payload }
     else

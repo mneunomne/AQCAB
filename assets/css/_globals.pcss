@@ -2,9 +2,20 @@
   --margin-top: 30px;
   --margin-side: 30px;
   --grid-margin: 20px;
-  --footer-height: 120px;
-  --grid-height: calc(((100vh - var(--footer-height) - var(--margin-top)) / 4) - var(--grid-margin));
-  --grid-height-2: calc((var(--grid-height) * 2) + var(--grid-margin));
+  --small-menu-button-height: 85px;
+  --menu-width: 310px;
+  --footer-height: calc(var(--small-menu-button-height) + var(--grid-margin));
+  --container-width: calc(100vw - var(--menu-width));
+  --container-inner-width: calc(var(--container-width) - (var(--margin-side) * 2));
+  /* height */
+  --grid-height-1: calc(((100vh - var(--footer-height) - var(--margin-top)) / 3) - var(--grid-margin));
+  --grid-height-2: calc((var(  --grid-height-1) * 2) + var(--grid-margin));
+  --grid-height-3: calc(var(  --grid-height-1) * 3 + var(--grid-margin) * 2);
+  /* width */
+  --grid-width-1: calc((var(--container-inner-width) - (var(--grid-margin) * 2)) / 3);
+  --grid-width-2: calc(var(--grid-width-1) * 2 + var(--grid-margin));
+  --grid-width-3: calc(var(--container-inner-width));
+
 }
 
 html {

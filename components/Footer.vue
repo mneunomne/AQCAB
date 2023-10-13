@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span id="footer-title">{{ $t('title') }}</span>
+    <span id="footer-title">A<span class="queer">Q</span>CAB</span>
     <span :class="{ show: !getIsMenuOpen }" id="footer-contribute">{{
       $t('contribute')
     }}</span>
@@ -24,6 +24,8 @@ export default {
   position: absolute;
   bottom: 30px;
   left: 30px;
+  text-transform: uppercase;
+  font-size: 1.6em;
 }
 
 #footer-contribute {
@@ -37,5 +39,9 @@ export default {
 #footer-contribute.show {
   opacity: 1;
   transition-delay: 0.5s;
+}
+
+.queer {
+  color: #ff00ff;
 }
 </style>

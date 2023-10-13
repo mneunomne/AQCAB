@@ -3,7 +3,7 @@
     <li
       v-for="(blogPost, index) in blogPosts"
       :key="index"
-      class="blog-card"
+      class="grid-block grid-height-1 grid-width-1 blog-card"
       @click="onClickBlog(`/blog/${blogPost.slug}`)"
     >
       <article>
@@ -51,24 +51,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.articles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-}
-.articles article {
-  padding: 20px;
-  z-index: 10;
-  position: relative;
-}
 .blog-card {
   cursor: pointer;
-  position: relative;
-  width: 100%;
-  height: var(--grid-height-2);
-  .card {
-    padding: 20px;
-    height: 100%;
-  }
 }
 </style>

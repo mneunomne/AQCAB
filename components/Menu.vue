@@ -10,19 +10,13 @@
         </li>
         <li class="side_menu-btn" @click="goToRoute('/')">
           <nuxt-link class="btn" :to="localePath('/')">{{
-            $t('home')
+            $t('network')
           }}</nuxt-link>
           <BoxShape />
         </li>
         <li class="side_menu-btn" @click="goToRoute('/blog')">
           <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
-          }}</nuxt-link>
-          <BoxShape />
-        </li>
-        <li class="side_menu-btn" @click="goToRoute('/about')">
-          <nuxt-link class="btn" :to="localePath('/about')">{{
-            $t('about')
           }}</nuxt-link>
           <BoxShape />
         </li>
@@ -96,7 +90,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 270px;
+  width: var(--menu-width);
   padding-top: var(--margin-top);
   padding-right: var(--margin-side);
   z-index: 1;
@@ -125,7 +119,7 @@ export default {
 
 .side_menu li {
   flex: 1 1 0%;
-  height: var(--grid-height);
+  height: var(--grid-height-1);
   margin-bottom: var(--grid-margin);
 }
 
@@ -153,7 +147,7 @@ export default {
 .btn-small {
   position: relative;
   display: inline-block;
-  height: 70px;
+  height: 86px;
   .btn {
     font-size: 14px;
     display: flex;
