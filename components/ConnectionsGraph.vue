@@ -7,7 +7,7 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
-import { colors, generateHighContrastColor } from '~/utils/globals'
+import { generateHighContrastColor } from '~/utils/globals'
 
 const fontSize = 6
 
@@ -275,11 +275,12 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 0;
-  transition: filter 0.5s;
-  filter: blur(0px);
+  transition: opacity 0.5s;
+  /* filter: blur(0px); */
 }
 .connections-graph.hide {
-  filter: blur(8px);
+  /* filter: blur(8px); */
+  opacity: 0.85;
   pointer-events: none;
 }
 </style>

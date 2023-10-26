@@ -8,20 +8,42 @@
           </a>
           <BoxShape :interactOnHover="true" />
         </li>
-        <li class="side_menu-btn" @click="goToRoute('/')">
+        <li
+          id="network-button"
+          class="side_menu-btn mid-button can-hide"
+          :class="{
+            hide: $route.path === '/' || $route.path.includes('/connections'),
+          }"
+          @click="goToRoute('/')"
+        >
           <nuxt-link class="btn" :to="localePath('/')">{{
             $t('network')
           }}</nuxt-link>
           <BoxShape :interactOnHover="true" />
         </li>
-        <li class="side_menu-btn" @click="goToRoute('/blog')">
+        <li
+          id="blog-button"
+          class="side_menu-btn mid-button"
+          @click="goToRoute('/blog')"
+          :class="{ hide: $route.path.includes('/blog') }"
+        >
           <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
           }}</nuxt-link>
           <BoxShape :interactOnHover="true" />
         </li>
+        <li
+          id="timeline-button"
+          class="side_menu-btn disabled"
+          @click="goToRoute('/timeline')"
+        >
+          <nuxt-link class="btn" :to="localePath('/timeline')">{{
+            $t('timeline')
+          }}</nuxt-link>
+          <BoxShape :interactOnHover="true" />
+        </li>
         <li class="small-btn-wrapper wrap-3">
-          <div class="side_menu-btn btn-small">
+          <div class="side_menu-btn btn-small" @click="onClickLangButton">
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
@@ -66,14 +88,26 @@ export default {
       this.toggleMenu(this.menuOpen)
     },
     goToRoute(path) {
-      console.log("goToRoute", path)
-      this.$router.push({ path: this.localePath(path) })
+      console.log("goToRoute", path, this.$route)
+      this.$nuxt.$router.push({ path: this.localePath(path) })
+      // if path contains blog
+    },
+    onClickLangButton() {
+      // go to locale path
+      console.log("onClickLangButton", this.locale, this.$nuxt.switchLocalePath(this.locale))
+      this.$nuxt.$router.push({ path: this.$nuxt.switchLocalePath(this.locale) })
+      //this.$i18n.locale = this.locale
+      //this.$nuxt.switchLocalePath()
+
     }
   },
   computed: {
     ...mapGetters({
       getIsMenuOpen: 'getIsMenuOpen'
     }),
+    mounted() {
+      console.log("mounted", this.routeName)
+    },
     locale() {
       return this.$i18n.locale == 'en' ? 'be' : 'en'
     },
@@ -128,6 +162,22 @@ export default {
   transform: translateX(0px);
   transition: transform 0.3s ease-in-out;
   text-align: left;
+}
+
+.side_menu-btn:not(.btn-small) {
+  width: var(--menu-button-width);
+}
+.side_menu-btn.can-hide {
+  position: absolute;
+}
+
+.side_menu-btn.hide {
+  transform: translateX(300px);
+  transition-delay: 0.5 !important;
+}
+
+.nav .mid-button {
+  transition-delay: 2s;
 }
 
 /* text inside button */

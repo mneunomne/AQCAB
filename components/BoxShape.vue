@@ -2,7 +2,10 @@
   <div
     class="box_shape"
     :id="`box_shape_${id}`"
-    :class="{ color: isShape, buttonDown: isButtonDown }"
+    :class="{
+      color: isShape,
+      buttonDown: isButtonDown,
+    }"
   >
     <svg
       @mouseenter="onMouseEnter"

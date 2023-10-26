@@ -2,7 +2,9 @@
   <div class="grid-block-container" v-show="blogPost">
     <div class="grid-block grid-width-3 grid-height-3">
       <article class="article">
-        <span class="close" @click="$router.push('/blog')">close</span>
+        <span class="close" @click="$router.push(localePath('/blog'))"
+          >close</span
+        >
         <h1 class="article-title">{{ blogPost.title }}</h1>
         <h6
           v-if="blogPost.date"
