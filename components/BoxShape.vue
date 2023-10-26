@@ -5,6 +5,7 @@
     :class="{
       color: isShape,
       buttonDown: isButtonDown,
+      onHoverOnly: !interactOnHover,
     }"
   >
     <svg
@@ -46,6 +47,10 @@ export default {
     interactOnHover: {
       type: Boolean,
       default: false
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -68,7 +73,7 @@ export default {
     }
   },
   mounted() {
-    this.id = parseInt(Math.random() * 1000)
+    this.id = parseInt(Math.random() * 1000000)
     this.color = this.randomColor()
     this.shape_idx = parseInt(Math.random() * 4) + 1
     // wait for dom to be rendered
@@ -92,6 +97,7 @@ export default {
   methods: {
     onMouseEnter() {
       if (!this.interactOnHover) {
+        this.color = this.randomColor()
         return;
       } else {
         this.enterAnimation()
@@ -158,7 +164,9 @@ export default {
       if (this.isShape) {
         if (this.waitTimeout) clearTimeout(this.waitTimeout)
         this.waitTimeout = setTimeout(() => {
-          this.setToRect()
+          if (!this.active) {
+            this.setToRect()
+          }
         }, this.waitDuration)
       }
     },
@@ -176,6 +184,18 @@ export default {
     randomColor() {
       return menuColors[Math.floor(Math.random() * menuColors.length)]
     },
+  },
+  watch: {
+    active(val) {
+      if (!val) {
+        this.setToRect()
+      } else {
+        if (!this.isShape) {
+          if (this.waitTimeout) clearTimeout(this.waitTimeout)
+          this.setToShape()
+        }
+      }
+    }
   }
 }
 </script>
@@ -186,12 +206,8 @@ export default {
   top: 0;
   height: 100%;
   /*filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));*/
-  opacity: 0.4;
+  opacity: 0.5;
   transition: opacity 0.25s;
-}
-
-.box_shape:hover {
-  opacity: 0.6;
 }
 
 .box_shape.effect {
@@ -216,7 +232,11 @@ export default {
   transition: fill 0.5s;
 }
 
-.box_shape:not(.color) svg path {
+.box_shape.onHoverOnly:not(:hover) svg path {
+  fill: rgba(220, 220, 220);
+}
+
+.box_shape:not(.onHoverOnly):not(.color) svg path {
   fill: rgba(220, 220, 220);
 }
 

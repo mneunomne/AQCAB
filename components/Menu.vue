@@ -1,43 +1,29 @@
 <template>
   <div class="menu">
+    <div class="menu-toggle" @click="onClickMenuButton">
+      <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
+    </div>
     <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
-        <li class="side_menu-btn btn-fixed" @click="onClickMenuButton">
-          <a class="btn" href="#">
-            <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
-          </a>
-          <BoxShape :interactOnHover="true" />
-        </li>
-        <li
-          id="network-button"
-          class="side_menu-btn mid-button can-hide"
-          :class="{
-            hide:
+        <li id="network-button" class="side_menu-btn" @click="goToRoute('/')">
+          <span class="btn">{{ $t('network') }}</span>
+          <BoxShape
+            :interactOnHover="true"
+            :active="
               $route.path === localePath('/') ||
-              $route.path.includes(localePath('/connections')),
-          }"
-          @click="goToRoute('/')"
-        >
-          <nuxt-link class="btn" :to="localePath('/')">{{
-            $t('network')
-          }}</nuxt-link>
-          <BoxShape :interactOnHover="true" />
+              $route.path.includes(localePath('/connections'))
+            "
+          />
         </li>
-        <li
-          id="blog-button"
-          class="side_menu-btn mid-button"
-          @click="goToRoute('/blog')"
-          :class="{ hide: $route.path.includes(localePath('/blog')) }"
-        >
-          <nuxt-link class="btn" :to="localePath('/blog')">{{
-            $t('blog')
-          }}</nuxt-link>
-          <BoxShape :interactOnHover="true" />
+        <li id="blog-button" class="side_menu-btn" @click="goToRoute('/blog')">
+          <span class="btn">{{ $t('blog') }}</span>
+          <BoxShape
+            :interactOnHover="true"
+            :active="$route.path.includes(localePath('/blog'))"
+          />
         </li>
         <li id="timeline-button" class="side_menu-btn disabled">
-          <nuxt-link class="btn" :to="localePath('/timeline')">{{
-            $t('timeline')
-          }}</nuxt-link>
+          <span class="btn">{{ $t('timeline') }}</span>
           <BoxShape :interactOnHover="true" />
         </li>
         <li class="small-btn-wrapper wrap-3">
@@ -126,6 +112,12 @@ export default {
   padding-top: var(--margin-top);
   padding-right: var(--margin-side);
   z-index: 1;
+}
+
+.menu-toggle {
+  position: absolute;
+  top: 30px;
+  right: 50px;
 }
 
 .toggle-button {
