@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="blogPosts" class="articles">
+  <ul class="articles">
     <li
       v-for="(blogPost, index) in blogPosts"
       :key="index"

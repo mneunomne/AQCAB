@@ -73,28 +73,33 @@ export default {
     }
   },
   mounted() {
-    this.id = parseInt(Math.random() * 1000000)
-    this.color = this.randomColor()
-    this.shape_idx = parseInt(Math.random() * 4) + 1
-    // wait for dom to be rendered
-    this.$nextTick(() => {
-      // animation to become shape
-      this.shapeAnimation = KUTE.fromTo(
-        `#target_${this.id}`,
-        { path: '#rectangle' },
-        { path: '#shape_' + this.shape_idx },
-        { duration: this.animationDuration, easing: 'easingCubicInOut' }
-      )
-      // animation to become rectangle
-      this.rectAnimation = KUTE.fromTo(
-        `#target_${this.id}`,
-        { path: '#shape_' + this.shape_idx },
-        { path: '#rectangle' },
-        { duration: this.animationDuration, easing: 'easingCubicInOut' }
-      )
-    })
+    if (this.interactOnHover) {
+      this.init()
+    }
   },
   methods: {
+    init() {
+      this.id = parseInt(Math.random() * 1000000)
+      this.color = this.randomColor()
+      this.shape_idx = parseInt(Math.random() * 4) + 1
+      // wait for dom to be rendered
+      this.$nextTick(() => {
+        // animation to become shape
+        this.shapeAnimation = KUTE.fromTo(
+          `#target_${this.id}`,
+          { path: '#rectangle' },
+          { path: '#shape_' + this.shape_idx },
+          { duration: this.animationDuration, easing: 'easingCubicInOut' }
+        )
+        // animation to become rectangle
+        this.rectAnimation = KUTE.fromTo(
+          `#target_${this.id}`,
+          { path: '#shape_' + this.shape_idx },
+          { path: '#rectangle' },
+          { duration: this.animationDuration, easing: 'easingCubicInOut' }
+        )
+      })
+    },
     onMouseEnter() {
       if (!this.interactOnHover) {
         this.color = this.randomColor()
@@ -232,13 +237,14 @@ export default {
   transition: fill 0.5s;
 }
 
-.box_shape.onHoverOnly:not(:hover) svg path {
+.box_shape:not(:hover) svg path {
   fill: rgba(220, 220, 220);
 }
-
+/*
 .box_shape:not(.onHoverOnly):not(.color) svg path {
   fill: rgba(220, 220, 220);
 }
+*/
 
 .box_shape.buttonDown {
   opacity: 0.65;
