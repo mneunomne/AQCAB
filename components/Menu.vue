@@ -12,7 +12,9 @@
           id="network-button"
           class="side_menu-btn mid-button can-hide"
           :class="{
-            hide: $route.path === '/' || $route.path.includes('/connections'),
+            hide:
+              $route.path === localePath('/') ||
+              $route.path.includes(localePath('/connections')),
           }"
           @click="goToRoute('/')"
         >
@@ -25,18 +27,14 @@
           id="blog-button"
           class="side_menu-btn mid-button"
           @click="goToRoute('/blog')"
-          :class="{ hide: $route.path.includes('/blog') }"
+          :class="{ hide: $route.path.includes(localePath('/blog')) }"
         >
           <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
           }}</nuxt-link>
           <BoxShape :interactOnHover="true" />
         </li>
-        <li
-          id="timeline-button"
-          class="side_menu-btn disabled"
-          @click="goToRoute('/timeline')"
-        >
+        <li id="timeline-button" class="side_menu-btn disabled">
           <nuxt-link class="btn" :to="localePath('/timeline')">{{
             $t('timeline')
           }}</nuxt-link>
@@ -173,7 +171,7 @@ export default {
 
 .side_menu-btn.hide {
   transform: translateX(300px);
-  transition-delay: 0.5 !important;
+  transition-delay: 0.5;
 }
 
 .nav .mid-button {

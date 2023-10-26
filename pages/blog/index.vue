@@ -34,8 +34,12 @@ export default {
   },
   computed: {
     blogPosts() {
+      console.log("blogPosts")
       return this.$store.state.blogPosts
     }
+  },
+  mounted() {
+    console.log('blog page loaded')
   },
   methods: {
     formatDate(dateString) {

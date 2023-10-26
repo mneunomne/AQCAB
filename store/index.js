@@ -27,6 +27,7 @@ export const mutations = {
 
 export const actions = {
   getPosts(files) {
+    console.log("getPosts")
     return files.keys().map((key) => {
       let res = files(key)
       res.slug = key.slice(2, -5)
