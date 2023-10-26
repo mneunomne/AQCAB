@@ -22,17 +22,17 @@
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small">
+            <nuxt-link class="btn" :to="switchLocalePath(locale)"
+              ><span>{{ localeName }}</span></nuxt-link
+            >
+            <BoxShape :interactOnHover="true" />
+          </div>
+          <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>insta</span></a>
             <BoxShape :interactOnHover="true" />
           </div>
           <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>email</span></a>
-            <BoxShape :interactOnHover="true" />
-          </div>
-          <div class="side_menu-btn btn-small">
-            <nuxt-link class="btn" :to="switchLocalePath(locale)"
-              ><span>{{ localeName }}</span></nuxt-link
-            >
             <BoxShape :interactOnHover="true" />
           </div>
         </li>

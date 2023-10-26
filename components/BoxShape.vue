@@ -35,7 +35,7 @@
 <script>
 // import kute.js library
 import KUTE from 'kute.js'
-import { colors } from '~/utils/globals'
+import { colors, generateHighContrastColor } from '~/utils/globals'
 
 export default {
   name: "BoxShape",
@@ -66,7 +66,7 @@ export default {
   },
   mounted() {
     this.id = parseInt(Math.random() * 1000)
-    this.color = this.generateHighContrastColor()
+    this.color = generateHighContrastColor()
     this.shape_idx = parseInt(Math.random() * 4) + 1
     console.log("KUTE", KUTE)
     // wait for dom to be rendered
@@ -168,49 +168,12 @@ export default {
       this.rectAnimation.start();
       this.animationTimeout = setTimeout(() => {
         this.animating = false
-        this.color = this.generateHighContrastColor()
+        this.color = generateHighContrastColor()
       }, this.duration)
     },
     randomColor() {
       return colors[Math.floor(Math.random() * colors.length)]
     },
-    generateHighContrastColor() {
-      // Generate a random hue value between 0 and 360
-      const hue = Math.floor(Math.random() * 360);
-
-      // Set high saturation and lightness values
-      const saturation = 80; // Adjust this value for desired saturation
-      const lightness = 50;  // Adjust this value for desired lightness
-
-      // Convert HSL to RGB
-      const hslToRgb = (h, s, l) => {
-        h /= 360;
-        s /= 100;
-        l /= 100;
-        let r, g, b;
-        if (s === 0) {
-          r = g = b = l;
-        } else {
-          const hueToRgb = (p, q, t) => {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1 / 6) return p + (q - p) * 6 * t;
-            if (t < 1 / 2) return q;
-            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-            return p;
-          };
-          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-          const p = 2 * l - q;
-          r = hueToRgb(p, q, h + 1 / 3);
-          g = hueToRgb(p, q, h);
-          b = hueToRgb(p, q, h - 1 / 3);
-        }
-        return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-      };
-
-      const [r, g, b] = hslToRgb(hue, saturation, lightness);
-      return `rgb(${r}, ${g}, ${b})`;
-    }
 
   }
 }
@@ -221,7 +184,7 @@ export default {
   position: absolute;
   top: 0;
   height: 100%;
-  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
+  /*filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));*/
   opacity: 0.4;
   transition: opacity 0.25s;
 }
