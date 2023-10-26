@@ -17,13 +17,12 @@
   
   /* container */
   --container-width: calc(100vw - var(--menu-width));
-  --container-inner-width: calc(var(--container-width) - (var(--margin-side) * 2));
+  --container-inner-width: calc(var(--container-width) - var(--margin-side) - var(--grid-margin));
 
   /* width */
   --grid-width-1: calc((var(--container-inner-width) - (var(--grid-margin) * 2)) / 3);
   --grid-width-2: calc(var(--grid-width-1) * 2 + var(--grid-margin));
   --grid-width-3: calc(var(--container-inner-width));
-
 
 }
 
