@@ -176,7 +176,6 @@ export default {
     randomColor() {
       return menuColors[Math.floor(Math.random() * menuColors.length)]
     },
-
   }
 }
 </script>
