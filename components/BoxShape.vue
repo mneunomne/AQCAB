@@ -38,7 +38,7 @@
 <script>
 // import kute.js library
 import KUTE from 'kute.js'
-import { colors, generateHighContrastColor } from '~/utils/globals'
+import { colors, menuColors } from '~/utils/globals'
 
 export default {
   name: "BoxShape",
@@ -69,9 +69,8 @@ export default {
   },
   mounted() {
     this.id = parseInt(Math.random() * 1000)
-    this.color = generateHighContrastColor()
+    this.color = this.randomColor()
     this.shape_idx = parseInt(Math.random() * 4) + 1
-    console.log("KUTE", KUTE)
     // wait for dom to be rendered
     this.$nextTick(() => {
       // animation to become shape
@@ -171,11 +170,11 @@ export default {
       this.rectAnimation.start();
       this.animationTimeout = setTimeout(() => {
         this.animating = false
-        this.color = generateHighContrastColor()
+        this.color = this.randomColor()
       }, this.duration)
     },
     randomColor() {
-      return colors[Math.floor(Math.random() * colors.length)]
+      return menuColors[Math.floor(Math.random() * menuColors.length)]
     },
 
   }

@@ -7,7 +7,7 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
-import { generateHighContrastColor } from '~/utils/globals'
+import { generateHighContrastColor, networkColors } from '~/utils/globals'
 
 const fontSize = 6
 
@@ -109,7 +109,7 @@ export default {
           // create a triangle plane with random shape and color
           if (node.type === 'node') {
             const material = new THREE.MeshBasicMaterial({
-              color: generateHighContrastColor(),
+              color: this.randomTriangleColor(),
               opacity: 1,
               transparent: true,
             })
@@ -238,7 +238,9 @@ export default {
       return links
     },
     randomTriangleColor() {
-      return generateHighContrastColor()
+      // random color networkColors
+      return networkColors[Math.floor(Math.random() * networkColors.length)]
+      //return generateHighContrastColor()
     },
     hexColorWithRandomHue() {
       function hslToHex(h, s, l) {
