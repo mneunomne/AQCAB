@@ -7,7 +7,7 @@
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
 
-import { generateHighContrastColor, networkColors } from '~/utils/globals'
+import { networkColors } from '~/utils/globals'
 
 const fontSize = 6
 
@@ -86,7 +86,7 @@ export default {
             // this.nodeOpacity(node.id, 1)
             node.__threeObj.children[0]
             // make triangle rotate
-            //node.__threeObj.children[0].rotation.z += 0.01
+            // node.__threeObj.children[0].rotation.z += 0.01
             if (this.rotateInterval) {
               clearInterval(this.rotateInterval)
             }
@@ -135,7 +135,7 @@ export default {
             )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 4 + Math.random() * 3
+            var triangle_scale = 4 + Math.random() * 4
             var rand = Math.random() * triangle_scale
             mesh.scale.set(
               triangle_scale + rand,
@@ -154,7 +154,7 @@ export default {
             sprite.material.opacity = 0
           } else {
             sprite.material.opacity = 1
-            sprite.backgroundColor = "#B1B2B5";
+            sprite.backgroundColor = "rgba(220, 220, 220)";
             sprite.padding = [0, 0];
           }
 
@@ -217,17 +217,22 @@ export default {
         }
         nodes.push(obj)
         node.tags.forEach((tag) => {
-          // check if tag already exists
-          if (nodes.find((n) => n.id === tag)) {
-            return
-          }
-          nodes.push({
+          let obj = {
             id: tag,
             name: tag,
             val: 1,
             content_en: tag,
             type: 'tag',
-          })
+          }
+          if (Math.random() > 0.7) {
+            obj.fx = nx / 2 - Math.random() * nx
+            obj.fy = ny / 2 - Math.random() * ny
+          }
+          // check if tag already exists
+          if (nodes.find((n) => n.id === tag)) {
+            return
+          }
+          nodes.push(obj)
         })
       })
       return nodes
