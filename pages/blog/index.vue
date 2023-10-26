@@ -6,7 +6,7 @@
       class="grid-block grid-height-1 grid-width-1 blog-card"
       @click="onClickBlog(`/blog/${blogPost.slug}`)"
     >
-      <article>
+      <article class="card-content">
         <div class="flex justify-between align-baseline">
           <h3 class="article-title">{{ blogPost.title }}</h3>
           <h6
@@ -53,5 +53,8 @@ export default {
 <style lang="postcss" scoped>
 .blog-card {
   cursor: pointer;
+}
+.card-content {
+  pointer-events: none;
 }
 </style>

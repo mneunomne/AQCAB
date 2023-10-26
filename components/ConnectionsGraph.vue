@@ -280,5 +280,6 @@ export default {
 }
 .connections-graph.hide {
   filter: blur(8px);
+  pointer-events: none;
 }
 </style>

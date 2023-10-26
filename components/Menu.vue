@@ -6,34 +6,34 @@
           <a class="btn" href="#">
             <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
           </a>
-          <BoxShape />
+          <BoxShape :interactOnHover="true" />
         </li>
         <li class="side_menu-btn" @click="goToRoute('/')">
           <nuxt-link class="btn" :to="localePath('/')">{{
             $t('network')
           }}</nuxt-link>
-          <BoxShape />
+          <BoxShape :interactOnHover="true" />
         </li>
         <li class="side_menu-btn" @click="goToRoute('/blog')">
           <nuxt-link class="btn" :to="localePath('/blog')">{{
             $t('blog')
           }}</nuxt-link>
-          <BoxShape />
+          <BoxShape :interactOnHover="true" />
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>insta</span></a>
-            <BoxShape />
+            <BoxShape :interactOnHover="true" />
           </div>
           <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>email</span></a>
-            <BoxShape />
+            <BoxShape :interactOnHover="true" />
           </div>
           <div class="side_menu-btn btn-small">
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
-            <BoxShape />
+            <BoxShape :interactOnHover="true" />
           </div>
         </li>
       </ul>

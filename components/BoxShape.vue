@@ -1,8 +1,14 @@
 <template>
-  <div class="box_shape" :id="`box_shape_${id}`" :class="{ color: isShape }">
+  <div
+    class="box_shape"
+    :id="`box_shape_${id}`"
+    :class="{ color: isShape, buttonDown: isButtonDown }"
+  >
     <svg
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
+      @mousedown="onMouseDown"
+      @mouseup="onMouseUp"
       width="100"
       height="100"
       id="screenshot-7a682ccd-6dce-80b8-8003-3399c0cf2987"
@@ -33,6 +39,12 @@ import { colors } from '~/utils/globals'
 
 export default {
   name: "BoxShape",
+  props: {
+    interactOnHover: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       waitTimeout: null,
@@ -48,7 +60,8 @@ export default {
       animationDuration: 500,
       waitDuration: 1000,
       color: null,
-      shape_idx: 0
+      shape_idx: 0,
+      isButtonDown: false
     }
   },
   mounted() {
@@ -76,6 +89,43 @@ export default {
   },
   methods: {
     onMouseEnter() {
+      if (!this.interactOnHover) {
+        return;
+      } else {
+        this.enterAnimation()
+      }
+    },
+    onMouseLeave() {
+      if (!this.interactOnHover) {
+        return;
+      } else {
+        this.leaveAnimation();
+      }
+    },
+
+    onMouseDown() {
+      this.isButtonDown = true
+    },
+    onMouseUp() {
+      this.isButtonDown = false
+    },
+
+    setToShape() {
+      this.isRectangle = false
+      this.isShape = true
+      this.animating = true
+      this.shapeAnimation.start();
+      this.animationTimeout = setTimeout(() => {
+        this.animating = false
+      }, this.duration)
+      /*
+      if (this.waitTimeout) clearTimeout(this.waitTimeout)
+      this.waitTimeout = setTimeout(() => {
+        this.setToRect()
+      }, this.waitDuration)
+      */
+    },
+    enterAnimation() {
       // if its animating... dont do anything
       if (this.animating || this.isShape) {
         return
@@ -94,7 +144,10 @@ export default {
         this.setToShape()
       }
     },
-    onMouseLeave() {
+    leaveAnimation() {
+      if (!this.interactOnHover) {
+        return;
+      }
       // if its animating... dont do anything
       if (this.animating) {
         return
@@ -108,21 +161,6 @@ export default {
       }
     },
 
-    setToShape() {
-      this.isRectangle = false
-      this.isShape = true
-      this.animating = true
-      this.shapeAnimation.start();
-      this.animationTimeout = setTimeout(() => {
-        this.animating = false
-      }, this.duration)
-      /*
-      if (this.waitTimeout) clearTimeout(this.waitTimeout)
-      this.waitTimeout = setTimeout(() => {
-        this.setToRect()
-      }, this.waitDuration)
-      */
-    },
     setToRect() {
       this.isShape = false
       this.isRectangle = true
@@ -184,7 +222,12 @@ export default {
   top: 0;
   height: 100%;
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
-  opacity: 0.5;
+  opacity: 0.4;
+  transition: opacity 0.25s;
+}
+
+.box_shape:hover {
+  opacity: 0.6;
 }
 
 .box_shape.effect {
@@ -211,5 +254,9 @@ export default {
 
 .box_shape:not(.color) svg path {
   fill: rgba(220, 220, 220);
+}
+
+.box_shape.buttonDown {
+  opacity: 0.65;
 }
 </style>
