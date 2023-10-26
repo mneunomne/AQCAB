@@ -21,6 +21,8 @@ export default {
   data() {
     return {
       g: null,
+      numNodes: 0,
+      loadedNodes: 0,
       rotateInterval: null,
     }
   },
@@ -43,6 +45,7 @@ export default {
       if (window) {
         ForceGraph3D = require('3d-force-graph').default
         console.log('ForceGraph3D', ForceGraph3D)
+        console.log("loaded 3d-force-graph")
       } else {
         return
       }
@@ -53,12 +56,18 @@ export default {
         nodes: this.generateNodes(data),
         links: this.generateLinks(data),
       }
+      this.numNodes = gData.nodes.length
 
       g.graphData(gData)
         .backgroundColor('rgba(0,0,0,0)')
         .linkWidth(0)
         .showNavInfo(false)
         .numDimensions(2)
+        // onLoaded 
+        .onEngineStop(() => {
+          console.log("loaded!")
+        })
+        // .cooldownTime(500)
         .linkOpacity(0.5)
         .linkColor(() => {
           return '#000'
@@ -96,6 +105,7 @@ export default {
           }
         })
         .nodeThreeObject((node) => {
+          console.log("node")
           const group = new THREE.Group()
           const click_geometry = new THREE.SphereGeometry(5, 64, 64)
           const clickMatSphere = new THREE.MeshBasicMaterial({
@@ -162,7 +172,6 @@ export default {
 
           var text_height = bbox.max.z - bbox.min.z
           var text_width = bbox.max.x - bbox.min.x
-          console.log('text_width', text_width)
 
           if (node.type === 'node') {
             // sprite.material.rotation = Math.PI / 2;
@@ -175,11 +184,19 @@ export default {
           if (!node?.disabled) {
             //group.add(click_sphere)
           }
+          this.onLoadedNode(node)
           return group
         })
       g.d3Force('charge').strength(-70)
       this.g = g
 
+    },
+    onLoadedNode(node) {
+      this.loadedNodes += 1
+      if (this.loadedNodes === this.numNodes) {
+        console.log("all nodes loaded")
+        this.$emit('loaded')
+      }
     },
     // Data for nodes -> names of connections + tags
     generateNodes(data) {

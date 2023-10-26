@@ -1,7 +1,11 @@
 <template>
   <div class="menu">
-    <div class="menu-toggle" @click="onClickMenuButton">
-      <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
+    <div
+      :class="{ active: getIsMenuOpen }"
+      class="menu-toggle"
+      @click="onClickMenuButton"
+    >
+      <span>{{ $t('menu') }} </span>
     </div>
     <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
@@ -132,6 +136,11 @@ export default {
   position: absolute;
   top: 30px;
   right: 50px;
+  cursor: pointer;
+}
+
+.menu-toggle.active span {
+  text-decoration: line-through;
 }
 
 .toggle-button {
@@ -145,8 +154,12 @@ export default {
   display: flex;
   padding: 20px 18px;
 }
-.nav.closed .side_menu-btn:not(.btn-fixed) {
+.nav.closed .side_menu-btn:not(.btn-small) {
   transform: translateX(300px);
+}
+
+.nav.closed .side_menu-btn.btn-small {
+  transform: translateY(300px);
 }
 
 .side_menu {
@@ -173,15 +186,6 @@ export default {
 }
 .side_menu-btn.can-hide {
   position: absolute;
-}
-
-.side_menu-btn.hide {
-  transform: translateX(300px);
-  transition-delay: 0.5;
-}
-
-.nav .mid-button {
-  transition-delay: 2s;
 }
 
 /* text inside button */
@@ -230,37 +234,35 @@ export default {
 
 /* open */
 
-.nav.closed .side_menu li:nth-child(2) {
+.nav.closed .side_menu li:nth-child(1) {
   transition-delay: 0.45s;
 }
-.nav.closed .side_menu li:nth-child(3) {
+.nav.closed .side_menu li:nth-child(2) {
   transition-delay: 0.35s;
 }
-.nav.closed .side_menu li:nth-child(4) {
+.nav.closed .side_menu li:nth-child(3) {
   transition-delay: 0.25s;
-}
-.nav.closed .side_menu li:nth-child(5) {
-  transition-delay: 0.15s;
-}
-.nav.closed .side_menu li:nth-child(6) {
-  transition-delay: 0.05s;
 }
 
 /* closed */
 
-.nav .side_menu li:nth-child(2) {
+.nav .side_menu li:nth-child(1) {
   transition-delay: 0.05s;
 }
-.nav .side_menu li:nth-child(3) {
+.nav .side_menu li:nth-child(2) {
   transition-delay: 0.15s;
 }
-.nav .side_menu li:nth-child(4) {
+.nav .side_menu li:nth-child(3) {
   transition-delay: 0.25s;
 }
-.nav .side_menu li:nth-child(5) {
-  transition-delay: 0.35s;
+
+.small-btn-wrapper .btn-small:nth-child(1) {
+  transition-delay: 0.05s;
 }
-.nav .side_menu li:nth-child(6) {
-  transition-delay: 0.45s;
+.small-btn-wrapper .btn-small:nth-child(2) {
+  transition-delay: 0.15s;
+}
+.small-btn-wrapper .btn-small:nth-child(3) {
+  transition-delay: 0.25s;
 }
 </style>
