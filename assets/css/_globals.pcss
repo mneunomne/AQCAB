@@ -3,20 +3,27 @@
   --margin-side: 30px;
   --grid-margin: 20px;
   --block-padding: 30px;
-  --small-menu-button-height: 85px;
-  --menu-width: 270px;
-  --menu-button-width: calc(var(--menu-width) - var(--margin-side));
-  --footer-height: calc(var(--small-menu-button-height) + var(--margin-top));
-  --container-width: calc(100vw - var(--menu-width));
-  --container-inner-width: calc(var(--container-width) - (var(--margin-side) * 2));
+  --footer-height: calc(var(--margin-top) + var(--grid-margin));
+
   /* height */
   --grid-height-1: calc(((100vh - var(--footer-height) - var(--margin-top)) / 3) - var(--grid-margin));
   --grid-height-2: calc((var(  --grid-height-1) * 2) + var(--grid-margin));
   --grid-height-3: calc(var(  --grid-height-1) * 3 + var(--grid-margin) * 2);
+
+  /* menu */
+  --menu-button-width: var(--grid-height-1);
+  --menu-width: calc(var(--grid-height-1) + var(--margin-side));
+  --small-menu-button-height: calc((var(--menu-button-width) - (var(--grid-margin) * 2)) / 3);
+  
+  /* container */
+  --container-width: calc(100vw - var(--menu-width));
+  --container-inner-width: calc(var(--container-width) - (var(--margin-side) * 2));
+
   /* width */
   --grid-width-1: calc((var(--container-inner-width) - (var(--grid-margin) * 2)) / 3);
   --grid-width-2: calc(var(--grid-width-1) * 2 + var(--grid-margin));
   --grid-width-3: calc(var(--container-inner-width));
+
 
 }
 

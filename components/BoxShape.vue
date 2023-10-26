@@ -69,7 +69,8 @@ export default {
       waitDuration: 1000,
       color: null,
       shape_idx: 0,
-      isButtonDown: false
+      isButtonDown: false,
+      numShapes: 9
     }
   },
   mounted() {
@@ -81,7 +82,7 @@ export default {
     init() {
       this.id = parseInt(Math.random() * 1000000)
       this.color = this.randomColor()
-      this.shape_idx = parseInt(Math.random() * 4) + 1
+      this.shape_idx = parseInt(Math.random() * this.numShapes) + 1
       // wait for dom to be rendered
       this.$nextTick(() => {
         // animation to become shape
@@ -89,14 +90,14 @@ export default {
           `#target_${this.id}`,
           { path: '#rectangle' },
           { path: '#shape_' + this.shape_idx },
-          { duration: this.animationDuration, easing: 'easingCubicInOut' }
+          { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
         )
         // animation to become rectangle
         this.rectAnimation = KUTE.fromTo(
           `#target_${this.id}`,
           { path: '#shape_' + this.shape_idx },
           { path: '#rectangle' },
-          { duration: this.animationDuration, easing: 'easingCubicInOut' }
+          { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
         )
       })
     },
@@ -115,7 +116,6 @@ export default {
         this.leaveAnimation();
       }
     },
-
     onMouseDown() {
       this.isButtonDown = true
     },
@@ -169,9 +169,9 @@ export default {
       if (this.isShape) {
         if (this.waitTimeout) clearTimeout(this.waitTimeout)
         this.waitTimeout = setTimeout(() => {
-          if (!this.active) {
-            this.setToRect()
-          }
+          // if (!this.active) {
+          this.setToRect()
+          //}
         }, this.waitDuration)
       }
     },
@@ -190,6 +190,7 @@ export default {
       return menuColors[Math.floor(Math.random() * menuColors.length)]
     },
   },
+  /*
   watch: {
     active(val) {
       if (!val) {
@@ -202,6 +203,7 @@ export default {
       }
     }
   }
+  */
 }
 </script>
 <style>
@@ -237,7 +239,10 @@ export default {
   transition: fill 0.5s;
 }
 
-.box_shape:not(:hover) svg path {
+.box_shape.onHoverOnly:not(:hover) svg path {
+  fill: rgba(220, 220, 220);
+}
+.box_shape:not(.onHoverOnly):not(.color) svg path {
   fill: rgba(220, 220, 220);
 }
 /*

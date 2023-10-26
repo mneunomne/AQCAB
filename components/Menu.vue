@@ -6,7 +6,15 @@
     <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
         <li id="network-button" class="side_menu-btn" @click="goToRoute('/')">
-          <span class="btn">{{ $t('network') }}</span>
+          <span
+            class="btn"
+            :class="{
+              active:
+                $route.path === localePath('/') ||
+                $route.path.includes(localePath('/connections')),
+            }"
+            >{{ $t('network') }}</span
+          >
           <BoxShape
             :interactOnHover="true"
             :active="
@@ -16,7 +24,13 @@
           />
         </li>
         <li id="blog-button" class="side_menu-btn" @click="goToRoute('/blog')">
-          <span class="btn">{{ $t('blog') }}</span>
+          <span
+            class="btn"
+            :class="{
+              active: $route.path.includes(localePath('/blog')),
+            }"
+            >{{ $t('blog') }}</span
+          >
           <BoxShape
             :interactOnHover="true"
             :active="$route.path.includes(localePath('/blog'))"
@@ -59,7 +73,7 @@ export default {
   },
   data() {
     return {
-      menuOpen: false,
+      menuOpen: true,
     }
   },
   methods: {
@@ -183,10 +197,13 @@ export default {
   pointer-events: none;
 }
 
+.btn.active {
+  text-decoration: underline;
+}
+
 .btn-small {
   position: relative;
   display: inline-block;
-  height: 86px;
   .btn {
     font-size: 14px;
     display: flex;
@@ -199,13 +216,12 @@ export default {
 .small-btn-wrapper {
   display: grid;
   grid-gap: 20px;
-  height: auto;
+  height: var(--small-menu-button-height) !important;
 }
 
 .wrap-3 {
   grid-template-columns: repeat(3, 1fr);
-  height: auto !important;
-  padding-bottom: 20px;
+  height: auto;
 }
 
 .wrap-2 {

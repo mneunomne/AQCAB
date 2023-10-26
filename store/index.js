@@ -3,7 +3,7 @@ import { SET_BLOG_POSTS, SET_CONNECTIONS, TOGGLE_MENU } from './mutations.type'
 export const state = () => ({
   blogPosts: [],
   connections: [],
-  menuOpen: false
+  menuOpen: true
 })
 
 export const getters = {
