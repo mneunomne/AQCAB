@@ -20,6 +20,7 @@
             >{{ $t('network') }}</span
           >
           <BoxShape
+            :boxId="'network_btn'"
             :interactOnHover="true"
             :active="
               $route.path === localePath('/') ||
@@ -36,28 +37,29 @@
             >{{ $t('blog') }}</span
           >
           <BoxShape
+            :boxId="'blog_btn'"
             :interactOnHover="true"
             :active="$route.path.includes(localePath('/blog'))"
           />
         </li>
         <li id="timeline-button" class="side_menu-btn disabled">
           <span class="btn">{{ $t('timeline') }}</span>
-          <BoxShape :interactOnHover="true" />
+          <BoxShape :boxId="'timeline_btn'" :interactOnHover="true" />
         </li>
         <li class="small-btn-wrapper wrap-3">
           <div class="side_menu-btn btn-small" @click="onClickLangButton">
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
-            <BoxShape :interactOnHover="true" />
+            <BoxShape :boxId="'lang_btn'" :interactOnHover="true" />
           </div>
           <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>insta</span></a>
-            <BoxShape :interactOnHover="true" />
+            <BoxShape :boxId="'insta_btn'" :interactOnHover="true" />
           </div>
           <div class="side_menu-btn btn-small">
             <a class="btn" target="_blank"><span>email</span></a>
-            <BoxShape :interactOnHover="true" />
+            <BoxShape :boxId="'email_btn'" :interactOnHover="true" />
           </div>
         </li>
       </ul>

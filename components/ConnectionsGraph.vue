@@ -135,7 +135,7 @@ export default {
             )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 4 + Math.random() * 4
+            var triangle_scale = 4 + Math.random() * 5
             var rand = Math.random() * triangle_scale
             mesh.scale.set(
               triangle_scale + rand,
@@ -200,41 +200,74 @@ export default {
     },
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
-      let nx = 400
-      let ny = 250
-      const nodes = []
+      let minDist = 20
+      let nx = 500;
+      let ny = 350;
+      const nodes = [];
+      const gridSize = minDist * 2; // Adjust this based on your minimum distance
+
+      const positions = new Set();
+
+      function getGridPosition(x, y) {
+        return [
+          Math.floor(x / gridSize) * gridSize,
+          Math.floor(y / gridSize) * gridSize,
+        ];
+      }
+
       data.forEach((node) => {
-        let obj = {
+        let x = nx / 2 - Math.random() * nx;
+        let y = ny / 2 - Math.random() * ny;
+
+        let gridPos = getGridPosition(x, y);
+
+        while (positions.has(gridPos.join(','))) {
+          x = nx / 2 - Math.random() * nx;
+          y = ny / 2 - Math.random() * ny;
+          gridPos = getGridPosition(x, y);
+        }
+
+        const obj = {
           id: node.node_id,
           name: node.name_en,
           val: 1,
           content_en: node.content_en,
           type: 'node',
-        }
-        if (Math.random() > 0.5) {
-          obj.fx = nx / 2 - Math.random() * nx
-          obj.fy = ny / 2 - Math.random() * ny
-        }
-        nodes.push(obj)
+          fx: x,
+          fy: y,
+        };
+        nodes.push(obj);
+        positions.add(gridPos.join(','));
+
         node.tags.forEach((tag) => {
-          let obj = {
+          if (nodes.find((n) => n.id === tag)) {
+            return;
+          }
+
+          let tx = nx / 2 - Math.random() * nx;
+          let ty = ny / 2 - Math.random() * ny;
+
+          let tagGridPos = getGridPosition(tx, ty);
+
+          while (positions.has(tagGridPos.join(','))) {
+            tx = nx / 2 - Math.random() * nx;
+            ty = ny / 2 - Math.random() * ny;
+            tagGridPos = getGridPosition(tx, ty);
+          }
+
+          const tagObj = {
             id: tag,
             name: tag,
             val: 1,
             content_en: tag,
             type: 'tag',
-          }
-          if (Math.random() > 0.7) {
-            obj.fx = nx / 2 - Math.random() * nx
-            obj.fy = ny / 2 - Math.random() * ny
-          }
-          // check if tag already exists
-          if (nodes.find((n) => n.id === tag)) {
-            return
-          }
-          nodes.push(obj)
-        })
-      })
+            fx: tx,
+            fy: ty,
+          };
+          nodes.push(tagObj);
+          positions.add(tagGridPos.join(','));
+        });
+      });
       return nodes
     },
     // Data for Links -> Array of objects with source and target

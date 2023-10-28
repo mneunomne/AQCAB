@@ -20,7 +20,7 @@
           <p class="inline">{{ blogPost.description }}</p>
         </div>
       </article>
-      <BoxShape />
+      <BoxShape :boxId="`blog_${index}`" />
     </li>
   </ul>
 </template>

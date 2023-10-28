@@ -1,7 +1,7 @@
 <template>
   <div
     class="box_shape"
-    :id="`box_shape_${id}`"
+    :id="`box_shape_${boxId}`"
     :class="{
       color: isShape,
       buttonDown: isButtonDown,
@@ -26,7 +26,7 @@
         <g class="fills" id="fills-7a682ccd-6dce-80b8-8003-3399c0cf2987">
           <path
             filter="url(#inset-shadow)"
-            :id="`target_${this.id}`"
+            :id="`target_${boxId}`"
             d="M0,0 L100,0 L100,100 L0,100 Z"
             style="fill-opacity: 1"
             :fill="color"
@@ -51,13 +51,16 @@ export default {
     active: {
       type: Boolean,
       default: false
+    },
+    boxId: {
+      type: String,
+      required: true
     }
   },
   data() {
     return {
       waitTimeout: null,
       animationTimeout: null,
-      id: 0,
       width: 100,
       height: 100,
       isShape: false,
@@ -70,36 +73,35 @@ export default {
       color: null,
       shape_idx: 0,
       isButtonDown: false,
-      numShapes: 9
+      numShapes: 9,
+      hasInitiated: false
     }
   },
   mounted() {
     if (this.interactOnHover) {
-      this.init()
+      this.init();
     }
   },
   methods: {
     init() {
-      this.id = parseInt(Math.random() * 1000000)
+      this.hasInitiated = true
       this.color = this.randomColor()
       this.shape_idx = parseInt(Math.random() * this.numShapes) + 1
       // wait for dom to be rendered
-      this.$nextTick(() => {
-        // animation to become shape
-        this.shapeAnimation = KUTE.fromTo(
-          `#target_${this.id}`,
-          { path: '#rectangle' },
-          { path: '#shape_' + this.shape_idx },
-          { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
-        )
-        // animation to become rectangle
-        this.rectAnimation = KUTE.fromTo(
-          `#target_${this.id}`,
-          { path: '#shape_' + this.shape_idx },
-          { path: '#rectangle' },
-          { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
-        )
-      })
+      // animation to become shape
+      this.shapeAnimation = KUTE.fromTo(
+        `#target_${this.boxId}`,
+        { path: '#rectangle' },
+        { path: '#shape_' + this.shape_idx },
+        { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
+      )
+      // animation to become rectangle
+      this.rectAnimation = KUTE.fromTo(
+        `#target_${this.boxId}`,
+        { path: '#shape_' + this.shape_idx },
+        { path: '#rectangle' },
+        { duration: this.animationDuration, easing: 'easingCubicInOut', morphPrecision: 2 }
+      )
     },
     onMouseEnter() {
       if (!this.interactOnHover) {
@@ -140,7 +142,7 @@ export default {
     },
     enterAnimation() {
       // if its animating... dont do anything
-      if (this.animating || this.isShape) {
+      if (this.animating || this.isShape || !this.hasInitiated) {
         return
       }
 
