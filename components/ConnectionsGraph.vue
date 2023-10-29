@@ -135,7 +135,7 @@ export default {
             )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 4 + Math.random() * 5
+            var triangle_scale = 3 + Math.random() * 4
             var rand = Math.random() * triangle_scale
             mesh.scale.set(
               triangle_scale + rand,
@@ -201,8 +201,8 @@ export default {
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
       let minDist = 20
-      let nx = 500;
-      let ny = 350;
+      let nx = 470;
+      let ny = 320;
       const nodes = [];
       const gridSize = minDist * 2; // Adjust this based on your minimum distance
 
