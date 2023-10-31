@@ -180,7 +180,7 @@ export default {
             sprite.material.opacity = 0
           } else {
             sprite.material.opacity = 1
-            sprite.backgroundColor = "rgba(220, 220, 220)";
+            sprite.backgroundColor = "rgba(230, 230, 230)";
             sprite.padding = [0, 0];
           }
 

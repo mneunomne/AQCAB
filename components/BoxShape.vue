@@ -246,21 +246,21 @@ export default {
 }
 
 .box_shape.onHoverOnly svg path {
-  fill: rgba(220, 220, 220);
+  fill: rgba(230, 230, 230);
 }
 
 /*
 .box_shape.onHoverOnly:not(:hover) svg path {
-  fill: rgba(220, 220, 220);
+  fill: rgba(230, 230, 230);
 }
 */
 .box_shape:not(.onHoverOnly):not(.color) svg path {
-  fill: rgba(220, 220, 220);
+  fill: rgba(230, 230, 230);
 }
 
 /*
 .box_shape:not(.onHoverOnly):not(.color) svg path {
-  fill: rgba(220, 220, 220);
+  fill: rgba(230, 230, 230);
 }
 */
 

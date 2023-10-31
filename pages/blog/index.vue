@@ -7,18 +7,18 @@
       @click="onClickBlog(`/blog/${blogPost.slug}`)"
     >
       <article class="card-content">
-        <div class="flex justify-between align-baseline">
+        <div class="row title">
           <h3 class="article-title">{{ blogPost.title }}</h3>
-          <h6
-            v-if="blogPost.date"
-            class="inline-block font-medium rounded-sm whitespace-no-wrap"
-          >
-            {{ formatDate(blogPost.date) }}
-          </h6>
         </div>
-        <div class="mt-4 mb-2">
+        <div v-show="blogPost.author" class="row author">
+          <h3 class="article-author">{{ blogPost.author }}</h3>
+        </div>
+        <div class="row content">
           <p class="inline">{{ blogPost.description }}</p>
         </div>
+        <p v-if="blogPost.date" class="blog-card-date">
+          {{ formatDate(blogPost.date) }}
+        </p>
       </article>
       <BoxShape :boxId="`blog_${index}`" />
     </li>
@@ -58,7 +58,18 @@ export default {
 .blog-card {
   cursor: pointer;
 }
+
+.blog-card-date {
+  position: absolute;
+  bottom: 25px;
+}
+
+.content {
+  height: 50%;
+}
+/*
 .card-content {
   pointer-events: none;
 }
+*/
 </style>

@@ -5,14 +5,18 @@
         <span class="close" @click="$router.push(localePath('/blog'))"
           >close</span
         >
-        <h1 class="article-title">{{ blogPost.title }}</h1>
-        <h6
-          v-if="blogPost.date"
-          class="inline-block py-1 my-2 font-medium whitespace-no-wrap"
-        >
+        <div v-show="blogPost.author" class="row title">
+          <h1 class="article-title">{{ blogPost.title }}</h1>
+        </div>
+        <div v-show="blogPost.author" class="row author">
+          <h3 class="article-author">{{ blogPost.author }}</h3>
+        </div>
+        <h6 v-if="blogPost.date" class="inline-block">
           {{ formatDate(blogPost.date) }}
         </h6>
-        <div v-html="$md.render(blogPost.body)"></div>
+        <div v-show="blogPost.author" class="row content">
+          <div v-html="$md.render(blogPost.body)"></div>
+        </div>
       </article>
       <BoxShape />
     </div>

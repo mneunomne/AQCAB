@@ -139,6 +139,7 @@ export default {
   top: 30px;
   right: 50px;
   cursor: pointer;
+  text-transform: lowercase;
 }
 
 /*

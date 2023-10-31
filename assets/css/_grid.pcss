@@ -16,7 +16,7 @@
 }
 
 .grid-block {
-  display: inline-block;
+  display: inline-grid;
   position: relative;
   backdrop-filter: blur(6px);
 }
@@ -26,7 +26,7 @@
 }
 
 .card {
-  background: rgba(220, 220, 220, 0.5);
+  background: rgba(230, 230, 230, 0.5);
   backdrop-filter: blur(8px);
   z-index: 10;
   border-radius: 10px;
@@ -48,7 +48,13 @@ article {
 
 .article-title {
   margin-bottom: 1em;
-  font-weight: bold;
+  font-weight: 600;
+  color: black;
+  text-transform: uppercase;
+}
+
+.article .row {
+  margin-bottom: 1em;
 }
 
 .grid-height-1 { height: var(--grid-height-1); }
@@ -80,7 +86,7 @@ article {
 
 a > .card, a.card, button span.card {
   &:hover {
-    background: rgba(220, 220, 220, 0.8);
+    background: rgba(230, 230, 230, 0.8);
   }
 }
 
