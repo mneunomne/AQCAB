@@ -1,5 +1,5 @@
 <template>
-  <div class="network-node grid-block-container">
+  <div class="network-node grid-block-cont">
     <div class="grid-block grid-width-1 grid-height-1">
       <article class="article">
         <span>image</span>
@@ -40,4 +40,8 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.close {
+  right: 35px;
+  top: 25px;
+}
 </style>

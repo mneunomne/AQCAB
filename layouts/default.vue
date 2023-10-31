@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="cont" :class="{ menuClosed: !getIsMenuOpen }">
     <div class="wrapper" :class="{ loading: loading }">
       <ConnectionsGraph
         v-if="connections"
@@ -23,6 +23,7 @@ import Footer from '~/components/Footer.vue'
 import ConnectionsGraph from '~/components/ConnectionsGraph.vue'
 import BoxShape from '~/components/BoxShape.vue'
 import Shapes from '~/components/Shapes.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -36,6 +37,9 @@ export default {
     connections() {
       return this.$store.state.connections
     },
+    ...mapGetters({
+      getIsMenuOpen: 'getIsMenuOpen'
+    }),
   },
   data() {
     return {
@@ -51,6 +55,23 @@ export default {
 }
 </script>
 <style scoped>
+.cont.menuClosed {
+  transition: all 0.25s 0.5s;
+  width: 100%;
+}
+
+@keyframes grow-width {
+  0% {
+    width: var(--cont-width);
+  }
+  50% {
+    width: var(--cont-width);
+  }
+  100% {
+    width: 100%;
+  }
+}
+
 .wrapper {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;

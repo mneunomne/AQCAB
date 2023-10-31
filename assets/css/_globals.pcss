@@ -15,14 +15,14 @@
   --menu-width: calc(var(--grid-height-1) + var(--margin-side));
   --small-menu-button-height: calc((var(--menu-button-width) - (var(--grid-margin) * 2)) / 3);
   
-  /* container */
-  --container-width: calc(100vw - var(--menu-width));
-  --container-inner-width: calc(var(--container-width) - var(--margin-side) - var(--grid-margin));
+  /* cont */
+  --cont-width: calc(100vw - var(--menu-width));
+  --cont-inner-width: calc(var(--cont-width) - var(--margin-side) - var(--grid-margin));
 
   /* width */
-  --grid-width-1: calc((var(--container-inner-width) - (var(--grid-margin) * 2)) / 3);
+  --grid-width-1: calc(((100% - var(--grid-margin) ) - (var(--grid-margin) * 2)) / 3);
   --grid-width-2: calc(var(--grid-width-1) * 2 + var(--grid-margin));
-  --grid-width-3: calc(var(--container-inner-width));
+  --grid-width-3: calc(100% - var(--grid-margin));
 
 }
 

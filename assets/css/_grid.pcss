@@ -1,6 +1,7 @@
-.container {
+.cont {
   min-height: 100vh;
-  max-width: var(--container-width);
+  width: var(--cont-width);
+  transition: all 0.25s;
 }
 
 .main {
@@ -21,8 +22,9 @@
   backdrop-filter: blur(6px);
 }
 
-.grid-block-container {
+.grid-block-cont {
   display: inline-table;
+  width: 100%;
 }
 
 .card {
@@ -79,9 +81,6 @@ article p {
 }
 
 .close {
-  position: absolute;
-  right: 35px;
-  top: 25px;
   text-decoration: line-through;
   cursor: pointer;
   &:hover {

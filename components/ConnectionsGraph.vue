@@ -218,7 +218,7 @@ export default {
           this.onLoadedNode(node)
           return group
         })
-      //g.d3Force('charge').strength(-70)
+      g.d3Force('charge').strength(-120)
       this.g = g
 
     },
@@ -232,7 +232,7 @@ export default {
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
       let minDist = 20
-      let nx = 470;
+      let nx = 420;
       let ny = 320;
       const nodes = [];
       const gridSize = minDist * 2; // Adjust this based on your minimum distance
@@ -266,8 +266,8 @@ export default {
           type: 'node',
           tags: [...node.tags],
         };
-        obj.fx = x;
-        obj.fy = y;
+        //obj.fx = x;
+        //obj.fy = y;
         nodes.push(obj);
         positions.add(gridPos.join(','));
 
@@ -295,8 +295,8 @@ export default {
             content_en: tag,
             type: 'tag',
           };
-          tagObj.fx = tx;
-          tagObj.fy = ty;
+          //tagObj.fx = tx;
+          // tagObj.fy = ty;
           nodes.push(tagObj);
           positions.add(tagGridPos.join(','));
         });
