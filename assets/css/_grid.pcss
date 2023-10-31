@@ -8,8 +8,8 @@
   padding-left: var(--margin-side);
   padding-top: var(--margin-top);
   padding-bottom: var(--margin-top);
+  overflow: auto;
   height: 100vh;
-  overflow: hidden;
   .title {
     z-index: 1;
   }
@@ -83,3 +83,26 @@ a > .card, a.card, button span.card {
     background: rgba(220, 220, 220, 0.8);
   }
 }
+
+
+
+*::-webkit-scrollbar-track
+{
+	display: none;
+}
+
+*::-webkit-scrollbar
+{
+	display: none;
+}
+
+.main::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.1);
+	background-color: #555;
+}
+
+::-webkit-resizer,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner { display: none; }

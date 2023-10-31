@@ -79,7 +79,7 @@ export default {
   },
   mounted() {
     if (this.interactOnHover) {
-      this.init();
+      // this.init();
     }
   },
   methods: {
@@ -104,7 +104,7 @@ export default {
       )
     },
     onMouseEnter() {
-      if (!this.interactOnHover) {
+      if (!this.interactOnHover || !this.hasInitiated) {
         this.color = this.randomColor()
         return;
       } else {
@@ -112,7 +112,7 @@ export default {
       }
     },
     onMouseLeave() {
-      if (!this.interactOnHover) {
+      if (!this.interactOnHover || !this.hasInitiated) {
         return;
       } else {
         this.leaveAnimation();
@@ -241,12 +241,23 @@ export default {
   transition: fill 0.5s;
 }
 
+.box_shape:hover {
+  opacity: 0.6;
+}
+
+.box_shape.onHoverOnly svg path {
+  fill: rgba(220, 220, 220);
+}
+
+/*
 .box_shape.onHoverOnly:not(:hover) svg path {
   fill: rgba(220, 220, 220);
 }
+*/
 .box_shape:not(.onHoverOnly):not(.color) svg path {
   fill: rgba(220, 220, 220);
 }
+
 /*
 .box_shape:not(.onHoverOnly):not(.color) svg path {
   fill: rgba(220, 220, 220);

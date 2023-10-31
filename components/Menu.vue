@@ -5,7 +5,7 @@
       class="menu-toggle"
       @click="onClickMenuButton"
     >
-      <span>{{ $t('menu') }} </span>
+      <span>{{ getIsMenuOpen ? $t('hide') : $t('menu') }} </span>
     </div>
     <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
@@ -141,9 +141,11 @@ export default {
   cursor: pointer;
 }
 
+/*
 .menu-toggle.active span {
   text-decoration: line-through;
 }
+*/
 
 .toggle-button {
   position: relative;
@@ -181,6 +183,11 @@ export default {
   transform: translateX(0px);
   transition: transform 0.3s ease-in-out;
   text-align: left;
+}
+
+.side_menu-btn.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .side_menu-btn:not(.btn-small) {

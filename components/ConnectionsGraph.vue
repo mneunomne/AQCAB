@@ -63,7 +63,6 @@ export default {
         .linkWidth(0)
         .showNavInfo(false)
         .numDimensions(2)
-        // onLoaded 
         .onEngineStop(() => {
           console.log("loaded!")
         })
@@ -77,14 +76,24 @@ export default {
           if (node.type === 'node') {
             return `<span class="node-name">${node.name}</span>`
           } else {
-            return false
+            return
           }
         })
         .onNodeHover((node) => {
+          if (node) {
+            node.__threeObj.children[0].material.opacity = 1
+            node.__threeObj.scale.set(1.1, 1.1, 1.1);
+            // node.__threeObj.children[0].scale
+          } else {
+            let nodes = gData.nodes
+            nodes.forEach((n) => {
+              n.__threeObj.scale.set(1, 1, 1);
+            })
+          }
           if (node && node.type === 'node') {
             // 
             // this.nodeOpacity(node.id, 1)
-            node.__threeObj.children[0]
+            // node.__threeObj.children[0].scale = { x: 1.1, y: 1.1, z: 1.1 }
             // make triangle rotate
             // node.__threeObj.children[0].rotation.z += 0.01
             if (this.rotateInterval) {
@@ -100,8 +109,25 @@ export default {
           }
         })
         .onNodeClick((node) => {
+          console.log("click", node)
           if (node.type === 'node') {
             this.$router.push(`/connections/${node.id}`)
+          } else if (node.type === 'tag') {
+
+            // hide all nodes that are not connected to this tag
+            let nodes = gData.nodes
+            console.log("node", node, nodes)
+            let links = gData.links
+            let connectedNodes = []
+            nodes.forEach((n) => {
+              if (n.type === 'node' && n.tags && n.tags.includes(node.id)) {
+                connectedNodes.push(n.id)
+                n.__threeObj.children[0].material.opacity = 1
+              } else {
+                n.__threeObj.children[0].material.opacity = 0.2
+              }
+            })
+            node.__threeObj.children[0].material.opacity = 1
           }
         })
         .nodeThreeObject((node) => {
@@ -187,7 +213,7 @@ export default {
           this.onLoadedNode(node)
           return group
         })
-      g.d3Force('charge').strength(-70)
+      //g.d3Force('charge').strength(-70)
       this.g = g
 
     },
@@ -233,11 +259,13 @@ export default {
           val: 1,
           content_en: node.content_en,
           type: 'node',
-          fx: x,
-          fy: y,
+          tags: [...node.tags],
         };
+        obj.fx = x;
+        obj.fy = y;
         nodes.push(obj);
         positions.add(gridPos.join(','));
+
 
         node.tags.forEach((tag) => {
           if (nodes.find((n) => n.id === tag)) {
@@ -261,9 +289,9 @@ export default {
             val: 1,
             content_en: tag,
             type: 'tag',
-            fx: tx,
-            fy: ty,
           };
+          tagObj.fx = tx;
+          tagObj.fy = ty;
           nodes.push(tagObj);
           positions.add(tagGridPos.join(','));
         });
@@ -326,7 +354,7 @@ export default {
   
 <style global lang="postcss">
 .connections-graph {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

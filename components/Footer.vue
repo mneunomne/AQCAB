@@ -21,7 +21,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 #footer-title {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 30px;
   text-transform: uppercase;
@@ -29,7 +29,7 @@ export default {
 }
 
 #footer-contribute {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   right: 30px;
   opacity: 0;
