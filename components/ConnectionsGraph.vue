@@ -1,5 +1,10 @@
 <template>
-  <div class="connections-graph" :class="{ hide: !isHomeRoute }">.</div>
+  <div
+    class="connections-graph"
+    :class="{ hide: $route.path !== localePath('/') }"
+  >
+    .
+  </div>
 </template>
   
 <script>

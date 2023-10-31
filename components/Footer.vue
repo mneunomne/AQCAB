@@ -1,6 +1,8 @@
 <template>
   <div>
-    <span id="footer-title">A<span class="queer">Q</span>CAB</span>
+    <span @click="onClickLogo" id="footer-title"
+      >A<span class="queer">Q</span>CAB</span
+    >
     <span :class="{ show: !getIsMenuOpen }" id="footer-contribute">{{
       $t('contribute')
     }}</span>
@@ -17,6 +19,11 @@ export default {
       getIsMenuOpen: 'getIsMenuOpen'
     })
   },
+  methods: {
+    onClickLogo() {
+      this.$router.push({ path: this.localePath('/about') })
+    }
+  }
 }
 </script>
 <style lang="postcss" scoped>
