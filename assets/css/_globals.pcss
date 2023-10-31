@@ -21,9 +21,25 @@
 
   /* width */
   --grid-width-1: calc(((100% - var(--grid-margin) ) - (var(--grid-margin) * 2)) / 3);
-  --grid-width-2: calc(var(--grid-width-1) * 2 + var(--grid-margin));
+  --grid-width-2: calc((((100% - var(--grid-margin) ) - (var(--grid-margin))) / 3) * 2);
   --grid-width-3: calc(100% - var(--grid-margin));
+}
 
+/* smaller window */
+@media only screen and (max-width: 1280px) {
+  :root {
+    --grid-width-1: calc(((100% - var(--grid-margin) ) - (var(--grid-margin))) / 2);
+    --grid-width-2: calc(((100% - var(--grid-margin) ) - (var(--grid-margin))) / 2);
+
+  }
+}
+
+/* smaller window */
+@media only screen and (max-width: 1024px) {
+  :root {
+    --grid-width-1: calc(100% - var(--grid-margin));
+    --grid-width-2: calc(100% - var(--grid-margin));
+  }
 }
 
 html {
