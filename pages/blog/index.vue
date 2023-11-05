@@ -9,16 +9,16 @@
     >
       <article class="card-content">
         <div class="row title">
-          <h3 class="article-title">{{ blogPost[`title_${$i18n.locale}`] }}</h3>
+          <h3 class="article-title">{{ blogPost[`title`] }}</h3>
         </div>
-        <div v-show="blogPost[`author_${$i18n.locale}`]" class="row author">
+        <div v-show="blogPost.author" class="row author">
           <h3 class="article-author">
-            {{ blogPost[`author_${$i18n.locale}`] }}
+            {{ blogPost[`author`] }}
           </h3>
         </div>
         <div
           class="row content"
-          v-html="$md.render(blogPost[`description_en`])"
+          v-html="$md.render(blogPost[`description`])"
         ></div>
         <p v-if="blogPost.date" class="blog-card-date">
           {{ formatDate(blogPost.date) }}
@@ -39,6 +39,26 @@ export default {
   computed: {
     blogPosts() {
       console.log("blogPosts")
+      // fallback to english:
+      this.$store.state.blogPosts = this.$store.state.blogPosts.map(post => {
+        if (!post[`title_${this.$i18n.locale}`]) {
+          post[`title_${this.$i18n.locale}`] = post[`title_en`]
+        }
+        post['title'] = post[`title_${this.$i18n.locale}`] || post[`title_en`]
+        post['description'] = post[`description_${this.$i18n.locale}`] || post[`description_en`]
+        post['author'] = post[`author_${this.$i18n.locale}`] || post[`author_en`]
+
+        if (!post['description'] || post['description'] == "") {
+          if (post.highlight) {
+            post['description'] = post['body_en'].substring(0, 600) + "..."
+          } else {
+            post['description'] = post['body_en'].substring(0, 400) + "..."
+          }
+
+        }
+
+        return post
+      })
       return this.$store.state.blogPosts
     }
   },
@@ -69,6 +89,10 @@ export default {
 .blog-card-date {
   position: absolute;
   bottom: 25px;
+}
+
+.article-author {
+  font-size: 18px;
 }
 
 .content {

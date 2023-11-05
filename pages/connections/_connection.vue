@@ -7,7 +7,7 @@
       <BoxShape />
     </div>
     <div class="grid-block grid-width-2 grid-height-1">
-      <article class="article">
+      <article class="node-info">
         <div class="article-content">
           <span class="close" @click="$router.push('/')">close</span>
           <h1 class="article-name">
@@ -72,9 +72,18 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.article li {
+.node-info li {
   display: inline-block;
   margin-right: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.article {
+  padding: var(--article-padding);
+  min-width: auto !important;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .article-content {
@@ -83,6 +92,7 @@ export default {
 
 .tag {
   cursor: pointer;
+  font-size: 18px;
 }
 .tag:hover {
   text-decoration: underline;
@@ -90,6 +100,6 @@ export default {
 
 .article-name {
   font-size: 28px;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 </style>

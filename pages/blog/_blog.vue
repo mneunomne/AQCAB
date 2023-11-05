@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-block-cont" v-show="blogPost">
+  <div class="grid-block-cont">
     <div class="grid-block grid-width-3 grid-height-3">
       <span class="close" @click="$router.push(localePath('/blog'))"
         >{{ $t('close') }}
@@ -62,12 +62,23 @@ export default {
 
 .article-content {
   position: relative;
-  margin: 50px;
+  margin: 60px;
+}
+
+.article-title {
+  max-width: 80%;
+  font-size: 22px;
+}
+
+.article-author {
+  font-size: 20px;
+  margin-bottom: 24px;
 }
 
 .article {
   margin: var(--block-padding);
   padding: 0px;
   min-width: auto !important;
+  font-size: 18px;
 }
 </style>

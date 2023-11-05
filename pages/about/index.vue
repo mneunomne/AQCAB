@@ -23,6 +23,16 @@
       </g>
     </svg>
 
+    <div class="about-text-container">
+      <div class="about-text">
+        <div
+          class="text"
+          v-html="$md.render(about[`about_${$i18n.locale}`])"
+        ></div>
+      </div>
+      <div class="shape"></div>
+    </div>
+
     <svg
       xmlns:xlink="http://www.w3.org/1999/xlink"
       width="100"
@@ -53,6 +63,13 @@
 </template>
 <script>
 export default {
+  async asyncData({ params, payload }) {
+    if (payload) return { blogPost: payload }
+    else
+      return {
+        about: await require(`~/assets/content/site/about.json`)
+      }
+  },
   computed: {
     blogPosts() {
       return this.$store.state.blogPosts
@@ -64,12 +81,16 @@ export default {
       return date.toLocaleDateString(process.env.lang) || ''
     }
   }
+
 }
 </script>
 
 <style lang="postcss" scoped>
 #about {
-  display: contents;
+  width: 100%;
+  display: block;
+  height: 100%;
+  position: relative;
 }
 
 #about svg {
@@ -77,5 +98,75 @@ export default {
   height: 100%;
   backdrop-filter: opacity(1);
   opacity: 0.85;
+  position: absolute;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.about-text {
+  /*BLUE BG*/
+
+  position: relative;
+  margin: 0;
+  color: black;
+}
+
+.about-text-container,
+.text,
+.about-text {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
+.text {
+  padding: 78px;
+}
+
+.about-text::before {
+  box-sizing: border-box;
+  content: '';
+  width: 50%;
+  height: 100%;
+  float: left;
+  shape-outside: polygon(
+    0 0,
+    98% 0,
+    50% 6%,
+    23.4% 17.3%,
+    6% 32.6%,
+    0 50%,
+    6% 65.6%,
+    23.4% 82.7%,
+    50% 94%,
+    98% 100%,
+    0 100%
+  );
+  shape-margin: 7%;
+}
+
+.text::before {
+  box-sizing: border-box;
+  content: '';
+  width: 50%;
+  height: 100%;
+  float: right;
+  shape-outside: polygon(
+    2% 0%,
+    100% 0%,
+    100% 100%,
+    2% 100%,
+    50% 94%,
+    76.6% 82.7%,
+    94% 65.6%,
+    100% 50%,
+    94% 32.6%,
+    76.6% 17.3%,
+    50% 6%
+  );
 }
 </style>
