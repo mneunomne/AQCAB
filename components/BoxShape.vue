@@ -215,7 +215,7 @@ export default {
   top: 0;
   height: 100%;
   /*filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));*/
-  opacity: 0.5;
+  opacity: 0.7;
   transition: opacity 0.25s;
 }
 
@@ -242,7 +242,7 @@ export default {
 }
 
 .box_shape:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .box_shape.onHoverOnly svg path {
