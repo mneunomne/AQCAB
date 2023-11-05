@@ -118,7 +118,7 @@ export default {
           if (node.type === 'node') {
             this.$router.push(`/connections/${node.id}`)
           } else if (node.type === 'tag') {
-
+            this.$router.replace({ query: { tag: node.id } });
             // hide all nodes that are not connected to this tag
             let nodes = gData.nodes
             console.log("node", node, nodes)

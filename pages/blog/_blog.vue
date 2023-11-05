@@ -68,5 +68,6 @@ export default {
 .article {
   margin: var(--block-padding);
   padding: 0px;
+  min-width: auto !important;
 }
 </style>

@@ -8,10 +8,32 @@
     </div>
     <div class="grid-block grid-width-2 grid-height-1">
       <article class="article">
-        <span class="close" @click="$router.push('/')">close</span>
-        <h1 class="article-title">
-          {{ connectionNode[`name_${$i18n.locale}`] }}
-        </h1>
+        <div class="article-content">
+          <span class="close" @click="$router.push('/')">close</span>
+          <h1 class="article-name">
+            {{ connectionNode[`name_${$i18n.locale}`] }}
+          </h1>
+          <ul class="row article-tags">
+            <li
+              v-for="tag in connectionNode.tags"
+              :key="tag"
+              class="tag"
+              @click="onClickTag(tag)"
+            >
+              - {{ tag }}
+            </li>
+          </ul>
+          <ul class="row article-connections">
+            <li
+              v-for="connection in connectionNode.connections"
+              :key="connection"
+              class="tag"
+              @click="$router.push(localePath(`/connections/${connection}`))"
+            >
+              > {{ connection }}
+            </li>
+          </ul>
+        </div>
       </article>
       <BoxShape />
     </div>
@@ -33,6 +55,12 @@ export default {
   components: {
     BoxShape
   },
+  methods: {
+    onClickTag(tag) {
+      this.$router.push(this.localePath(`/?tag=${tag}`))
+      //this.$router.replace({ query: { tag: tag } });
+    }
+  },
   async asyncData({ params, payload }) {
     console.log('params', params, payload)
     if (payload) return { connectionNode: payload }
@@ -44,4 +72,24 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
+.article li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.article-content {
+  padding: 10px;
+}
+
+.tag {
+  cursor: pointer;
+}
+.tag:hover {
+  text-decoration: underline;
+}
+
+.article-name {
+  font-size: 28px;
+  margin-bottom: 2em;
+}
 </style>

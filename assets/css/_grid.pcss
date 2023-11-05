@@ -17,9 +17,10 @@
 }
 
 .grid-block {
-  display: inline-grid;
+  display: inline-block;
   position: relative;
   backdrop-filter: blur(6px);
+  overflow: hidden;
 }
 
 .grid-block-cont {
@@ -40,6 +41,9 @@ article {
   padding: var(--block-padding);
   z-index: 10;
   position: relative;
+  min-height: 100%;
+  min-width: 100%;
+  display: inline-block;
 }
 
 .article.card > .card-content {
