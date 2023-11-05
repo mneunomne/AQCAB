@@ -11,14 +11,14 @@
         <div class="row title">
           <h3 class="article-title">{{ blogPost[`title_${$i18n.locale}`] }}</h3>
         </div>
-        <div v-show="blogPost.author" class="row author">
+        <div v-show="blogPost[`author_${$i18n.locale}`]" class="row author">
           <h3 class="article-author">
             {{ blogPost[`author_${$i18n.locale}`] }}
           </h3>
         </div>
         <div
           class="row content"
-          v-html="$md.render(blogPost[`description_${$i18n.locale}`])"
+          v-html="$md.render(blogPost[`description_en`])"
         ></div>
         <p v-if="blogPost.date" class="blog-card-date">
           {{ formatDate(blogPost.date) }}

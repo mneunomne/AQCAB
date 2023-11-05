@@ -6,7 +6,7 @@
       </span>
       <article class="article">
         <div class="article-content">
-          <div v-show="blogPost.title" class="row title">
+          <div v-show="blogPost[`title_${$i18n.locale}`]" class="row title">
             <h1 class="article-title">
               {{ blogPost[`title_${$i18n.locale}`] }}
             </h1>
@@ -16,12 +16,12 @@
               {{ formatDate(blogPost.date) }}
             </span>
           </div>
-          <div v-show="blogPost.author" class="row author">
+          <div v-show="blogPost[`author_${$i18n.locale}`]" class="row author">
             <h3 class="article-author">
               {{ blogPost[`author_${$i18n.locale}`] }}
             </h3>
           </div>
-          <div v-show="blogPost.author" class="row content">
+          <div class="row content">
             <div v-html="$md.render(blogPost[`body_${$i18n.locale}`])"></div>
           </div>
         </div>
