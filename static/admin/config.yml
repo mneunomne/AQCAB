@@ -89,14 +89,11 @@ collections:
       - { name: 'Content (be)', label: 'content_be', widget: 'markdown' , required: false, default: ''} 
   - name: 'blog'
     label: 'Blog'
-    # identifier_field: name
     folder: 'assets/content/blog'
     identifier_field: 'title_en'
     create: true
     format: 'json'
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
-    # editor:
-    #   preview: true
     fields:
       - { label: 'Title (en)', name: 'title_en', widget: 'string' }
       - { label: 'Author (en)', name: 'author_en', widget: 'string' }
@@ -105,3 +102,4 @@ collections:
       - { label: 'Author (be)', name: 'author_be', widget: 'string' }
       - { label: 'Body (be)', name: 'body_be', widget: 'markdown' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Highlight', name: 'highlight', widget: 'boolean', hint: 'a highlighted blog post will appear wider in the blog screen.' }
