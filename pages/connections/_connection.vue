@@ -15,7 +15,9 @@
     </div>
     <div class="grid-block grid-width-3 grid-height-2">
       <article class="article">
-        <div v-html="$md.render(connectionNode[`content_${locale}`])"></div>
+        <div
+          v-html="$md.render(connectionNode[`content_${$i18n.locale}`])"
+        ></div>
       </article>
       <BoxShape />
     </div>

@@ -60,4 +60,9 @@ export default {
   position: relative;
   margin: 50px;
 }
+
+.article {
+  margin: var(--block-padding);
+  padding: 0px;
+}
 </style>

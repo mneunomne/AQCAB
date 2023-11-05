@@ -3,7 +3,8 @@
     <li
       v-for="(blogPost, index) in blogPosts"
       :key="index"
-      class="grid-block grid-height-2 grid-width-1 blog-card"
+      class="grid-block grid-height-2 blog-card"
+      :class="blogPost.highlight ? 'grid-width-2' : 'grid-width-1'"
       @click="onClickBlog(`/blog/${blogPost.slug}`)"
     >
       <article class="card-content">
@@ -55,6 +56,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.articles {
+  display: flex;
+}
 .blog-card {
   cursor: pointer;
 }
