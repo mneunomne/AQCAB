@@ -35,17 +35,40 @@ collections:
               pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
             }
           # - { label: Site Email, name: siteemail, widget: string, required: false }
+  - label: 'About'
+    name: 'about'
+    files:
+      - label: 'About text'
+        name: 'abouttext'
+        file: 'assets/content/site/about.json'
+        format: 'json'
+        editor:
+        preview: false
+        fields:
+          - {
+              label: 'About (English)',
+              name: 'about_en',
+              widget: 'markdown',
+              hint: 'This is used as descriptive text for links that link to this site',
+            }
+          - {
+              label: 'About (Belarusian)',
+              name: 'about_be',
+              widget: 'markdown',
+              hint: 'This is used as descriptive text for links that link to this site',
+            }
+          # - { label: Site Email, name: siteemail, widget: string, required: false }
   - name: 'connections'
     label: 'Connections'
-    identifier_field: name_en
+    identifier_field: 'name_en'
     folder: 'assets/content/connections'
     create: true
     format: 'json'
     slug: '{{slug}}'
     fields:
-      - { name: 'node_id', label: 'Node Id', widget: 'string' , required: true, pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."]} 
-      - { name: 'name_en', label: 'name_en', widget: 'string' , required: true} 
-      - { name: 'name_be', label: 'name_be', widget: 'string' , required: false , default: ''} 
+      - { name: 'node_id', label: 'Node Id', widget: 'string' , required: true, pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."], hint: 'write the name of the connection with no special character or spaces.',} 
+      - { name: 'Name (en)', label: 'name_en', widget: 'string' , required: true} 
+      - { name: 'Name (be)', label: 'name_be', widget: 'string' , required: false , default: ''} 
       - { name: 'node_type', label: 'node_type', widget: 'string' , required: false, default: ''} 
       - { 
           name: 'connections',
@@ -62,19 +85,23 @@ collections:
         } 
       - { name: 'tags', label: 'tags', widget: 'list', default: [], required: false } 
       - { name: 'type', label: 'type', widget: 'string', required: false, default: '' } 
-      - { name: 'content_en', label: 'content_en', widget: 'markdown' , required: false, default: ''} 
-      - { name: 'content_be', label: 'content_be', widget: 'markdown' , required: false, default: ''} 
+      - { name: 'Content (en)', label: 'content_en', widget: 'markdown' , required: false, default: ''} 
+      - { name: 'Content (be)', label: 'content_be', widget: 'markdown' , required: false, default: ''} 
   - name: 'blog'
     label: 'Blog'
     # identifier_field: name
     folder: 'assets/content/blog'
+    identifier_field: 'title_en'
     create: true
     format: 'json'
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     # editor:
     #   preview: true
     fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Author', name: 'author', widget: 'string' }
+      - { label: 'Title (en)', name: 'title_en', widget: 'string' }
+      - { label: 'Author (en)', name: 'author_en', widget: 'string' }
+      - { label: 'Body (en)', name: 'body_en', widget: 'markdown' }
+      - { label: 'Title (be)', name: 'title_be', widget: 'string' }
+      - { label: 'Author (be)', name: 'author_be', widget: 'string' }
+      - { label: 'Body (be)', name: 'body_be', widget: 'markdown' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Body', name: 'body', widget: 'markdown' }
