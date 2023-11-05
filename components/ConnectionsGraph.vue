@@ -262,7 +262,6 @@ export default {
           id: node.node_id,
           name: node.name_en,
           val: 1,
-          content_en: node.content_en,
           type: 'node',
           tags: [...node.tags],
         };

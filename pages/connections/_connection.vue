@@ -15,7 +15,7 @@
     </div>
     <div class="grid-block grid-width-3 grid-height-2">
       <article class="article">
-        <div v-html="$md.render(connectionNode.content_en)"></div>
+        <div v-html="$md.render(connectionNode[`content_${locale}`])"></div>
       </article>
       <BoxShape />
     </div>
@@ -40,8 +40,4 @@ export default {
 }
 </script>
 <style lang="postcss" scoped>
-.close {
-  right: 35px;
-  top: 25px;
-}
 </style>
