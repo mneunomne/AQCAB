@@ -98,8 +98,10 @@ collections:
       - { label: 'Title (en)', name: 'title_en', widget: 'string' }
       - { label: 'Author (en)', name: 'author_en', widget: 'string' }
       - { label: 'Body (en)', name: 'body_en', widget: 'markdown' }
+      - { label: 'Short Description (en)', name: 'description_en', widget: 'markdown',  hint: 'Text that will be displayed in the blog menu. If not present, a preview of the body content will appear.' }
       - { label: 'Title (be)', name: 'title_be', widget: 'string' }
       - { label: 'Author (be)', name: 'author_be', widget: 'string' }
       - { label: 'Body (be)', name: 'body_be', widget: 'markdown' }
+      - { label: 'Short Description (be)', name: 'description_be', widget: 'markdown',  hint: 'Text that will be displayed in the blog menu. If not present, a preview of the body content will appear.' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Highlight', name: 'highlight', widget: 'boolean', hint: 'a highlighted blog post will appear wider in the blog screen.' }

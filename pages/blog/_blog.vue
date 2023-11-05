@@ -2,12 +2,14 @@
   <div class="grid-block-cont" v-show="blogPost">
     <div class="grid-block grid-width-3 grid-height-3">
       <span class="close" @click="$router.push(localePath('/blog'))"
-        >close</span
-      >
+        >{{ $t('close') }}
+      </span>
       <article class="article">
         <div class="article-content">
           <div v-show="blogPost.title" class="row title">
-            <h1 class="article-title">{{ blogPost.title }}</h1>
+            <h1 class="article-title">
+              {{ blogPost[`title_${$i18n.locale}`] }}
+            </h1>
           </div>
           <div class="article-date">
             <span v-if="blogPost.date" class="inline-block">
@@ -15,10 +17,12 @@
             </span>
           </div>
           <div v-show="blogPost.author" class="row author">
-            <h3 class="article-author">{{ blogPost.author }}</h3>
+            <h3 class="article-author">
+              {{ blogPost[`author_${$i18n.locale}`] }}
+            </h3>
           </div>
           <div v-show="blogPost.author" class="row content">
-            <div v-html="$md.render(blogPost.body)"></div>
+            <div v-html="$md.render(blogPost[`body_${$i18n.locale}`])"></div>
           </div>
         </div>
       </article>
