@@ -80,4 +80,11 @@ export default {
   min-width: auto !important;
   font-size: 18px;
 }
+
+.close-bottom {
+  position: absolute;
+  bottom: -50px;
+  right: -15px;
+  top: auto;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="connections-graph"
-    :class="{ hide: $route.path !== localePath(';/') }"
+    :class="{ hide: $route.path !== localePath('/') }"
     @click="onClickNetwork"
   >
     .

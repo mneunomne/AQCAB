@@ -1,11 +1,11 @@
 <template>
   <div class="network-node grid-block-cont">
-    <div class="grid-block grid-width-1 grid-height-1 grid-box">
+    <div class="grid-block grid-width-1 grid-height-1 grid-box fixed-height">
       <article class="article">
         <span>image</span>
       </article>
     </div>
-    <div class="grid-block grid-width-2 grid-height-1 grid-box">
+    <div class="grid-block grid-width-2 grid-height-1 grid-box fixed-height">
       <article class="node-info">
         <div class="article-content">
           <span class="close" @click="$router.push('/')">close</span>
@@ -72,14 +72,14 @@ export default {
 .node-info li {
   display: inline-block;
   margin-right: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .article {
   padding: var(--article-padding);
   min-width: auto !important;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -96,7 +96,7 @@ export default {
 }
 
 .article-name {
-  font-size: 28px;
-  margin-bottom: 1em;
+  font-size: 26px;
+  margin-bottom: 16px;
 }
 </style>
