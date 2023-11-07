@@ -46,7 +46,7 @@ export default {
       this.open = true
       if (this.closeTimeout) clearTimeout(this.closeTimeout)
       this.closeTimeout = setTimeout(() => {
-        if (this.$route.path.includes(localePath('/about'))) return
+        if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
         this.open = false
       }, 500)
     }
