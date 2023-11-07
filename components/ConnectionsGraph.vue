@@ -15,7 +15,7 @@ import SpriteText from 'three-spritetext'
 
 import { networkColors } from '~/utils/globals'
 
-const fontSize = 6
+const fontSize = 8
 
 export default {
   props: {
