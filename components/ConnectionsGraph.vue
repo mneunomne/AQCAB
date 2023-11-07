@@ -74,6 +74,9 @@ export default {
         .onEngineStop(() => {
           console.log("loaded!")
         })
+        .linkVisibility((link) => {
+          return !link.target.includes('_name')
+        })
         // .cooldownTime(500)
         .linkOpacity(0.5)
         .linkColor(() => {
@@ -81,16 +84,19 @@ export default {
         })
         .enableNavigationControls(false)
         .nodeLabel((node) => {
-          if (node.type === 'node') {
-            return `<span class="node-name">${node.name}</span>`
-          } else {
-            return
-          }
+          return ''
         })
         .onNodeHover((node) => {
           if (node) {
             node.__threeObj.children[0].material.opacity = 1
             node.__threeObj.scale.set(1.1, 1.1, 1.1);
+            if (node.type === 'name') {
+              var _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+              if (_node) {
+                _node.__threeObj.children[0].material.opacity = 1
+                _node.__threeObj.scale.set(1.1, 1.1, 1.1);
+              }
+            }
             // node.__threeObj.children[0].scale
           } else {
             let nodes = gData.nodes
@@ -98,18 +104,30 @@ export default {
               n.__threeObj.scale.set(1, 1, 1);
             })
           }
-          if (node && node.type === 'node') {
-            // 
-            // this.nodeOpacity(node.id, 1)
-            // node.__threeObj.children[0].scale = { x: 1.1, y: 1.1, z: 1.1 }
-            // make triangle rotate
-            // node.__threeObj.children[0].rotation.z += 0.01
-            if (this.rotateInterval) {
-              clearInterval(this.rotateInterval)
+          if (node) {
+            if (node.type === 'node') {
+              // 
+              // this.nodeOpacity(node.id, 1)
+              // node.__threeObj.children[0].scale = { x: 1.1, y: 1.1, z: 1.1 }
+              // make triangle rotate
+              // node.__threeObj.children[0].rotation.z += 0.01
+              if (this.rotateInterval) {
+                clearInterval(this.rotateInterval)
+              }
+              this.rotateInterval = setInterval(() => {
+                node.__threeObj.children[0].rotation.z += 0.01
+              }, 10)
+            } else if (node.type === 'name') {
+              var _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+              if (_node) {
+                if (this.rotateInterval) {
+                  clearInterval(this.rotateInterval)
+                }
+                this.rotateInterval = setInterval(() => {
+                  _node.__threeObj.children[0].rotation.z += 0.01
+                }, 10)
+              }
             }
-            this.rotateInterval = setInterval(() => {
-              node.__threeObj.children[0].rotation.z += 0.01
-            }, 10)
           } else {
             if (this.rotateInterval) {
               clearInterval(this.rotateInterval)
@@ -118,8 +136,9 @@ export default {
         })
         .onNodeClick((node) => {
           console.log("click", node)
-          if (node.type === 'node') {
-            this.$router.push(`/connections/${node.id}`)
+          if (node.type === 'node' || node.type === 'name') {
+            let path = `/connections/${node.id}`.replace('_name', '')
+            this.$router.push(path)
           } else if (node.type === 'tag') {
             this.$router.replace({ query: { tag: node.id } });
             // hide all nodes that are not connected to this tag
@@ -156,7 +175,7 @@ export default {
             transparent: true,
           })
           const click_sphere = new THREE.Mesh(click_geometry, clickMatSphere)
-          click_sphere.scale.set(8, 8, 8)
+          click_sphere.scale.set(5, 5, 5)
 
           // create a triangle plane with random shape and color
           if (node.type === 'node') {
@@ -189,15 +208,19 @@ export default {
             group.add(mesh)
           }
 
-          const sprite = new SpriteText(node.name)
+          const char = node.type === 'tag' ? '- ' : '> '
+          const name = char + node.name
+          const sprite = new SpriteText(name)
           // sprite.fontFace = 'Hauora'
           sprite.material.depthWrite = false // make sprite background transparent
           if (node.type === 'node') {
             sprite.material.opacity = 0
-          } else {
+          } else if (node.type === 'tag') {
             sprite.material.opacity = 1
             sprite.backgroundColor = "rgba(230, 230, 230)";
             sprite.padding = [0, 0];
+          } else {
+            sprite.backgroundColor = "rgba(230, 230, 230, 0)";
           }
 
           sprite.color = 'black'
@@ -229,16 +252,21 @@ export default {
           this.onLoadedNode(node)
           return group
         })
-      g.d3Force('charge').strength(-170)
+      g.d3Force('charge').strength(-130)
       let w = window.innerWidth / 3
       let h = window.innerHeight
       g.d3Force('limit',
         d3ForceLimit()
           .x0(-w / 2)
           .x1(w / 2)
-          .y0(-h / 2 - 50)
-          .y1(h / 2 - 50)
+          .y0(-h / 2 - 100)
+          .y1(h / 2 - 100)
       );
+      const linkForce = g.d3Force('link').distance((link) => {
+        console.log("link", link)
+        return link.target.id.includes('_name') ? 2 : 20
+      })
+
       this.g = g
 
     },
@@ -293,7 +321,7 @@ export default {
         positions.add(gridPos.join(','));
 
         // add node of just name
-        /*
+
         nodes.push({
           id: node.node_id + '_name',
           name: node.name_en,
@@ -301,7 +329,6 @@ export default {
           type: 'name',
           tags: []
         });
-        */
 
 
 
@@ -345,12 +372,11 @@ export default {
       console.log("data", data)
       const links = []
       data.forEach((node) => {
-        /*
+
         links.push({
           source: node.node_id,
           target: node.node_id + '_name',
         })
-        */
         node.connections.forEach((connection) => {
           links.push({
             source: node.node_id,
