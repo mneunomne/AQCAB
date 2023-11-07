@@ -1,7 +1,7 @@
 <template>
   <div
     class="connections-graph"
-    :class="{ hide: $route.path !== localePath('/') }"
+    :class="{ hide: $route.path !== localePath(';/') }"
     @click="onClickNetwork"
   >
     .
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     isHomeRoute() {
-      return this.$route.path === '/'
+      return this.$route.path === this.$nuxt.localePath('/')
     },
   },
   methods: {
@@ -140,18 +140,30 @@ export default {
             let path = `/connections/${node.id}`.replace('_name', '')
             this.$router.push(path)
           } else if (node.type === 'tag') {
-            this.$router.replace({ query: { tag: node.id } });
+            // this.$router.replace({ query: { tag: node.id } });
             // hide all nodes that are not connected to this tag
             let nodes = gData.nodes
             console.log("node", node, nodes)
             let links = gData.links
             let connectedNodes = []
             nodes.forEach((n) => {
-              if (n.type === 'node' && n.tags && n.tags.includes(node.id)) {
+              if ((n.type === 'node' || n.type === 'name') && n.tags && n.tags.includes(node.id)) {
                 connectedNodes.push(n.id)
                 n.__threeObj.children[0].material.opacity = 1
               } else {
                 n.__threeObj.children[0].material.opacity = 0.2
+              }
+            })
+
+            // make all links not connected to tag disapear
+            const linkObjects = node.__threeObj.parent.children.filter(
+              (c) => c.__graphObjType === 'link'
+            )
+            linkObjects.forEach((l) => {
+              if (l.__data.source.id.includes(node.id)) {
+                l.visible = true
+              } else {
+                l.visible = false
               }
             })
             node.__threeObj.children[0].material.opacity = 1
@@ -160,9 +172,16 @@ export default {
         .onBackgroundClick(() => {
           let nodes = gData.nodes
           // remove query param
-          this.$router.replace({ query: { tag: null } });
+          // this.$router.replace({ query: { tag: null } });
           nodes.forEach((n) => {
             n.__threeObj.children[0].material.opacity = 1
+          })
+          // make all links not connected to tag disapear
+          const linkObjects = gData.nodes[0].__threeObj.parent.children.filter(
+            (c) => c.__graphObjType === 'link'
+          )
+          linkObjects.forEach((l) => {
+            l.visible = true
           })
         })
         .nodeThreeObject((node) => {
@@ -196,7 +215,7 @@ export default {
             )
             geometry.center()
             const mesh = new THREE.Mesh(geometry, material)
-            var triangle_scale = 3 + Math.random() * 4
+            var triangle_scale = 4 + Math.random() * 4
             var rand = Math.random() * triangle_scale
             mesh.scale.set(
               triangle_scale + rand,
@@ -217,10 +236,14 @@ export default {
             sprite.material.opacity = 0
           } else if (node.type === 'tag') {
             sprite.material.opacity = 1
-            sprite.backgroundColor = "rgba(230, 230, 230)";
+            sprite.backgroundColor = "rgba(220, 220, 220, 0.8)";
             sprite.padding = [0, 0];
           } else {
-            sprite.backgroundColor = "rgba(230, 230, 230, 0)";
+            // always in front
+            sprite.material.opacity = 1
+            sprite.renderOrder = 1000
+            sprite.backgroundColor = "rgba(255, 255, 255, 0.5)";
+            sprite.padding = [0, 0];
           }
 
           sprite.color = 'black'
@@ -259,8 +282,8 @@ export default {
         d3ForceLimit()
           .x0(-w / 2)
           .x1(w / 2)
-          .y0(-h / 2 - 100)
-          .y1(h / 2 - 100)
+          .y0(-h / 2 - 200)
+          .y1(h / 2 - 200)
       );
       const linkForce = g.d3Force('link').distance((link) => {
         console.log("link", link)
@@ -327,7 +350,7 @@ export default {
           name: node.name_en,
           val: 1,
           type: 'name',
-          tags: []
+          tags: node.tags
         });
 
 
