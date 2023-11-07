@@ -9,7 +9,11 @@
     </div>
     <nav class="nav" :class="{ closed: !getIsMenuOpen }">
       <ul class="side_menu">
-        <li id="network-button" class="side_menu-btn" @click="goToRoute('/')">
+        <li
+          id="network-button"
+          class="side_menu-btn grid-box"
+          @click="goToRoute('/')"
+        >
           <span
             class="btn"
             :class="{
@@ -19,16 +23,12 @@
             }"
             >{{ $t('network') }}</span
           >
-          <BoxShape
-            :boxId="'network_btn'"
-            :interactOnHover="true"
-            :active="
-              $route.path === localePath('/') ||
-              $route.path.includes(localePath('/connections'))
-            "
-          />
         </li>
-        <li id="blog-button" class="side_menu-btn" @click="goToRoute('/blog')">
+        <li
+          id="blog-button"
+          class="side_menu-btn grid-box"
+          @click="goToRoute('/blog')"
+        >
           <span
             class="btn"
             :class="{
@@ -36,30 +36,24 @@
             }"
             >{{ $t('blog') }}</span
           >
-          <BoxShape
-            :boxId="'blog_btn'"
-            :interactOnHover="true"
-            :active="$route.path.includes(localePath('/blog'))"
-          />
         </li>
-        <li id="timeline-button" class="side_menu-btn disabled">
+        <li id="timeline-button" class="side_menu-btn grid-box disabled">
           <span class="btn">{{ $t('timeline') }}</span>
-          <BoxShape :boxId="'timeline_btn'" :interactOnHover="true" />
         </li>
         <li class="small-btn-wrapper wrap-3">
-          <div class="side_menu-btn btn-small" @click="onClickLangButton">
+          <div
+            class="side_menu-btn btn-small grid-box"
+            @click="onClickLangButton"
+          >
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
-            <BoxShape :boxId="'lang_btn'" :interactOnHover="true" />
           </div>
-          <div class="side_menu-btn btn-small">
+          <div class="side_menu-btn btn-small grid-box">
             <a class="btn" target="_blank"><span>insta</span></a>
-            <BoxShape :boxId="'insta_btn'" :interactOnHover="true" />
           </div>
-          <div class="side_menu-btn btn-small">
+          <div class="side_menu-btn btn-small grid-box">
             <a class="btn" target="_blank"><span>email</span></a>
-            <BoxShape :boxId="'email_btn'" :interactOnHover="true" />
           </div>
         </li>
       </ul>
@@ -136,10 +130,15 @@ export default {
 
 .menu-toggle {
   position: absolute;
-  top: 30px;
-  right: 50px;
+  padding: 20px;
+  top: 10px;
+  right: 30px;
   cursor: pointer;
   text-transform: lowercase;
+}
+
+.menu-toggle {
+  font-weight: 500;
 }
 
 /*
@@ -160,11 +159,11 @@ export default {
   padding: 20px 18px;
 }
 .nav.closed .side_menu-btn:not(.btn-small) {
-  transform: translateX(300px);
+  transform: translateX(500px);
 }
 
 .nav.closed .side_menu-btn.btn-small {
-  transform: translateY(300px);
+  transform: translateY(500px);
 }
 
 .side_menu {

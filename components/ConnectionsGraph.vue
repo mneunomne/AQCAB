@@ -2,6 +2,7 @@
   <div
     class="connections-graph"
     :class="{ hide: $route.path !== localePath('/') }"
+    @click="onClickNetwork"
   >
     .
   </div>
@@ -134,6 +135,14 @@ export default {
             })
             node.__threeObj.children[0].material.opacity = 1
           }
+        })
+        .onBackgroundClick(() => {
+          let nodes = gData.nodes
+          // remove query param
+          this.$router.replace({ query: { tag: null } });
+          nodes.forEach((n) => {
+            n.__threeObj.children[0].material.opacity = 1
+          })
         })
         .nodeThreeObject((node) => {
           console.log("node")
@@ -352,6 +361,9 @@ export default {
       this.g.width(window.innerWidth)
       this.g.height(window.innerHeight)
     },
+    onClickNetwork() {
+      console.log("onClickNetwork")
+    }
   },
 }
 </script>

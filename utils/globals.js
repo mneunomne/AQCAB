@@ -414,6 +414,9 @@ export const networkColors = [
   "#607466",
 ]
 
+export const bigScreen = 1280
+export const smallScreen = 1024
+
 export const generateHighContrastColor = () => {
   // Generate a random hue value between 0 and 360
   const hue = Math.floor(Math.random() * 360);

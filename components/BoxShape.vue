@@ -5,7 +5,6 @@
     :class="{
       color: isShape,
       buttonDown: isButtonDown,
-      onHoverOnly: !interactOnHover,
     }"
   >
     <svg
@@ -55,6 +54,10 @@ export default {
     boxId: {
       type: String,
       required: true
+    },
+    prefColor: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -78,14 +81,12 @@ export default {
     }
   },
   mounted() {
-    if (this.interactOnHover) {
-      // this.init();
-    }
+    this.init();
   },
   methods: {
     init() {
       this.hasInitiated = true
-      this.color = this.randomColor()
+      this.color = this.prefColor || this.randomColor()
       this.shape_idx = parseInt(Math.random() * this.numShapes) + 1
       // wait for dom to be rendered
       // animation to become shape
@@ -192,7 +193,6 @@ export default {
       return menuColors[Math.floor(Math.random() * menuColors.length)]
     },
   },
-  /*
   watch: {
     active(val) {
       if (!val) {
@@ -205,7 +205,6 @@ export default {
       }
     }
   }
-  */
 }
 </script>
 <style>

@@ -1,12 +1,11 @@
 <template>
   <div class="network-node grid-block-cont">
-    <div class="grid-block grid-width-1 grid-height-1">
+    <div class="grid-block grid-width-1 grid-height-1 grid-box">
       <article class="article">
         <span>image</span>
       </article>
-      <BoxShape />
     </div>
-    <div class="grid-block grid-width-2 grid-height-1">
+    <div class="grid-block grid-width-2 grid-height-1 grid-box">
       <article class="node-info">
         <div class="article-content">
           <span class="close" @click="$router.push('/')">close</span>
@@ -35,15 +34,13 @@
           </ul>
         </div>
       </article>
-      <BoxShape />
     </div>
-    <div class="grid-block grid-width-3 grid-height-2">
+    <div class="grid-block grid-width-3 grid-height-2 grid-box">
       <article class="article">
         <div
           v-html="$md.render(connectionNode[`content_${$i18n.locale}`])"
         ></div>
       </article>
-      <BoxShape />
     </div>
   </div>
 </template>

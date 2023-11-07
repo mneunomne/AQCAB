@@ -37,6 +37,7 @@ export default {
 
 #footer-contribute {
   position: fixed;
+  font-weight: 500;
   bottom: 30px;
   right: 30px;
   opacity: 0;

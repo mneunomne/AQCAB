@@ -1,5 +1,20 @@
 <template>
-  <div id="about">
+  <div id="about-cont">
+    <div class="grid-block grid-width-3 grid-height-3 grid-box">
+      <span class="close" @click="$router.push(localePath('/'))"
+        >{{ $t('close') }}
+      </span>
+      <article class="article">
+        <div class="article-content">
+          <div class="row content">
+            <div v-html="$md.render(about[`about_${$i18n.locale}`])"></div>
+          </div>
+        </div>
+      </article>
+      <!--<BoxShape :boxId="'about'" :active="open" />-->
+    </div>
+  </div>
+  <!--
     <svg
       width="100"
       height="100"
@@ -59,10 +74,26 @@
         </feMerge>
       </filter>
     </svg>
-  </div>
+    -->
 </template>
 <script>
+
+import BoxShape from '~/components/BoxShape.vue'
+
 export default {
+  components: {
+    BoxShape
+  },
+  data() {
+    return {
+      open: false
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.open = true
+    }, 1000)
+  },
   async asyncData({ params, payload }) {
     if (payload) return { blogPost: payload }
     else

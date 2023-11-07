@@ -1,6 +1,6 @@
 <template>
   <div class="grid-block-cont">
-    <div class="grid-block grid-width-3 grid-height-3">
+    <div class="grid-block grid-width-3 grid-height-3 grid-box">
       <span class="close" @click="$router.push(localePath('/blog'))"
         >{{ $t('close') }}
       </span>
@@ -26,7 +26,6 @@
           </div>
         </div>
       </article>
-      <BoxShape />
     </div>
   </div>
 </template>
