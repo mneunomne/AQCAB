@@ -1,8 +1,20 @@
 <template>
   <div>
-    <span @click="onClickLogo" id="footer-title"
-      >A<span class="queer">Q</span>CAB</span
+    <div
+      @click="onClickLogo"
+      @mouseover="onMouseOverLogo"
+      id="footer-title"
+      class="logo"
+      :class="{ open: open || $route.path.includes(localePath('/about')) }"
     >
+      <span class="letter">A</span><span class="letters_hide">rchive of</span>
+      <span class="letter pinkLetter">Q</span
+      ><span class="letters_hide pinkLetter">ueer</span>
+      <span class="letter">C</span><span class="letters_hide">ulture and</span>
+      <span class="letter">A</span><span class="letters_hide">rt from</span>
+      <span class="letter">B</span><span class="letters_hide">elarus</span>
+    </div>
+
     <span :class="{ show: !getIsMenuOpen }" id="footer-contribute">{{
       $t('contribute')
     }}</span>
@@ -14,6 +26,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Footer',
+  data() {
+    return {
+      open: false,
+      closeTimeout: null
+    }
+  },
   computed: {
     ...mapGetters({
       getIsMenuOpen: 'getIsMenuOpen'
@@ -22,7 +40,23 @@ export default {
   methods: {
     onClickLogo() {
       this.$router.push({ path: this.localePath('/about') })
+    },
+    onMouseOverLogo() {
+      if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
+      this.open = true
+      if (this.closeTimeout) clearTimeout(this.closeTimeout)
+      this.closeTimeout = setTimeout(() => {
+        if (this.$route.path.includes(localePath('/about'))) return
+        this.open = false
+      }, 500)
     }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path.includes(this.$nuxt.localePath('/about'))) return
+      this.open = false
+    }
+
   }
 }
 </script>
@@ -33,6 +67,7 @@ export default {
   left: 30px;
   text-transform: uppercase;
   font-size: 1.6em;
+  font-family: 'HauoraGX';
 }
 
 #footer-contribute {
@@ -49,7 +84,32 @@ export default {
   transition-delay: 0.5s;
 }
 
-.queer {
+.pinkLetter {
+  color: #ff00ff;
+}
+
+.logo span {
+  display: inline-block;
+  font-variation-settings: 'wght' 400;
+}
+
+.letters_hide {
+  color: transparent;
+  transition: all 0.3s;
+  text-transform: lowercase;
+  letter-spacing: -0.5em;
+}
+
+.logo.open span {
+  font-variation-settings: 'wght' 500;
+}
+
+.logo.open .letters_hide {
+  color: #000;
+  width: auto;
+  letter-spacing: 0;
+}
+.logo.open .letters_hide.pinkLetter {
   color: #ff00ff;
 }
 </style>
