@@ -47,10 +47,12 @@ export default {
   methods: {
     buildGraph() {
       const data = this.data
-      let ForceGraph3D
+      var ForceGraph3D
+      var d3ForceLimit
       if (window) {
         ForceGraph3D = require('3d-force-graph').default
-        console.log('ForceGraph3D', ForceGraph3D)
+        d3ForceLimit = require('d3-force-limit').default
+        console.log('d3ForceLimit', d3ForceLimit)
         console.log("loaded 3d-force-graph")
       } else {
         return
@@ -154,7 +156,7 @@ export default {
             transparent: true,
           })
           const click_sphere = new THREE.Mesh(click_geometry, clickMatSphere)
-          click_sphere.scale.set(10, 10, 10)
+          click_sphere.scale.set(8, 8, 8)
 
           // create a triangle plane with random shape and color
           if (node.type === 'node') {
@@ -227,7 +229,16 @@ export default {
           this.onLoadedNode(node)
           return group
         })
-      g.d3Force('charge').strength(-120)
+      g.d3Force('charge').strength(-170)
+      let w = window.innerWidth / 3
+      let h = window.innerHeight
+      g.d3Force('limit',
+        d3ForceLimit()
+          .x0(-w / 2)
+          .x1(w / 2)
+          .y0(-h / 2 - 50)
+          .y1(h / 2 - 50)
+      );
       this.g = g
 
     },
@@ -241,8 +252,8 @@ export default {
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
       let minDist = 20
-      let nx = 420;
-      let ny = 320;
+      let nx = 400;
+      let ny = 220;
       const nodes = [];
       const gridSize = minDist * 2; // Adjust this based on your minimum distance
 
@@ -274,10 +285,24 @@ export default {
           type: 'node',
           tags: [...node.tags],
         };
-        //obj.fx = x;
-        //obj.fy = y;
+        if (Math.random() > 0.9) {
+          obj.fx = x;
+          obj.fy = y;
+        }
         nodes.push(obj);
         positions.add(gridPos.join(','));
+
+        // add node of just name
+        /*
+        nodes.push({
+          id: node.node_id + '_name',
+          name: node.name_en,
+          val: 1,
+          type: 'name',
+          tags: []
+        });
+        */
+
 
 
         node.tags.forEach((tag) => {
@@ -305,6 +330,10 @@ export default {
           };
           //tagObj.fx = tx;
           // tagObj.fy = ty;
+          if (Math.random() > 0.9) {
+            obj.fx = tx;
+            obj.fy = ty;
+          }
           nodes.push(tagObj);
           positions.add(tagGridPos.join(','));
         });
@@ -313,8 +342,15 @@ export default {
     },
     // Data for Links -> Array of objects with source and target
     generateLinks(data) {
+      console.log("data", data)
       const links = []
       data.forEach((node) => {
+        /*
+        links.push({
+          source: node.node_id,
+          target: node.node_id + '_name',
+        })
+        */
         node.connections.forEach((connection) => {
           links.push({
             source: node.node_id,
