@@ -1,5 +1,5 @@
 <template>
-  <ul class="articles">
+  <ul class="grid-block-cont">
     <li
       v-for="(blogPost, index) in blogPosts"
       :key="index"
