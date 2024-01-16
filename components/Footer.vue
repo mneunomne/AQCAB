@@ -3,6 +3,8 @@
     <div
       @click="onClickLogo"
       @mouseover="onMouseOverLogo"
+      @mouseenter="onMouseOverLogo"
+      @mouseleave="onMouseLeaveLogo"
       id="footer-title"
       class="logo"
       :class="{ open: open || $route.path.includes(localePath('/about')) }"
@@ -44,6 +46,9 @@ export default {
     onMouseOverLogo() {
       if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
       this.open = true
+      if (this.closeTimeout) clearTimeout(this.closeTimeout)
+    },
+    onMouseLeaveLogo() {
       if (this.closeTimeout) clearTimeout(this.closeTimeout)
       this.closeTimeout = setTimeout(() => {
         if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
@@ -91,6 +96,7 @@ export default {
 .logo span {
   display: inline-block;
   font-variation-settings: 'wght' 400;
+  cursor: pointer;
 }
 
 .letters_hide {

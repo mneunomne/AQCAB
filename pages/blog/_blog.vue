@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-block-cont">
+  <div class="grid-block-cont" ref="postContainer">
     <div class="grid-block grid-width-3 grid-height-3 grid-box">
       <span class="close" @click="$router.push(localePath('/blog'))"
         >{{ $t('close') }}
@@ -26,6 +26,12 @@
           </div>
         </div>
       </article>
+      <span
+        v-show="isBiggerThanScreen"
+        class="close back"
+        @click="$router.push(localePath('/blog'))"
+        >{{ $t('back') }}
+      </span>
     </div>
   </div>
 </template>
@@ -44,15 +50,44 @@ export default {
         blogPost: await require(`~/assets/content/blog/${params.blog}.json`)
       }
   },
+  data() {
+    return {
+      windowHeight: 0,
+      postHeight: 0
+    }
+  },
+  mounted() {
+    this.windowHeight = window.innerHeight
+    this.postHeight = this.$refs.postContainer.offsetHeight
+    window.addEventListener('resize', (evt) => {
+      this.windowHeight = window.innerHeight
+      this.postHeight = this.$refs.postContainer.offsetHeight
+      console.log("this.postHeight", this.postHeight, this.windowHeight)
+    })
+  },
   methods: {
     formatDate(dateString) {
       const date = new Date(dateString)
       return date.toLocaleDateString(process.env.lang) || ''
     }
+  },
+  computed: {
+    isBiggerThanScreen() {
+      return (this.postHeight + 70) > this.windowHeight
+    }
   }
 }
 </script>
 <style scoped>
+.grid-box {
+  overflow: visible;
+}
+.back {
+  position: absolute;
+  bottom: -42px;
+  top: auto;
+  padding: 12px 20px;
+}
 .article-date {
   position: absolute;
   right: 0px;
@@ -75,8 +110,7 @@ export default {
 }
 
 .article {
-  margin: var(--block-padding);
-  padding: 0px;
+  padding: var(--block-padding);
   min-width: auto !important;
   font-size: 18px;
 }

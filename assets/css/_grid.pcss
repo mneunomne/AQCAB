@@ -8,7 +8,7 @@
   width: 100%;
   padding-left: var(--margin-side);
   padding-top: var(--margin-top);
-  padding-bottom: var(--margin-top);
+  padding-bottom: var(--padding-bottom);
   overflow: auto;
   height: 100vh;
   .title {
@@ -90,7 +90,7 @@ div p:first-child {
   margin-right: var(--grid-margin);
 }
 
-.grid-height-1, .grid-height-2, .grid-height-3 {
+.grid-height-1, .grid-height-2 {
   margin-bottom: var(--grid-margin);
 }
 
@@ -98,9 +98,9 @@ div p:first-child {
   background-color: rgba(230, 230, 230, 0.45);
   backdrop-filter: blur(6px);
   border-radius: 10px;
-  box-shadow: -1px 1px 22px 3px rgba(0,0,0,0.35) inset;
-  -webkit-box-shadow: -1px 1px 22px 3px rgba(0,0,0,0.35) inset;
-  -moz-box-shadow: -1px 1px 22px 3px rgba(0,0,0,0.35) inset;
+  box-shadow: -1px 1px 10px 6px rgba(0,0,0,0.25) inset;
+  -webkit-box-shadow: -1px 1px 10px 6px rgba(0,0,0,0.25) inset;
+  -moz-box-shadow: -1px 1px 10px 6px rgba(0,0,0,0.25) inset;
   transition: all 0.25s;
   z-index: 999;
 }
@@ -113,6 +113,7 @@ div p:first-child {
   font-size: 100%;
   font-weight: 500;
   text-decoration: line-through;
+  
   text-transform: lowercase;
   cursor: pointer;
   &:hover {
