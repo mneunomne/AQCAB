@@ -68,7 +68,7 @@ export default {
 <style lang="postcss" scoped>
 #footer-title {
   position: fixed;
-  bottom: 26px;
+  bottom: 27px;
   left: 30px;
   text-transform: uppercase;
   font-size: 1.6em;

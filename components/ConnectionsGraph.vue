@@ -49,10 +49,11 @@ export default {
       const data = this.data
       var ForceGraph3D
       var d3ForceLimit
+      var forceCollide
       if (window) {
         ForceGraph3D = require('3d-force-graph').default
         d3ForceLimit = require('d3-force-limit').default
-        console.log('d3ForceLimit', d3ForceLimit)
+        forceCollide = require('d3-force-3d').forceCollide
         console.log("loaded 3d-force-graph")
       } else {
         return
@@ -82,7 +83,6 @@ export default {
         .linkColor(() => {
           return '#000'
         })
-        .enableNavigationControls(false)
         .nodeLabel((node) => {
           return ''
         })
@@ -276,15 +276,26 @@ export default {
           return group
         })
       g.d3Force('charge').strength(-130)
-      let w = window.innerWidth / 3
+      let w = window.innerWidth
       let h = window.innerHeight
+      console.log("w h", w, h)
       g.d3Force('limit',
         d3ForceLimit()
-          .x0(-w / 2)
-          .x1(w / 2)
-          .y0(-h / 2 - 200)
-          .y1(h / 2 - 200)
+          .x0(-w / 4)
+          .x1(w / 8)
+          .y0(-(h / 5))
+          .y1(h / 5)
       );
+
+      g.controls().enableZoom = false
+      g.controls().enablePan = true
+      g.controls().noRotate = true
+      g.controls().noZoom = true
+      g.controls().panSpeed = 0.1
+
+
+      g.d3Force('colide', forceCollide(node => 20))
+
       const linkForce = g.d3Force('link').distance((link) => {
         return link.target.id.includes('_name') ? 2 : 20
       })
@@ -302,8 +313,10 @@ export default {
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
       let minDist = 20
-      let nx = 400;
-      let ny = 220;
+      let w = window.innerWidth
+      let h = window.innerHeight
+      let nx = w / 5;
+      let ny = h / 5;
       const nodes = [];
       const gridSize = minDist * 2; // Adjust this based on your minimum distance
 
@@ -351,8 +364,6 @@ export default {
           type: 'name',
           tags: node.tags
         });
-
-
 
         node.tags.forEach((tag) => {
           if (nodes.find((n) => n.id === tag)) {

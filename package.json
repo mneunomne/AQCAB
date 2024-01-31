@@ -18,6 +18,8 @@
     "@nuxtjs/i18n": "^7.3.1",
     "@nuxtjs/markdownit": "^1.2.6",
     "3d-force-graph": "^1.71.4",
+    "d3-force": "^3.0.0",
+    "d3-force-3d": "^3.0.5",
     "d3-force-limit": "^1.2.1",
     "kute.js": "^2.2.4",
     "nuxt": "^2.14.12",

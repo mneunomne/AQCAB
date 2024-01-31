@@ -1,5 +1,9 @@
 <template>
-  <div class="cont" :class="{ menuClosed: !getIsMenuOpen }">
+  <div
+    id="main-container"
+    class="cont"
+    :class="{ menuClosed: !getIsMenuOpen, mobile: getIsMobile }"
+  >
     <div class="wrapper" :class="{ loading: loading }">
       <ConnectionsGraph
         v-if="connections"
