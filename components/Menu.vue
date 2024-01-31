@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      menuOpen: true,
+      menuOpen: false,
     }
   },
   methods: {
@@ -99,9 +99,16 @@ export default {
 
     }
   },
+  mounted() {
+    if (!this.getIsMobile) {
+      this.menuOpen = true
+      this.toggleMenu(this.menuOpen)
+    }
+  },
   computed: {
     ...mapGetters({
-      getIsMenuOpen: 'getIsMenuOpen'
+      getIsMenuOpen: 'getIsMenuOpen',
+      getIsMobile: 'getIsMobile'
     }),
     mounted() {
       console.log("mounted", this.routeName)
@@ -113,6 +120,15 @@ export default {
       return this.$i18n.locale == 'en' ? 'бел' : 'eng'
     },
   },
+  watch: {
+    $route(to, from) {
+      console.log("watch route", to, from)
+      if (this.getIsMobile) {
+        this.menuOpen = false
+        this.toggleMenu(this.menuOpen)
+      }
+    }
+  }
 }
 </script>
 
@@ -132,7 +148,7 @@ export default {
   position: absolute;
   padding: 20px;
   top: 10px;
-  right: 30px;
+  right: 27px;
   cursor: pointer;
   text-transform: lowercase;
 }

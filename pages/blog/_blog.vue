@@ -62,7 +62,6 @@ export default {
     window.addEventListener('resize', (evt) => {
       this.windowHeight = window.innerHeight
       this.postHeight = this.$refs.postContainer.offsetHeight
-      console.log("this.postHeight", this.postHeight, this.windowHeight)
     })
   },
   methods: {
@@ -86,7 +85,7 @@ export default {
   position: absolute;
   bottom: -42px;
   top: auto;
-  padding: 12px 20px;
+  padding: 12px 25px;
 }
 .article-date {
   position: absolute;

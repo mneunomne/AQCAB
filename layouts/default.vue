@@ -7,7 +7,7 @@
         @loaded="onGraphLoaded"
       />
       <Menu />
-      <div class="main">
+      <div class="main" :class="{ menuOpen: getIsMenuOpen && getIsMobile }">
         <Footer />
         <nuxt />
       </div>
@@ -23,7 +23,10 @@ import Footer from '~/components/Footer.vue'
 import ConnectionsGraph from '~/components/ConnectionsGraph.vue'
 import BoxShape from '~/components/BoxShape.vue'
 import Shapes from '~/components/Shapes.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+
+const mobileWidth = 600
+
 
 export default {
   components: {
@@ -38,7 +41,8 @@ export default {
       return this.$store.state.connections
     },
     ...mapGetters({
-      getIsMenuOpen: 'getIsMenuOpen'
+      getIsMenuOpen: 'getIsMenuOpen',
+      getIsMobile: 'getIsMobile'
     }),
   },
   data() {
@@ -47,11 +51,26 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setIsMobile: 'setIsMobile',
+      toggleMenu: 'toggleMenu'
+    }),
     onGraphLoaded() {
       console.log("onGraphLoaded")
       this.loading = false
     }
   },
+  created() {
+    if (process.client) {
+      this.setIsMobile(window.innerWidth < 768)
+      console.log("mounted", this.getIsMobile)
+      window.addEventListener('resize', (evt) => {
+        this.windowHeight = window.innerHeight
+        this.postHeight = this.$refs.postContainer.offsetHeight
+        this.setIsMobile(window.innerWidth < 768)
+      })
+    }
+  }
 }
 </script>
 <style scoped>

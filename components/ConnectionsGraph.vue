@@ -286,7 +286,6 @@ export default {
           .y1(h / 2 - 200)
       );
       const linkForce = g.d3Force('link').distance((link) => {
-        console.log("link", link)
         return link.target.id.includes('_name') ? 2 : 20
       })
 

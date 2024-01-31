@@ -9,7 +9,7 @@
       <article class="node-info">
         <div class="article-content">
           <span class="close" @click="$router.push('/')">close</span>
-          <h1 class="article-name">
+          <h1 class="article-title">
             {{ connectionNode[`name_${$i18n.locale}`] }}
           </h1>
           <ul class="row article-tags">
@@ -84,7 +84,7 @@ export default {
 }
 
 .article-content {
-  padding: 10px;
+  padding: 0px;
 }
 
 .tag {
@@ -98,5 +98,9 @@ export default {
 .article-name {
   font-size: 26px;
   margin-bottom: 16px;
+}
+
+.article-title {
+  text-transform: inherit;
 }
 </style>

@@ -60,6 +60,35 @@ article {
   text-transform: uppercase;
 }
 
+.card-content, .article {
+  opacity: 1;
+  transition: opacity 0.2s;
+  transition-delay: 0.5s;
+}
+
+.main.menuOpen .blog-card {
+  pointer-events: none;
+}
+
+.main.menuOpen .card-content, .main.menuOpen .article {
+  animation: fadeout 0.2s;
+  opacity: 0;
+  transition-delay: 0.5s;
+}
+
+@keyframes fadein {
+  0%  { opacity: 0; }
+  50%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+
+
 article .row {
   margin-bottom: 1em;
 }
