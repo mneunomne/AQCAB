@@ -233,13 +233,14 @@ export default {
 .btn-small {
   position: relative;
   display: inline-block;
-  .btn {
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    align-items: center;
-  }
+}
+
+.btn-small .btn {
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  align-items: center;
 }
 
 .small-btn-wrapper {
