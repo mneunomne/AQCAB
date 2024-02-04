@@ -104,6 +104,7 @@ export default {
   transition: all 0.3s;
   text-transform: lowercase;
   letter-spacing: -0.5em;
+  white-space: nowrap;
 }
 
 .logo.open span {
