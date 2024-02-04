@@ -67,21 +67,32 @@ export default {
   created() {
     if (process.client) {
       this.setIsMobile(window.innerWidth < 768)
-      console.log("mounted", this.getIsMobile)
       window.addEventListener('resize', (evt) => {
+        console.log("resize", window.innerWidth)
         this.windowHeight = window.innerHeight
-        this.postHeight = this.$refs.postContainer.offsetHeight
         this.setIsMobile(window.innerWidth < 768)
+        // this.postHeight = this.$refs.postContainerthis.$refs.postContainer?.offsetHeight
       })
     }
   }
 }
 </script>
 <style scoped>
-.cont.menuClosed {
+.cont.menuClosed:not(.mobile) {
   transition: all 0.25s 0.5s;
   width: 100%;
   padding-right: 10px;
+}
+
+.cont.mobile .main > *:not(.footer) {
+  transition: transform 0.5s;
+  transform: translateX(0);
+  transition-delay: 0.5s;
+}
+
+.cont.mobile .main.menuOpen > *:not(.footer) {
+  transform: translateX(calc(-1 * var(--menu-width)));
+  transition-delay: 0s;
 }
 
 @keyframes grow-width {

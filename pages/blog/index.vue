@@ -46,7 +46,6 @@ export default {
   data() {
     return {
       show: false,
-      isMobile: false,
       noTransition: false
     }
   },
@@ -115,6 +114,12 @@ export default {
   -webkit-line-clamp: 11;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  max-height: calc(100% - 30px);
+  -webkit-mask-image: linear-gradient(0deg, transparent 5px, white 50px);
+}
+
+.card-content {
+  display: flex;
 }
 
 .blog-card.show {
@@ -136,6 +141,7 @@ export default {
 }
 
 .content {
+  display: flow-root;
   height: 50%;
 }
 </style>

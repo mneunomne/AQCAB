@@ -1,11 +1,13 @@
 <template>
   <div class="network-node grid-block-cont">
+    <!--
     <div class="grid-block grid-width-1 grid-height-1 grid-box fixed-height">
       <article class="article">
         <span>image</span>
       </article>
     </div>
-    <div class="grid-block grid-width-2 grid-height-1 grid-box fixed-height">
+    -->
+    <div class="grid-block grid-width-3 grid-height-1 grid-box fixed-height">
       <article class="node-info">
         <div class="article-content">
           <span class="close" @click="$router.push('/')">close</span>

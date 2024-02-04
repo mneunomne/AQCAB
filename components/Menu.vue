@@ -138,6 +138,7 @@ export default {
 <style lang="postcss" scoped>
 .menu {
   position: fixed;
+  pointer-events: none;
   top: 0;
   right: 0;
   bottom: 0;
@@ -154,6 +155,10 @@ export default {
   right: 27px;
   cursor: pointer;
   text-transform: lowercase;
+}
+
+.cont.mobile .menu-toggle {
+  right: 36px;
 }
 
 .menu-toggle {
@@ -183,6 +188,15 @@ export default {
 
 .nav.closed .side_menu-btn.btn-small {
   transform: translateY(500px);
+}
+
+.nav,
+.menu-toggle {
+  pointer-events: all;
+}
+
+.nav.closed {
+  pointer-events: none;
 }
 
 .side_menu {

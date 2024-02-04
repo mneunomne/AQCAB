@@ -70,11 +70,17 @@ article {
   pointer-events: none;
 }
 
-.main.menuOpen .card-content, .main.menuOpen .article {
-  animation: fadeout 0.2s;
-  opacity: 0;
-  transition-delay: 0.5s;
+.cont.mobile {
+  min-width: calc(100vw - 10px);
 }
+
+.grid-block-cont {
+}
+
+.main.menuOpen .grid-block-cont {
+
+}
+
 
 @keyframes fadein {
   0%  { opacity: 0; }
@@ -137,6 +143,8 @@ div p:first-child {
 .grid-box:hover {
   background-color: rgba(230, 230, 230, 0.8);
 }
+
+
 
 .close {
   font-size: 100%;

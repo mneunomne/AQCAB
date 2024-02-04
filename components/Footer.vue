@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="footer">
     <div
       @click="onClickLogo"
       @mouseover="onMouseOverLogo"
@@ -7,7 +7,10 @@
       @mouseleave="onMouseLeaveLogo"
       id="footer-title"
       class="logo"
-      :class="{ open: open || $route.path.includes(localePath('/about')) }"
+      :class="{
+        open:
+          (open || $route.path.includes(localePath('/about'))) && !getIsMobile,
+      }"
     >
       <span class="letter">A</span><span class="letters_hide">rchive of</span>
       <span class="letter pinkLetter">Q</span
@@ -40,6 +43,7 @@ export default {
     ...mapGetters({
       getIsMenuOpen: 'getIsMenuOpen',
       getSiteInfo: 'getSiteInfo',
+      getIsMobile: 'getIsMobile'
     })
   },
   methods: {
@@ -47,11 +51,13 @@ export default {
       this.$router.push({ path: this.localePath('/about') })
     },
     onMouseOverLogo() {
+      if (this.getIsMobile) return
       if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
       this.open = true
       if (this.closeTimeout) clearTimeout(this.closeTimeout)
     },
     onMouseLeaveLogo() {
+      if (this.getIsMobile) return
       if (this.closeTimeout) clearTimeout(this.closeTimeout)
       this.closeTimeout = setTimeout(() => {
         if (this.$route.path.includes(this.$nuxt.localePath('/about'))) return
@@ -62,6 +68,7 @@ export default {
   watch: {
     $route(to, from) {
       if (to.path.includes(this.$nuxt.localePath('/about'))) return
+      if (this.getIsMobile) return
       this.open = false
     }
 
@@ -87,15 +94,23 @@ export default {
   transition: opacity 0.3s ease-in-out;
 }
 
+#footer-contribute a {
+  color: var(--pink);
+  text-decoration: none;
+}
+
+.cont.mobile #footer-contribute {
+  bottom: 35px;
+}
+
 #footer-contribute.show {
   opacity: 1;
   transition-delay: 0.5s;
-  z-index: 9999;
   pointer-events: all;
 }
 
 .pinkLetter {
-  color: #ff00ff;
+  color: var(--pink);
 }
 
 .logo span {

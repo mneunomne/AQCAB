@@ -6,15 +6,20 @@
       </span>
       <article class="article">
         <div class="article-content">
+          <div v-if="!getIsMobile" class="article-date">
+            <span v-if="blogPost.date" class="inline-block">
+              {{ formatDate(blogPost.date) }}
+            </span>
+          </div>
+          <div v-if="getIsMobile && blogPost.date" class="row date">
+            <span v-if="blogPost.date" class="inline-block">
+              {{ formatDate(blogPost.date) }}
+            </span>
+          </div>
           <div v-show="blogPost[`title_${$i18n.locale}`]" class="row title">
             <h1 class="article-title">
               {{ blogPost[`title_${$i18n.locale}`] }}
             </h1>
-          </div>
-          <div class="article-date">
-            <span v-if="blogPost.date" class="inline-block">
-              {{ formatDate(blogPost.date) }}
-            </span>
           </div>
           <div v-show="blogPost[`author_${$i18n.locale}`]" class="row author">
             <h3 class="article-author">
@@ -38,6 +43,8 @@
 <script>
 
 import BoxShape from '~/components/BoxShape.vue'
+
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -73,7 +80,10 @@ export default {
   computed: {
     isBiggerThanScreen() {
       return (this.postHeight + 70) > this.windowHeight
-    }
+    },
+    ...mapGetters({
+      getIsMobile: 'getIsMobile',
+    }),
   }
 }
 </script>
@@ -96,6 +106,10 @@ export default {
 .article-content {
   position: relative;
   margin: 60px;
+}
+
+.cont.mobile .article-content {
+  margin: 40px 10px;
 }
 
 .article-title {

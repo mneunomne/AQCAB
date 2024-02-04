@@ -15,6 +15,8 @@ import SpriteText from 'three-spritetext'
 
 import { networkColors } from '~/utils/globals'
 
+import { mapGetters } from 'vuex'
+
 const fontSize = 8
 
 export default {
@@ -43,6 +45,9 @@ export default {
     isHomeRoute() {
       return this.$route.path === this.$nuxt.localePath('/')
     },
+    ...mapGetters({
+      getIsMobile: 'getIsMobile'
+    }),
   },
   methods: {
     buildGraph() {
@@ -87,6 +92,7 @@ export default {
           return ''
         })
         .onNodeHover((node) => {
+          if (this.getIsMobile) return
           if (node) {
             node.__threeObj.scale.set(1.1, 1.1, 1.1);
             // make lower opacity everything that is not connected to this node
@@ -153,50 +159,7 @@ export default {
           if (node.type === 'node' || node.type === 'name') {
             let path = `/connections/${node.id}`.replace('_name', '')
             this.$router.push(path)
-          } else if (node.type === 'tag') {
-            // this.$router.replace({ query: { tag: node.id } });
-            // hide all nodes that are not connected to this tag
-            let nodes = gData.nodes
-            console.log("node", node, nodes)
-            let links = gData.links
-            let connectedNodes = []
-            nodes.forEach((n) => {
-              if ((n.type === 'node' || n.type === 'name') && n.tags && n.tags.includes(node.id)) {
-                connectedNodes.push(n.id)
-                n.__threeObj.children[0].material.opacity = 1
-              } else {
-                n.__threeObj.children[0].material.opacity = 0.2
-              }
-            })
-
-            // make all links not connected to tag disapear
-            const linkObjects = node.__threeObj.parent.children.filter(
-              (c) => c.__graphObjType === 'link'
-            )
-            linkObjects.forEach((l) => {
-              if (l.__data.source.id.includes(node.id)) {
-                l.visible = true
-              } else {
-                l.visible = false
-              }
-            })
-            node.__threeObj.children[0].material.opacity = 1
           }
-        })
-        .onBackgroundClick(() => {
-          let nodes = gData.nodes
-          // remove query param
-          // this.$router.replace({ query: { tag: null } });
-          nodes.forEach((n) => {
-            n.__threeObj.children[0].material.opacity = 1
-          })
-          // make all links not connected to tag disapear
-          const linkObjects = gData.nodes[0].__threeObj.parent.children.filter(
-            (c) => c.__graphObjType === 'link'
-          )
-          linkObjects.forEach((l) => {
-            l.visible = true
-          })
         })
         .nodeThreeObject((node) => {
           console.log("node")
@@ -289,26 +252,42 @@ export default {
           this.onLoadedNode(node)
           return group
         })
-      g.d3Force('charge').strength(-130)
       let w = window.innerWidth
       let h = window.innerHeight
       console.log("w h", w, h)
-      g.d3Force('limit',
-        d3ForceLimit()
-          .x0(-w / 4)
-          .x1(w / 8)
+
+      if (this.getIsMobile) {
+        g.d3Force('charge').strength(-140)
+        g.d3Force('limit', d3ForceLimit()
+          .x0(-w / 5)
+          .x1(w / 5)
+          .y0(-(h / 4))
+          .y1(h / 4)
+        );
+      } else {
+        g.d3Force('charge').strength(-130)
+        g.d3Force('limit', d3ForceLimit()
+          .x0(-w / 5)
+          .x1(w / 9)
           .y0(-(h / 5))
           .y1(h / 5)
-      );
+        );
+      }
 
-      g.controls().enableZoom = false
-      g.controls().enablePan = true
-      g.controls().noRotate = true
-      g.controls().noZoom = true
       g.controls().panSpeed = 0.1
+      if (this.getIsMobile) {
+        g.controls().enableZoom = true
+        g.controls().enablePan = true
+        g.controls().noRotate = true
+        g.cameraPosition({ x: 0, y: 0, z: 600 })
+      } else {
+        g.controls().enableZoom = false
+        g.controls().enablePan = true
+        g.controls().noRotate = true
+        g.controls().noZoom = true
+      }
 
-
-      g.d3Force('colide', forceCollide(node => 20))
+      g.d3Force('colide', forceCollide(node => 30))
 
       const linkForce = g.d3Force('link').distance((link) => {
         return link.target.id.includes('_name') ? 2 : 20
