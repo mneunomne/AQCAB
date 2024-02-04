@@ -50,10 +50,14 @@
             >
           </div>
           <div class="side_menu-btn btn-small grid-box">
-            <a class="btn" target="_blank"><span>insta</span></a>
+            <a class="btn" :href="getSiteInfo.instagram" target="_blank"
+              ><span>insta</span></a
+            >
           </div>
           <div class="side_menu-btn btn-small grid-box">
-            <a class="btn" target="_blank"><span>email</span></a>
+            <a class="btn" :href="`mailto:${getSiteInfo.email}`" target="_blank"
+              ><span>email</span></a
+            >
           </div>
         </li>
       </ul>
@@ -100,6 +104,7 @@ export default {
     }
   },
   mounted() {
+    console.log("getSiteInfo", this.getSiteInfo)
     if (!this.getIsMobile) {
       this.menuOpen = true
       this.toggleMenu(this.menuOpen)
@@ -108,11 +113,9 @@ export default {
   computed: {
     ...mapGetters({
       getIsMenuOpen: 'getIsMenuOpen',
-      getIsMobile: 'getIsMobile'
+      getIsMobile: 'getIsMobile',
+      getSiteInfo: 'getSiteInfo',
     }),
-    mounted() {
-      console.log("mounted", this.routeName)
-    },
     locale() {
       return this.$i18n.locale == 'en' ? 'be' : 'en'
     },
@@ -199,6 +202,12 @@ export default {
   transform: translateX(0px);
   transition: transform 0.3s ease-in-out;
   text-align: left;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .side_menu-btn.disabled {
@@ -223,7 +232,6 @@ export default {
   display: block;
   text-align: left;
   background: transparent;
-  pointer-events: none;
 }
 
 .btn.active {
