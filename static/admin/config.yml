@@ -77,9 +77,9 @@ collections:
     slug: '{{slug}}'
     fields:
       - { name: 'node_id', label: 'Node Id', widget: 'string' , required: true, pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."], hint: 'write the name of the connection with no special character or spaces.',} 
-      - { name: 'Name (en)', label: 'name_en', widget: 'string' , required: true} 
-      - { name: 'Name (be)', label: 'name_be', widget: 'string' , required: false , default: ''} 
-      - { name: 'node_type', label: 'node_type', widget: 'string' , required: false, default: ''} 
+      - { label: 'Name (en)',  name: 'name_en', widget: 'string' , required: true} 
+      - { label: 'Name (be)',  name: 'name_be', widget: 'string' , required: false , default: ''} 
+      - { label: 'Node Type',  name: 'node_type', widget: 'string' , required: false, default: ''} 
       - { 
           name: 'connections',
           label: 'Connections',
