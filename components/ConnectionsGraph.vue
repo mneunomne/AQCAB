@@ -65,7 +65,6 @@ export default {
       }
       const el = document.querySelector('.connections-graph')
       const g = ForceGraph3D()(el)
-      console.log('data', data)
       const gData = {
         nodes: this.generateNodes(data),
         links: this.generateLinks(data),
@@ -305,35 +304,8 @@ export default {
     },
     // Data for nodes -> names of connections + tags
     generateNodes(data) {
-      let minDist = 20
-      let w = window.innerWidth
-      let h = window.innerHeight
-      let nx = w / 5;
-      let ny = h / 5;
       const nodes = [];
-      const gridSize = minDist * 2; // Adjust this based on your minimum distance
-
-      const positions = new Set();
-
-      function getGridPosition(x, y) {
-        return [
-          Math.floor(x / gridSize) * gridSize,
-          Math.floor(y / gridSize) * gridSize,
-        ];
-      }
-
       data.forEach((node) => {
-        let x = nx / 2 - Math.random() * nx;
-        let y = ny / 2 - Math.random() * ny;
-
-        let gridPos = getGridPosition(x, y);
-
-        while (positions.has(gridPos.join(','))) {
-          x = nx / 2 - Math.random() * nx;
-          y = ny / 2 - Math.random() * ny;
-          gridPos = getGridPosition(x, y);
-        }
-
         const obj = {
           id: node.node_id,
           name: node.name_en,
@@ -342,12 +314,7 @@ export default {
           tags: [...node.tags],
           connections: [...node.connections],
         };
-        if (Math.random() > 0.9) {
-          obj.fx = x;
-          obj.fy = y;
-        }
         nodes.push(obj);
-        positions.add(gridPos.join(','));
 
         // add node of just name
 
@@ -364,18 +331,6 @@ export default {
           if (nodes.find((n) => n.id === tag)) {
             return;
           }
-
-          let tx = nx / 2 - Math.random() * nx;
-          let ty = ny / 2 - Math.random() * ny;
-
-          let tagGridPos = getGridPosition(tx, ty);
-
-          while (positions.has(tagGridPos.join(','))) {
-            tx = nx / 2 - Math.random() * nx;
-            ty = ny / 2 - Math.random() * ny;
-            tagGridPos = getGridPosition(tx, ty);
-          }
-
           const tagObj = {
             id: tag,
             name: tag,
@@ -383,14 +338,7 @@ export default {
             content_en: tag,
             type: 'tag',
           };
-          //tagObj.fx = tx;
-          // tagObj.fy = ty;
-          if (Math.random() > 0.9) {
-            obj.fx = tx;
-            obj.fy = ty;
-          }
           nodes.push(tagObj);
-          positions.add(tagGridPos.join(','));
         });
       });
       return nodes

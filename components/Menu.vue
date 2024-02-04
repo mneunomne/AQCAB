@@ -41,10 +41,7 @@
           <span class="btn">{{ $t('timeline') }}</span>
         </li>
         <li class="small-btn-wrapper wrap-3">
-          <div
-            class="side_menu-btn btn-small grid-box"
-            @click="onClickLangButton"
-          >
+          <div class="side_menu-btn btn-small grid-box">
             <nuxt-link class="btn" :to="switchLocalePath(locale)"
               ><span>{{ localeName }}</span></nuxt-link
             >
@@ -96,7 +93,6 @@ export default {
     },
     onClickLangButton() {
       // go to locale path
-      console.log("onClickLangButton", this.locale, this.$nuxt.switchLocalePath(this.locale))
       this.$nuxt.$router.push({ path: this.$nuxt.switchLocalePath(this.locale) })
       //this.$i18n.locale = this.locale
       //this.$nuxt.switchLocalePath()

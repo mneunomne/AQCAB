@@ -9,5 +9,6 @@ export default {
   insta: 'Insta',
   eng: 'eng',
   email: 'Email',
-  contribute: "-> дадаць да архіву"
+  contribute: "-> дадаць да архіву",
+  network: 'сетка',
 }

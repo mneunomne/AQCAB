@@ -68,7 +68,7 @@ export default {
     if (process.client) {
       this.setIsMobile(window.innerWidth < 768)
       window.addEventListener('resize', (evt) => {
-        console.log("resize", window.innerWidth)
+        //console.log("resize", window.innerWidth)
         this.windowHeight = window.innerHeight
         this.setIsMobile(window.innerWidth < 768)
         // this.postHeight = this.$refs.postContainerthis.$refs.postContainer?.offsetHeight

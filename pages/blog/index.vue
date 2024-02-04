@@ -51,9 +51,11 @@ export default {
   },
   computed: {
     blogPosts() {
-      console.log("blogPosts")
+      // clone the array to avoid mutation
+      var blogPosts = this.$store.state.blogPosts.map(a => { return { ...a } })
+
       // fallback to english:
-      let blogPosts = this.$store.state.blogPosts.map(post => {
+      blogPosts = blogPosts.map(post => {
         if (!post[`title_${this.$i18n.locale}`]) {
           post[`title_${this.$i18n.locale}`] = post[`title_en`]
         }
