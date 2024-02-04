@@ -90,6 +90,7 @@ export default {
     }
   },
   mounted() {
+    document.querySelector(".main").scrollTo(0, 0)
     setTimeout(() => {
       this.open = true
     }, 1000)

@@ -154,7 +154,7 @@ export default {
 }
 
 .cont.mobile .menu-toggle {
-  right: 36px;
+  right: 39px;
 }
 
 .menu-toggle {
