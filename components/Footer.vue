@@ -17,9 +17,11 @@
       <span class="letter">B</span><span class="letters_hide">elarus</span>
     </div>
 
-    <span :class="{ show: !getIsMenuOpen }" id="footer-contribute">{{
-      $t('contribute')
-    }}</span>
+    <span :class="{ show: !getIsMenuOpen }" id="footer-contribute"
+      ><a target="_blank" :href="getSiteInfo.contribute_form">{{
+        $t('contribute')
+      }}</a>
+    </span>
   </div>
 </template>
 <script>
@@ -36,7 +38,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getIsMenuOpen: 'getIsMenuOpen'
+      getIsMenuOpen: 'getIsMenuOpen',
+      getSiteInfo: 'getSiteInfo',
     })
   },
   methods: {
@@ -87,6 +90,8 @@ export default {
 #footer-contribute.show {
   opacity: 1;
   transition-delay: 0.5s;
+  z-index: 9999;
+  pointer-events: all;
 }
 
 .pinkLetter {

@@ -88,29 +88,38 @@ export default {
         })
         .onNodeHover((node) => {
           if (node) {
-            node.__threeObj.children[0].material.opacity = 1
             node.__threeObj.scale.set(1.1, 1.1, 1.1);
-            if (node.type === 'name') {
-              var _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
-              if (_node) {
-                _node.__threeObj.children[0].material.opacity = 1
-                _node.__threeObj.scale.set(1.1, 1.1, 1.1);
-              }
-            }
-            // node.__threeObj.children[0].scale
-          } else {
+            // make lower opacity everything that is not connected to this node
             let nodes = gData.nodes
             nodes.forEach((n) => {
-              n.__threeObj.scale.set(1, 1, 1);
+              n.__threeObj.children[0].material.opacity = 0.2
             })
-          }
-          if (node) {
+            if (node.type == 'tag') {
+              nodes = nodes.filter((n) => n.tags && n.tags.includes(node.id))
+            }
+            if (node.type === 'node' || node.type === 'name') {
+              let id = node.id.replace('_name', '')
+              nodes = nodes.filter((n) => {
+                if (n.type === 'tag') {
+                  return node.tags.includes(n.id)
+                } else {
+                  return node.connections.includes(n.id) || n.connections.includes(id)
+                }
+              })
+            }
+
+            nodes.forEach((n) => {
+              n.__threeObj.children[0].material.opacity = 1
+            })
+            let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+            let _name = gData.nodes.find((n) => n.id === node.id + '_name')
+            if (_name) {
+              _name.__threeObj.children[0].material.opacity = 1
+            }
+            _node.__threeObj.children[0].material.opacity = 1
+            node.__threeObj.children[0].material.opacity = 1
+            // Rotation of node
             if (node.type === 'node') {
-              // 
-              // this.nodeOpacity(node.id, 1)
-              // node.__threeObj.children[0].scale = { x: 1.1, y: 1.1, z: 1.1 }
-              // make triangle rotate
-              // node.__threeObj.children[0].rotation.z += 0.01
               if (this.rotateInterval) {
                 clearInterval(this.rotateInterval)
               }
@@ -118,7 +127,6 @@ export default {
                 node.__threeObj.children[0].rotation.z += 0.01
               }, 10)
             } else if (node.type === 'name') {
-              var _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
               if (_node) {
                 if (this.rotateInterval) {
                   clearInterval(this.rotateInterval)
@@ -128,10 +136,16 @@ export default {
                 }, 10)
               }
             }
+            // if hover is blank...
           } else {
             if (this.rotateInterval) {
               clearInterval(this.rotateInterval)
             }
+            let nodes = gData.nodes
+            nodes.forEach((n) => {
+              n.__threeObj.scale.set(1, 1, 1);
+              n.__threeObj.children[0].material.opacity = 1
+            })
           }
         })
         .onNodeClick((node) => {
@@ -347,6 +361,7 @@ export default {
           val: 1,
           type: 'node',
           tags: [...node.tags],
+          connections: [...node.connections],
         };
         if (Math.random() > 0.9) {
           obj.fx = x;
@@ -362,7 +377,8 @@ export default {
           name: node.name_en,
           val: 1,
           type: 'name',
-          tags: node.tags
+          tags: [...node.tags],
+          connections: [...node.connections],
         });
 
         node.tags.forEach((tag) => {
