@@ -79,7 +79,7 @@ export default {
           console.log("loaded!")
         })
         .linkVisibility((link) => {
-          return !link.target.includes('_name')
+          return true || !link.target.includes('_name')
         })
         // .cooldownTime(500)
         .linkOpacity(0.5)
@@ -91,6 +91,8 @@ export default {
         })
         .onNodeHover((node) => {
           if (node) {
+            let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+            let _name = gData.nodes.find((n) => n.id === node.id + '_name')
             node.__threeObj.scale.set(1.1, 1.1, 1.1);
             if (!this.getIsMobile) {
               // make lower opacity everything that is not connected to this node
@@ -115,8 +117,6 @@ export default {
               nodes.forEach((n) => {
                 n.__threeObj.children[0].material.opacity = 1
               })
-              let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
-              let _name = gData.nodes.find((n) => n.id === node.id + '_name')
               if (_name) {
                 _name.__threeObj.children[0].material.opacity = 1
               }
@@ -259,7 +259,7 @@ export default {
       console.log("w h", w, h)
 
       if (this.getIsMobile) {
-        g.d3Force('charge').strength(-140)
+        g.d3Force('charge').strength(-100)
         g.d3Force('limit', d3ForceLimit()
           .x0(-w / 5)
           .x1(w / 5)
@@ -289,9 +289,15 @@ export default {
         g.controls().noZoom = true
       }
 
-      g.d3Force('colide', forceCollide(node => 30))
+      g.d3Force('colide', forceCollide(node => {
+        if (node.id.includes('_name')) {
+          return 2
+        } else {
+          return 30
+        }
+      }))
 
-      const linkForce = g.d3Force('link').distance((link) => {
+      g.d3Force('link').distance((link) => {
         return link.target.id.includes('_name') ? 2 : 20
       })
 

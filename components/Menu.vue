@@ -189,6 +189,7 @@ export default {
 .nav,
 .menu-toggle {
   pointer-events: all;
+  user-select: none;
 }
 
 .nav.closed {
