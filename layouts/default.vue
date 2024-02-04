@@ -81,6 +81,7 @@ export default {
 .cont.menuClosed {
   transition: all 0.25s 0.5s;
   width: 100%;
+  padding-right: 10px;
 }
 
 @keyframes grow-width {
