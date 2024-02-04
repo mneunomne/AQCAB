@@ -2,7 +2,6 @@
   <div
     class="connections-graph"
     :class="{ hide: $route.path !== localePath('/') }"
-    @click="onClickNetwork"
   >
     .
   </div>
@@ -91,38 +90,42 @@ export default {
           return ''
         })
         .onNodeHover((node) => {
-          if (this.getIsMobile) return
           if (node) {
             node.__threeObj.scale.set(1.1, 1.1, 1.1);
-            // make lower opacity everything that is not connected to this node
-            let nodes = gData.nodes
-            nodes.forEach((n) => {
-              n.__threeObj.children[0].material.opacity = 0.2
-            })
-            if (node.type == 'tag') {
-              nodes = nodes.filter((n) => n.tags && n.tags.includes(node.id))
-            }
-            if (node.type === 'node' || node.type === 'name') {
-              let id = node.id.replace('_name', '')
-              nodes = nodes.filter((n) => {
-                if (n.type === 'tag') {
-                  return node.tags.includes(n.id)
-                } else {
-                  return node.connections.includes(n.id) || n.connections.includes(id)
-                }
+            if (!this.getIsMobile) {
+              // make lower opacity everything that is not connected to this node
+              let nodes = gData.nodes
+              nodes.forEach((n) => {
+                n.__threeObj.children[0].material.opacity = 0.2
               })
+              if (node.type == 'tag') {
+                nodes = nodes.filter((n) => n.tags && n.tags.includes(node.id))
+              }
+              if (node.type === 'node' || node.type === 'name') {
+                let id = node.id.replace('_name', '')
+                nodes = nodes.filter((n) => {
+                  if (n.type === 'tag') {
+                    return node.tags.includes(n.id)
+                  } else {
+                    return node.connections.includes(n.id) || n.connections.includes(id)
+                  }
+                })
+              }
+
+              nodes.forEach((n) => {
+                n.__threeObj.children[0].material.opacity = 1
+              })
+              let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+              let _name = gData.nodes.find((n) => n.id === node.id + '_name')
+              if (_name) {
+                _name.__threeObj.children[0].material.opacity = 1
+              }
+              if (_node) {
+                _node.__threeObj.children[0].material.opacity = 1
+              }
+              node.__threeObj.children[0].material.opacity = 1
             }
 
-            nodes.forEach((n) => {
-              n.__threeObj.children[0].material.opacity = 1
-            })
-            let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
-            let _name = gData.nodes.find((n) => n.id === node.id + '_name')
-            if (_name) {
-              _name.__threeObj.children[0].material.opacity = 1
-            }
-            _node.__threeObj.children[0].material.opacity = 1
-            node.__threeObj.children[0].material.opacity = 1
             // Rotation of node
             if (node.type === 'node') {
               if (this.rotateInterval) {
@@ -399,9 +402,6 @@ export default {
       this.g.width(window.innerWidth)
       this.g.height(window.innerHeight)
     },
-    onClickNetwork() {
-      console.log("onClickNetwork")
-    }
   },
 }
 </script>
