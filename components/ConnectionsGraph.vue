@@ -11,12 +11,16 @@
 // import d3ForceLimit from 'd3-force-limit'
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'
+import * as TWEEN from '@tweenjs/tween.js';
 
 import { networkColors } from '~/utils/globals'
 
 import { mapGetters } from 'vuex'
 
 const fontSize = 8
+
+const duration = 250; // Duration of the animation in milliseconds
+const easing = TWEEN.Easing.Quadratic.InOut; // Easing function
 
 export default {
   props: {
@@ -31,11 +35,25 @@ export default {
       numNodes: 0,
       loadedNodes: 0,
       rotateInterval: null,
+      loadingPage: true,
     }
   },
   mounted() {
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Update your Three.js scene here
+
+      // Update Tween.js
+      TWEEN.update();
+    }
+
+    animate(); // Start the animation loop
     this.buildGraph()
     window.addEventListener('resize', this.onWindowResize, false)
+    this.$root.$on('node-loaded', (node) => {
+      this.loadingPage = false
+    })
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onWindowResize, false)
@@ -90,6 +108,8 @@ export default {
           return ''
         })
         .onNodeHover((node) => {
+          // Create a new tween
+          //.start();
           if (node) {
             let _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
             let _name = gData.nodes.find((n) => n.id === node.id + '_name')
@@ -98,8 +118,18 @@ export default {
               // make lower opacity everything that is not connected to this node
               let nodes = gData.nodes
               nodes.forEach((n) => {
-                n.__threeObj.children[0].material.opacity = 0.2
+                n.__threeObj.children[0].material.opacity = 0.5
               })
+              /*
+              var d = { opacity: 1 }
+              new TWEEN.Tween(d)
+                .to({ opacity: 0.2 }, duration)
+                .easing(easing)
+                .onUpdate((data) => {
+                  console.log("data", data)
+                })
+                .start();
+                */
               if (node.type == 'tag') {
                 nodes = nodes.filter((n) => n.tags && n.tags.includes(node.id))
               }
@@ -161,6 +191,50 @@ export default {
           if (node.type === 'node' || node.type === 'name') {
             let path = `/connections/${node.id}`.replace('_name', '')
             this.$router.push(path)
+            this.loadingPage = true
+            var _node = gData.nodes.find((n) => n.id === node.id.replace('_name', ''))
+            console.log("_node", _node)
+            if (_node) {
+              this.nodeLoading = true
+              // _node.__threeObj.scale.set(2, 2, 2)
+              // Bouncing Animation
+              let startScale = { x: 1, y: 1, z: 1 }; // Initial scale
+              let scale = { x: 1, y: 1, z: 1 };
+              let targetScale = { x: 1.2, y: 1.2, z: 1.2 }; // Target scale
+              let duration = 250; // Duration of the animation in milliseconds
+              let easing = TWEEN.Easing.Quadratic.InOut; // Easing function
+
+              // Create a new tween
+              let tweenA = new TWEEN.Tween(scale)
+                .to(targetScale, duration)
+                .easing(easing)
+                .onUpdate((data) => {
+                  // Update the scale of the node
+                  _node.__threeObj.scale.set(data.x, data.y, data.z);
+                })
+                .start();
+
+              let tweenB = new TWEEN.Tween(scale)
+                .to({ x: 1, y: 1, z: 1 }, duration)
+                .easing(easing)
+                .onUpdate((data) => {
+                  // Update the scale of the node
+                  _node.__threeObj.scale.set(data.x, data.y, data.z);
+                })
+              //.start();
+
+              // Chain another tween to bounce back to the original scale
+              tweenA.onComplete(() => {
+                if (this.loadingPage) {
+                  tweenB.start();
+                }
+              });
+              tweenB.onComplete(() => {
+                if (this.loadingPage) {
+                  tweenA.start();
+                }
+              });
+            }
           }
         })
         .nodeThreeObject((node) => {

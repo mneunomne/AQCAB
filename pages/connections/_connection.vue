@@ -60,6 +60,10 @@ export default {
       //this.$router.replace({ query: { tag: tag } });
     }
   },
+  mounted() {
+    console.log('connectionNode', this.connectionNode)
+    this.$root.$emit('node-loaded')
+  },
   async asyncData({ params, payload }) {
     console.log('params', params, payload)
     if (payload) return { connectionNode: payload }
