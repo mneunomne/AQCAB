@@ -1,7 +1,7 @@
 {
-  "name": "dotyk",
+  "name": "aqcab",
   "version": "1.0.0",
-  "description": "Dotyk Archive Website ",
+  "description": "AQCAB - Archive of Queer Culture and Art from Belarus",
   "author": "Alberto Harres & Hanna Paniutsich",
   "scripts": {
     "dev": "nuxt",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/knogobert/ntn-boilerplate#readme"
+    "url": "https://github.com/mneunomne/AQCAB/"
   },
   "license": "MIT",
   "dependencies": {
