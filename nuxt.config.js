@@ -26,10 +26,6 @@ export default {
         : 'http://localhost:3000',
     lang: SITE_INFO.sitelang || 'en-US'
   },
-  server: {
-    host: '0',
-    port: '3000' // optional
-  },
   /*
    ** Headers of the page
    */
