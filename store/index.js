@@ -40,7 +40,6 @@ export const mutations = {
 
 export const actions = {
   getPosts(files) {
-    console.log("getPosts")
     return files.keys().map((key) => {
       let res = files(key)
       res.slug = key.slice(2, -5)
@@ -63,7 +62,6 @@ export const actions = {
     await commit(SET_CONNECTIONS, actions.getPosts(connections))
 
     let site_info = await require('~/assets/content/site/info.json')
-    console.log("site_info", site_info)
     commit(SET_SITE_INFO, site_info)
 
     // ? When adding/changing NetlifyCMS collection types, make sure to:
