@@ -31,7 +31,7 @@
     "@nuxtjs/color-mode": "^1.1.1",
     "@nuxtjs/pwa": "^3.3.2",
     "@nuxtjs/svg": "^0.1.12",
-    "@nuxtjs/tailwindcss": "^3.4.1",
+    "@nuxtjs/tailwindcss": "^4.0.1",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-prettier": "^3.3.0",

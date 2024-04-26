@@ -79,7 +79,7 @@ collections:
     folder: 'assets/content/connections'
     create: true
     format: 'json'
-    slug: '{{slug}}'
+    slug: '{{node_id}}'
     fields:
       - { name: 'node_id', label: 'Node Id', widget: 'string' , required: true, pattern: ['.\S+\w{1,32}\S{1,}', "No space or special characters are allowed."], hint: 'write the name of the connection with no special character or spaces.',} 
       - { label: 'Name (en)',  name: 'name_en', widget: 'string' , required: true} 
@@ -100,8 +100,8 @@ collections:
         } 
       - { name: 'tags', label: 'tags', widget: 'list', default: [], required: false } 
       - { name: 'type', label: 'type', widget: 'string', required: false, default: '' } 
-      - { name: 'Content (en)', label: 'content_en', widget: 'markdown' , required: false, default: ''} 
-      - { name: 'Content (be)', label: 'content_be', widget: 'markdown' , required: false, default: ''} 
+      - { name: 'content_en', label: 'Content (en)', widget: 'markdown' , required: false, default: ''} 
+      - { name: 'content_be', label: 'Content (be)', widget: 'markdown' , required: false, default: ''} 
   - name: 'blog'
     label: 'Blog'
     folder: 'assets/content/blog'
