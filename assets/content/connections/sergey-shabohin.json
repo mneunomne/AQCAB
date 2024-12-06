@@ -1,9 +1,7 @@
 {
   "content_be": "Сергей Шабохин - художник, независимый куратор, автор текстов об искусстве, архивист и исследователь белорусской культуры, соучредитель и главный редактор исследовательской платформы современного белорусского искусства «Калектар», основатель и главный редактор портала об активизме и современном белорусском искусстве Art Aktivist.\\\n\\\nВладелец пространства Gray Mandorla Studio в Познани. Куратор и сокуратор нескольких выставок, программ и конкурсов, белорусский арт-активист, автор лекций, создатель десятков культурных инициатив, сооснователь сайта cultprotest.me, инициатор программы по созданию Музея современного искусства в Беларуси. Художник также занимается междисциплинарными практиками: режиссирует фильмы и перформансы, сотрудничает с музыкантами и театральными деятелями, выступает в качестве диджея.\\\n\\\nРодился в Наваполацке (Беларусь). Живет и работает в Познани и Берлине.",
-  "connections": [
-    "ana-lok",
-    "staloyka-xyz"
-  ],
+  "content_en": "Sergey Shabohin is an artist, independent curator, author of texts about art, archivist and researcher of Belarusian culture, co-founder and editor-in-chief of Kalektar research platform for contemporary Belarusian art, founder and editor-in-chief of Art Aktivist portal about activism and contemporary Belarusian art.\\\n\\\nOwner of Gray Mandorla Studio space in Poznan. Curator and co-curator of several exhibitions, programs, and competitions, Belarusian art activist, author of lectures, creator of dozens of cultural initiatives, co-founder of cultprotest.me, initiator of the program aimed at creating a Museum of Contemporary Art in Belarus. The artist is also involved in interdisciplinary practices: directing films and performances, collaborating with musicians and theatergoers, and acting as a DJ.\\\n\\\nBorn in Navapolack (Belarus). Lives and works in Poznan and Berlin.",
+  "connections": [],
   "name_be": "Сергей Шабохин",
   "node_type": "",
   "node_id": "sergey-shabohin",
@@ -13,6 +11,5 @@
     "activism"
   ],
   "type": "",
-  "name_en": "Sergey Shabohin",
-  "content_en": "Sergey Shabohin is an artist, independent curator, author of texts about art, archivist and researcher of Belarusian culture, co-founder and editor-in-chief of Kalektar research platform for contemporary Belarusian art, founder and editor-in-chief of Art Aktivist portal about activism and contemporary Belarusian art.\\\n\\\nOwner of Gray Mandorla Studio space in Poznan. Curator and co-curator of several exhibitions, programs, and competitions, Belarusian art activist, author of lectures, creator of dozens of cultural initiatives, co-founder of cultprotest.me, initiator of the program aimed at creating a Museum of Contemporary Art in Belarus. The artist is also involved in interdisciplinary practices: directing films and performances, collaborating with musicians and theatergoers, and acting as a DJ.\\\n\\\nBorn in Navapolack (Belarus). Lives and works in Poznan and Berlin."
+  "name_en": "Sergey Shabohin"
 }
