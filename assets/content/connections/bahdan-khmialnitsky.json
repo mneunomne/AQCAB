@@ -1,7 +1,10 @@
 {
   "content_be": "",
   "content_en": "",
-  "connections": [],
+  "connections": [
+    "ana-lok",
+    "dotyk"
+  ],
   "name_be": "",
   "node_type": "",
   "node_id": "bahdan-khmialnitsky",
