@@ -2,7 +2,10 @@
   "node_id": "dotyk",
   "name_en": "Dotyk",
   "name_be": "Дотык",
-  "connections": [],
+  "connections": [
+    "ana-lok",
+    "staloyka-xyz"
+  ],
   "tags": [
     "queer",
     "activism",
